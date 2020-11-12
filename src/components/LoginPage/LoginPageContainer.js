@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { loginPost, setAuthDataActionCreator } from '../../redux/authReducer';
 import LoginPage from './LoginPage';
 
 let LoginPageContainer = connect(
@@ -7,7 +8,15 @@ let LoginPageContainer = connect(
     }),
     dispatch => ({
         onLogin: (values) => {
-            console.log(values);
+            if (values.login && values.password) {
+                loginPost(values.login, values.password)
+                    .then((response) => {
+                        dispatch(setAuthDataActionCreator(response.data));
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         },
     })
 )(LoginPage);

@@ -4,7 +4,7 @@ import authHOC from '../../HOC/authHOC';
 let MainPage = (props) => {
     return (
         <div className="main-page">
-            Главная страница
+            Авторизованы на главной странице!
         </div>
     );
 }

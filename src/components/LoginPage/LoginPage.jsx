@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 
 let LoginForm = (props) => {
@@ -26,6 +27,8 @@ LoginForm = reduxForm({
 })(LoginForm);
 
 let LoginPage = (props) => {
+    if (props.isAuth) return <Redirect to="/main" />;
+
     return (
         <LoginForm onSubmit={props.onLogin} />
     );
