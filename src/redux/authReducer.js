@@ -1,6 +1,6 @@
 let initialState = {
     login: null,
-    isAuth: false,
+    isAuth: 0,
     permission: null,
 };
 

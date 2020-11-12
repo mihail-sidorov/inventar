@@ -1,4 +1,5 @@
 import React from 'react';
+import authHOC from '../../HOC/authHOC';
 
 let MainPage = (props) => {
     return (
@@ -7,5 +8,7 @@ let MainPage = (props) => {
         </div>
     );
 }
+
+MainPage = authHOC(MainPage);
 
 export default MainPage;
