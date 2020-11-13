@@ -17,6 +17,10 @@ export let loginGet = () => {
     return Axios.get('login');
 }
 
+export let loginDelete = () => {
+    return Axios.delete('login');
+}
+
 // Создание Action Creators
 export let setAuthDataActionCreator = (data) => {
     return {
