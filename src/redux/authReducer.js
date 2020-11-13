@@ -5,7 +5,7 @@ const SET_AUTH_DATA = 'SET_AUTH_DATA';
 let initialState = {
     login: null,
     isAuth: 0,
-    permission: null,
+    role: null,
 };
 
 // Запросы к API
@@ -36,7 +36,7 @@ let authReducer = (state = initialState, action) => {
                 ...state,
                 login: action.data.login,
                 isAuth: action.data.isAuth,
-                permission: action.data.permission,
+                role: action.data.permission,
             };
         default:
             return state;
