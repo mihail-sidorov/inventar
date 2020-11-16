@@ -4,7 +4,7 @@ import Device from './Device';
 let DeviceContainer = (id) => {
     return connect(
         state => ({
-            device: state.devicesPageState.devices[id],
+            device: state.devicesState.devices[id],
         }),
         dispatch => ({
 

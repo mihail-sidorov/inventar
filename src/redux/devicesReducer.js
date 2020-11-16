@@ -20,7 +20,7 @@ export let devicesGetActionCreator = (data) => {
     };
 }
 
-let devicesPageReducer = (state = initialState, action) => {
+let devicesReducer = (state = initialState, action) => {
     switch (action.type) {
         case DEVICES_GET:
             return {
@@ -32,4 +32,4 @@ let devicesPageReducer = (state = initialState, action) => {
     }
 }
 
-export default devicesPageReducer;
+export default devicesReducer;

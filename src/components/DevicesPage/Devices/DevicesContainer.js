@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import { devicesGetActionCreator } from '../../../redux/devicesPageReducer';
+import { devicesGetActionCreator } from '../../../redux/devicesReducer';
 import Devices from './Devices';
 
 let DevicesContainer = connect(
     state => ({
-        devices: state.devicesPageState.devices,
+        devices: state.devicesState.devices,
     }),
     dispatch => ({
         onDevicesGet: (data) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import isEmptyObject from '../../../functions/isEmptyObject';
-import { devicesGet } from '../../../redux/devicesPageReducer';
+import { devicesGet } from '../../../redux/devicesReducer';
 import DeviceContainer from './Device/DeviceContainer';
 
 let Devices = (props) => {
