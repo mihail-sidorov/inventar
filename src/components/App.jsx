@@ -5,7 +5,7 @@ import HeaderContainer from './Header/HeaderContainer';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
 import MainPage from './MainPage/MainPage';
 import ServicesPage from './ServicesPage/ServicesPage';
-import WorkersPage from './WorkersPage/WorkersPage';
+import UsersPage from './UsersPage/UsersPage';
 
 let App = () => {
     return (
@@ -16,7 +16,7 @@ let App = () => {
                 <Route path="/login" render={() => <LoginPageContainer />} />
                 <Route path="/main" render={() => <MainPage />} />
                 <Route path="/devices" render={() => <DevicesPage />} />
-                <Route path="/workers" render={() => <WorkersPage />} />
+                <Route path="/users" render={() => <UsersPage />} />
                 <Route path="/services" render={() => <ServicesPage />} />
             </Switch>
         </div>

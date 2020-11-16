@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
 
-let WorkersPage = (props) => {
+let UsersPage = (props) => {
     return (
         <div className="workers-page">
             <NavLink className="workers-page__to-main" to="/main">На главную</NavLink>
@@ -11,6 +11,6 @@ let WorkersPage = (props) => {
     );
 }
 
-WorkersPage = authHOC(WorkersPage);
+UsersPage = authHOC(UsersPage);
 
-export default WorkersPage;
+export default UsersPage;

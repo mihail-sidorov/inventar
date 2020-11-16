@@ -7,7 +7,7 @@ let MainPage = (props) => {
         <div className="main-page">
             <div className="main-page__items">
                 <NavLink className="main-page__item" to="/devices">Оборудование</NavLink><br />
-                <NavLink className="main-page__item" to="/workers">Сотрудники</NavLink><br />
+                <NavLink className="main-page__item" to="/users">Сотрудники</NavLink><br />
                 <NavLink className="main-page__item" to="/services">Сервисы</NavLink><br />
             </div>
         </div>
