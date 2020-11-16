@@ -52,9 +52,9 @@ let DevicesClassComponent = class extends React.Component {
 
             Promise.all(promiseArr)
                 .then((response) => {
-                    this.props.onDevicesGet(response[0].data);
-                    this.props.onUsersGet(response[1].data);
-                    this.props.onBrandsGet(response[2].data);
+                    if (response[0]) this.props.onDevicesGet(response[0].data);
+                    if (response[1]) this.props.onUsersGet(response[1].data);
+                    if (response[2]) this.props.onBrandsGet(response[2].data);
                 })
                 .catch((error) => {
                     console.log(error);
