@@ -1,6 +1,8 @@
 import React from 'react';
 import isEmptyObject from '../../../functions/isEmptyObject';
+import { brandsGet } from '../../../redux/brandsReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
+import { usersGet } from '../../../redux/usersReducer';
 import DeviceContainer from './Device/DeviceContainer';
 
 let Devices = (props) => {
@@ -31,10 +33,28 @@ let Devices = (props) => {
 
 let DevicesClassComponent = class extends React.Component {
     componentDidMount() {
-        if (isEmptyObject(this.props.devices)) {
-            devicesGet()
+        let state = window.store.getState();
+
+        if (isEmptyObject(state.devicesState.devices) || isEmptyObject(state.usersState.users) || isEmptyObject(state.brandsState.brands)) {
+            let promiseArr = [];
+
+            if (isEmptyObject(state.devicesState.devices)) {
+                promiseArr.push(devicesGet());
+            }
+
+            if (isEmptyObject(state.usersState.users)) {
+                promiseArr.push(usersGet());
+            }
+
+            if (isEmptyObject(state.brandsState.brands)) {
+                promiseArr.push(brandsGet());
+            }
+
+            Promise.all(promiseArr)
                 .then((response) => {
-                    this.props.onDevicesGet(response.data);
+                    this.props.onDevicesGet(response[0].data);
+                    this.props.onUsersGet(response[1].data);
+                    this.props.onBrandsGet(response[2].data);
                 })
                 .catch((error) => {
                     console.log(error);
