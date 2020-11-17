@@ -3,9 +3,9 @@ import React from 'react';
 let Device = (props) => {
     return (
         <tr>
-            <td>Наименование 1</td>
+            <td>{`${props.brand.brand} ${props.device.model}`}</td>
             <td>{props.device.inv_number}</td>
-            <td>Сотрудник 1</td>
+            <td>{props.user.full_name}</td>
         </tr>
     );
 }
