@@ -1,6 +1,6 @@
 import isEmptyObject from "../functions/isEmptyObject";
 
-const CHANGE_DEVICES_SEARCH = 'CHANGE_DEVICES_SEARCH', MAKE_SHORT_DEVICES = 'MAKE_SHORT_DEVICES';
+const CHANGE_DEVICES_SEARCH = 'CHANGE_DEVICES_SEARCH', MAKE_SHORT_DEVICES = 'MAKE_SHORT_DEVICES', CHANGE_DEVICES_PAGE = 'CHANGE_DEVICES_PAGE';
 
 let makeShortDevices = (devices, pagination, search, users, brands, isLastPage = false) => {
     let searchDevices = {}, shortDevices = {};
@@ -137,12 +137,23 @@ export let makeShortDevicesActionCreator = () => {
     };
 }
 
+export let changeDevicesPageActionCreator = (page) => {
+    return {
+        type: CHANGE_DEVICES_PAGE,
+        page: page,
+    };
+}
+
 let devicesPageReducer = (state = initialState, action) => {
     switch (action.type) {
         case CHANGE_DEVICES_SEARCH:
             return {
                 ...state,
                 search: action.search,
+                pagination: {
+                    ...state.pagination,
+                    currentPage: 1,
+                },
             };
         case MAKE_SHORT_DEVICES:
             let makeShortDevicesResult = makeShortDevices(action.devices, action.pagination, action.search, action.users, action.brands);
@@ -154,6 +165,14 @@ let devicesPageReducer = (state = initialState, action) => {
                     ...state.pagination,
                     currentPage: makeShortDevicesResult.currentPage,
                     pages: makeShortDevicesResult.pages,
+                },
+            };
+        case CHANGE_DEVICES_PAGE:
+            return {
+                ...state,
+                pagination: {
+                    ...state.pagination,
+                    currentPage: action.page,
                 },
             };
         default:
