@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
+import { makeShortDevicesActionCreator } from '../../../redux/devicesPageReducer';
 import { devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
 import Devices from './Devices';
 
 let DevicesContainer = connect(
     state => ({
-        devices: state.devicesState.devices,
+        devices: state.devicesPageState.shortDevices,
     }),
     dispatch => ({
         onDevicesGet: (data) => {
@@ -17,6 +18,9 @@ let DevicesContainer = connect(
         },
         onBrandsGet: (data) => {
             dispatch(brandsGetActionCreator(data));
+        },
+        onMakeShortDevices: () => {
+            dispatch(makeShortDevicesActionCreator());
         },
     })
 )(Devices);

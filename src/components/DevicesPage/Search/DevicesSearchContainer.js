@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeDevicesSerachActionCreator } from '../../../redux/devicesPageReducer';
+import { changeDevicesSerachActionCreator, makeShortDevicesActionCreator } from '../../../redux/devicesPageReducer';
 import Search from './Search';
 
 let DevicesSearchContainer = connect(
@@ -9,6 +9,7 @@ let DevicesSearchContainer = connect(
     dispatch => ({
         onChangeSearch: (value) => {
             dispatch(changeDevicesSerachActionCreator(value));
+            dispatch(makeShortDevicesActionCreator());
         },
     })
 )(Search);
