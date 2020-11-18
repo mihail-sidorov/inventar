@@ -5,12 +5,10 @@ html, body {
     color: #000;
 }
 
-
 * {
 
     box-sizing: border-box;
 }
-
 
 .btn {
 
@@ -22,11 +20,17 @@ html, body {
     cursor: pointer;
 }
 
+.section-1 {
+
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .login-page {
 
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     align-items: center;
     justify-content: center;
 
@@ -72,6 +76,80 @@ html, body {
         &-btns {
 
             text-align: center;
+        }
+    }
+}
+
+.header {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        height: 80px;
+        display: flex;
+        align-items: center;
+    }
+
+    &__logo {
+
+        margin-right: auto;
+    }
+
+    &__profile {
+
+        display: flex;
+        align-items: center;
+
+        &-fio {
+
+            margin-right: 20px;
+        }
+
+        &-menu {
+
+            width: 50px;
+            height: 50px;
+            position: relative;
+
+            &-photo {
+
+                width: 50px;
+                height: 50px;
+                background-color: #B1B1AF;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            &-actions {
+
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                border-radius: 5px;
+                cursor: default;
+                padding-top: 10px;
+
+                &-wrapper {
+
+                    padding: 20px;
+                    background-color: #EDDEDD;
+                }
+            }
+
+            &-action {
+
+                cursor: pointer;
+            }
+
+            &:hover {
+
+                .header__profile-menu-actions {
+
+                    display: block;
+                }
+            }
         }
     }
 }
