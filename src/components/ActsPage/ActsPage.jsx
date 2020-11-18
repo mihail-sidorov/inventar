@@ -1,12 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
+import InnerPage from '../InnerPage/InnerPage';
 
 let ActsPage = (props) => {
     return (
         <div className="acts-page">
-            <NavLink className="acts-page__to-main" to="/main">На главную</NavLink>
-            Сраница актов
+            <div className="acts-page__wrapper section-2">
+                <InnerPage>
+                    Страница актов
+                </InnerPage>
+            </div>
         </div>
     );
 }

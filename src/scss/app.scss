@@ -364,3 +364,54 @@ html, body {
         }
     }
 }
+
+.users-page {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+}
+
+.services-page {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+}
+
+.acts-page {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+}
