@@ -41,12 +41,16 @@ let makeShortDevices = (devices, pagination, search, users, brands, isLastPage =
                             }
                             break;
                         default:
-                            if (devices[id][property] !== undefined && devices[id][property] !== null && devices[id][property] !== '') {
-                                propertiesArr.push(String(devices[id][property]));
+                            if (property === 'model') {
+                                if (devices[id][property] !== undefined && devices[id][property] !== null && devices[id][property] !== '') {
+                                    propertiesArr.push(String(devices[id][property]));
+                                }
                             }
                             break;
                     }
                 }
+
+                console.log(propertiesArr);
 
                 for (let i = 0; i < propertiesArr.length; i++) {
                     if (propertiesArr[i].toLowerCase().match(pattern)) {
