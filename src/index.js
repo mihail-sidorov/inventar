@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import store from './redux/store';
 import { loginGet, setAuthDataActionCreator } from './redux/authReducer';
+import './scss/app.scss';
 
 loginGet()
   .then((response) => {

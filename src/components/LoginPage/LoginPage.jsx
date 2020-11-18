@@ -4,21 +4,23 @@ import { Field, reduxForm } from 'redux-form';
 
 let LoginForm = (props) => {
     return (
-        <form className="login-form" onSubmit={props.handleSubmit}>
-            <div className="login-form__container">
-                <div className="login-form__fields">
-                    <div className="login-form__login">
-                        <label><Field name={'login'} type={'text'} component={'input'} placeholder="Логин" /></label>
+        <div className="login-page">
+            <form className="login-page__form" onSubmit={props.handleSubmit}>
+                <div className="login-page__form-container">
+                    <div className="login-page__form-fields">
+                        <div className="login-page__form-field">
+                            <label><Field name={'login'} type={'text'} component={'input'} placeholder="Логин" /></label>
+                        </div>
+                        <div className="login-page__form-field">
+                            <label><Field name={'password'} type={'password'} component={'input'} placeholder="Пароль" /></label>
+                        </div>
                     </div>
-                    <div className="login-form__password">
-                        <label><Field name={'password'} type={'password'} component={'input'} placeholder="Пароль" /></label>
+                    <div className="login-page__form-btns">
+                        <button className="btn">Войти</button>
                     </div>
                 </div>
-                <div className="login-form__btns">
-                    <button>Войти</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     );
 }
 
