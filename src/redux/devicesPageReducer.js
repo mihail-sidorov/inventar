@@ -50,8 +50,6 @@ let makeShortDevices = (devices, pagination, search, users, brands, isLastPage =
                     }
                 }
 
-                console.log(propertiesArr);
-
                 for (let i = 0; i < propertiesArr.length; i++) {
                     if (propertiesArr[i].toLowerCase().match(pattern)) {
                         wordAccord = true;

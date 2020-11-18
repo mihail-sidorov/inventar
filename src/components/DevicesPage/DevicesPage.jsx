@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
+import InnerPage from '../InnerPage/InnerPage';
 import DevicesContainer from './Devices/DevicesContainer';
 import DevicesPaginationContainer from './Pagination/DevicesPaginationContainer';
 import DevicesSearchContainer from './Search/DevicesSearchContainer';
@@ -8,10 +8,13 @@ import DevicesSearchContainer from './Search/DevicesSearchContainer';
 let DevicesPage = (props) => {
     return (
         <div className="devices-page">
-            <NavLink className="devices-page__to-main" to="/main">На главную</NavLink>
-            <DevicesSearchContainer />
-            <DevicesContainer />
-            <DevicesPaginationContainer />
+            <div className="devices-page__wrapper section-2">
+                <InnerPage>
+                    <DevicesSearchContainer />
+                    <DevicesContainer />
+                    <DevicesPaginationContainer />
+                </InnerPage>
+            </div>
         </div>
     );
 }
