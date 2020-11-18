@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import ActsPage from './ActsPage/ActsPage';
 import DevicesPage from './DevicesPage/DevicesPage';
 import HeaderContainer from './Header/HeaderContainer';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
@@ -18,6 +19,7 @@ let App = () => {
                 <Route path="/devices" render={() => <DevicesPage />} />
                 <Route path="/users" render={() => <UsersPage />} />
                 <Route path="/services" render={() => <ServicesPage />} />
+                <Route path="/acts" render={() => <ActsPage />} />
             </Switch>
         </div>
     );
