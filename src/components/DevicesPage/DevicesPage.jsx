@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
 import InnerPage from '../InnerPage/InnerPage';
 import DevicesContainer from './Devices/DevicesContainer';
@@ -9,11 +10,13 @@ let DevicesPage = (props) => {
     return (
         <div className="devices-page">
             <div className="devices-page__wrapper section-2">
-                <InnerPage>
-                    <DevicesSearchContainer />
-                    <DevicesContainer />
-                    <DevicesPaginationContainer />
-                </InnerPage>
+                <Route exact path="/:page" render={() => (
+                    <InnerPage>
+                        <DevicesSearchContainer />
+                        <DevicesContainer />
+                        <DevicesPaginationContainer />
+                    </InnerPage>
+                )} />
             </div>
         </div>
     );

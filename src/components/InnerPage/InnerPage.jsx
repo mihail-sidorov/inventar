@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 let InnerPage = (props) => {
     return (
@@ -10,10 +10,10 @@ let InnerPage = (props) => {
                     <div className="inner-page__add-btn add-btn"></div>
                 </div>
                 <div className="inner-page__sidebar-menu-items">
-                    <NavLink className="inner-page__sidebar-menu-item" to="/devices">Оборудование компании</NavLink>
-                    <NavLink className="inner-page__sidebar-menu-item" to="/users">Сотрудники компании</NavLink>
-                    <NavLink className="inner-page__sidebar-menu-item" to="/services">Сервисы компании</NavLink>
-                    <NavLink className="inner-page__sidebar-menu-item" to="/acts">Акты</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование компании</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'users' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/users">Сотрудники компании</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы компании</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'acts' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/acts">Акты</NavLink>
                 </div>
             </div>
             <div className="inner-page__content">
@@ -22,5 +22,7 @@ let InnerPage = (props) => {
         </div>
     );
 }
+
+InnerPage = withRouter(InnerPage);
 
 export default InnerPage;
