@@ -52,9 +52,11 @@ let DevicesClassComponent = class extends React.Component {
 
             Promise.all(promiseArr)
                 .then((response) => {
-                    if (response[0]) this.props.onDevicesGet(response[0].data);
-                    if (response[1]) this.props.onUsersGet(response[1].data);
-                    if (response[2]) this.props.onBrandsGet(response[2].data);
+                    response.forEach((value) => {
+                        if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
+                        if (value.config.url === 'users') this.props.onUsersGet(value.data);
+                        if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
+                    });
 
                     this.props.onMakeShortDevices();
                 })

@@ -1,12 +1,22 @@
 import { connect } from 'react-redux';
 import authHOC from '../../HOC/authHOC';
 import { loginDelete, setAuthDataActionCreator } from '../../redux/authReducer';
+import { usersGetActionCreator } from '../../redux/usersReducer';
 import Header from './Header';
 
 let HeaderContainer = connect(
-    state => ({
+    state => {
+        let userId = state.authState.userId;
+        let fio = '';
 
-    }),
+        if (userId !== null && state.usersState.users[userId] !== undefined) {
+            fio = state.usersState.users[userId].full_name;
+        }
+
+        return {
+            fio: fio,
+        };
+    },
     dispatch => ({
         onLogout: () => {
             loginDelete()
@@ -16,6 +26,9 @@ let HeaderContainer = connect(
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        onUsersGet: (data) => {
+            dispatch(usersGetActionCreator(data));
         },
     })
 )(Header);

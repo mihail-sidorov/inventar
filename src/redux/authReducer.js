@@ -3,7 +3,7 @@ import Axios from "../config/axiosConfig";
 const SET_AUTH_DATA = 'SET_AUTH_DATA';
 
 let initialState = {
-    login: null,
+    userId: null,
     isAuth: 0,
     role: null,
 };
@@ -34,9 +34,9 @@ let authReducer = (state = initialState, action) => {
         case SET_AUTH_DATA:
             return {
                 ...state,
-                login: action.data.login,
+                userId: action.data.userId,
                 isAuth: action.data.isAuth,
-                role: action.data.permission,
+                role: action.data.role,
             };
         default:
             return state;
