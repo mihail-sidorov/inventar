@@ -21,10 +21,10 @@ let Pagination = (props) => {
     let limit = 0;
 
     if (props.currentPage > 1) {
-        prev.push(<span className="pagination__prev" key={1} onClick={onPrevPage}>prev</span>);
+        prev.push(<span className="pagination__prev" key={1} onClick={onPrevPage}></span>);
     }
     if (props.currentPage < props.pages) {
-        next.push(<span className="pagination__next" key={1} onClick={onNextPage}>next</span>);
+        next.push(<span className="pagination__next" key={1} onClick={onNextPage}></span>);
     }
 
     for (let i = 1; i <= props.pages; i++) {
