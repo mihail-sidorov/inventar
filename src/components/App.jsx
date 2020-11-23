@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ActsPage from './ActsPage/ActsPage';
+import DeviceSavePage from './DeviceSavePage/DeviceSavePage';
 import DevicesPage from './DevicesPage/DevicesPage';
 import HeaderContainer from './Header/HeaderContainer';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
@@ -16,10 +17,11 @@ let App = () => {
                 <Redirect exact from="/" to="/login" />
                 <Route path="/login" render={() => <LoginPageContainer />} />
                 <Route path="/main" render={() => <MainPage />} />
-                <Route path="/devices" render={() => <DevicesPage />} />
+                <Route exact path="/devices" render={() => <DevicesPage />} />
                 <Route path="/users" render={() => <UsersPage />} />
                 <Route path="/services" render={() => <ServicesPage />} />
                 <Route path="/acts" render={() => <ActsPage />} />
+                <Route exact path="/devices/:device" render={() => <DeviceSavePage />} />
             </Switch>
         </div>
     );

@@ -153,6 +153,7 @@ html, body {
 
                     padding: 20px;
                     background-color: #EDDEDD;
+                    border-radius: 5px;
                 }
             }
 
@@ -311,6 +312,43 @@ html, body {
 
         margin-left: auto;
         margin-right: 20px;
+        position: relative;
+
+        &:hover {
+
+            .inner-page__add-menu {
+
+                display: block;
+            }
+        }
+    }
+
+    &__add-menu {
+
+        position: absolute;
+        top: 0;
+        left: 100%;
+        display: none;
+        cursor: default;
+
+        &-wrapper {
+
+            padding-left: 10px;
+        }
+
+        &-items {
+
+            padding: 20px;
+            background-color: #EDDEDD;
+            border-radius: 5px;
+        }
+
+        &-item {
+
+            display: block;
+            color: #403539;
+            text-decoration: none;
+        }
     }
 }
 
@@ -409,6 +447,23 @@ html, body {
 }
 
 .acts-page {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+}
+
+.device-save-page {
 
     background-color: #A3DEE6;
 

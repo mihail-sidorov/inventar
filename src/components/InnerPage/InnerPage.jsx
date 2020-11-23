@@ -7,7 +7,15 @@ let InnerPage = (props) => {
             <div className="inner-page__sidebar-menu">
                 <div className="inner-page__sidebar-menu-header">
                     <NavLink className="inner-page__to-main" to="/main">На главную</NavLink>
-                    <div className="inner-page__add-btn add-btn"></div>
+                    <div className="inner-page__add-btn add-btn">
+                        <div className="inner-page__add-menu">
+                            <div className="inner-page__add-menu-wrapper">
+                                <div className="inner-page__add-menu-items">
+                                    <NavLink className="inner-page__add-menu-item" to="/devices/add">Добавить оборудование</NavLink>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="inner-page__sidebar-menu-items">
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование компании</NavLink>
