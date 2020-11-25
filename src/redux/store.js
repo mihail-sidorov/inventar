@@ -6,6 +6,8 @@ import devicesReducer from './devicesReducer';
 import devicesPageReducer from './devicesPageReducer';
 import usersReducer from './usersReducer';
 import brandsReducer from './brandsReducer';
+import responsiblesReducer from './responsiblesReducer';
+import deviceSavePageReducer from './deviceSavePageReducer';
 
 let reducers = combineReducers({
     mainPageState: mainPageReducer,
@@ -14,6 +16,8 @@ let reducers = combineReducers({
     devicesPageState: devicesPageReducer,
     usersState: usersReducer,
     brandsState: brandsReducer,
+    responsiblesState: responsiblesReducer,
+    deviceSavePageState: deviceSavePageReducer,
     form: formReducer,
 });
 

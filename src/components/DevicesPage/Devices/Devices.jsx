@@ -64,6 +64,9 @@ let DevicesClassComponent = class extends React.Component {
                     console.log(error);
                 });
         }
+        else {
+            this.props.onMakeShortDevices();
+        }
     }
 
     render() {
