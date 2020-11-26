@@ -8,6 +8,7 @@ import usersReducer from './usersReducer';
 import brandsReducer from './brandsReducer';
 import responsiblesReducer from './responsiblesReducer';
 import deviceSavePageReducer from './deviceSavePageReducer';
+import categoriesReducer from './categoriesReducer';
 
 let reducers = combineReducers({
     mainPageState: mainPageReducer,
@@ -17,6 +18,7 @@ let reducers = combineReducers({
     usersState: usersReducer,
     brandsState: brandsReducer,
     responsiblesState: responsiblesReducer,
+    categoriesState: categoriesReducer,
     deviceSavePageState: deviceSavePageReducer,
     form: formReducer,
 });

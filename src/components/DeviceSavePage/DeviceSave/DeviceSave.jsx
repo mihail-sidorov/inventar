@@ -3,9 +3,64 @@ import { NavLink, Redirect, withRouter } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGet } from '../../../redux/brandsReducer';
+import { categoriesGet } from '../../../redux/categoriesReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
 import { responsiblesGet } from '../../../redux/responsiblesReducer';
 import { usersGet } from '../../../redux/usersReducer';
+
+let CategoriesField = (categories) => {
+    let tree = [];
+
+    let getRootCategories = (categories) => {
+        let rootCategories = [];
+
+        for (let catId in categories) {
+            if (categories[catId].parent_id === null) {
+                rootCategories.push(categories[catId]);
+            }
+        }
+
+        return rootCategories;
+    }
+
+    let makeCategoryBranch = (categoryId, categories) => {
+        let branch = [];
+
+        for (let catId in categories) {
+            if (categories[catId].parent_id == categoryId) {
+                branch.push(makeCategoryBranch(catId, categories));
+            }
+        }
+
+        return {
+            category: categories[categoryId],
+            categories: branch,
+        };
+    }
+
+    getRootCategories(categories).forEach((value) => {
+        tree.push(makeCategoryBranch(value.id, categories));
+    });
+
+    let printTree = (tree) => {
+        if (tree.length > 0) {
+            return (
+                <ul>
+                    {tree.map((value, index) => {
+                        return (
+                            <li key={index}>
+                                {value.category.category}
+                                {printTree(value.categories)}
+                            </li>
+                        );
+                    })}
+                </ul>
+            );
+        }
+    }
+
+    return printTree(tree);
+}
 
 let Form = (props) => {
     let optionsResponsibles = [];
@@ -22,6 +77,7 @@ let Form = (props) => {
     return (
         <form action="" className="device-save__form form" onSubmit={props.handleSubmit}>
             <div className="device-save__form-fields form__fields">
+                {CategoriesField(props.categories)}
                 <div className="device-save__form-field form__field">
                     <label><Field name="model" type="text" component="input" placeholder="Модель" /></label>
                 </div>
@@ -122,7 +178,7 @@ let DeviceSaveClassComponent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands)) {
+        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories)) {
             let promiseArr = [];
 
             if (this.props.match.params.device !== 'add') {
@@ -143,6 +199,10 @@ let DeviceSaveClassComponent = class extends React.Component {
                 promiseArr.push(brandsGet());
             }
 
+            if (isEmptyObject(state.categoriesState.categories)) {
+                promiseArr.push(categoriesGet());
+            }
+
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
@@ -150,6 +210,7 @@ let DeviceSaveClassComponent = class extends React.Component {
                         if (value.config.url === 'warehouseResponsible') this.props.onResponsiblesGet(value.data);
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
+                        if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                     });
 
                     if (this.props.match.params.device !== 'add') {

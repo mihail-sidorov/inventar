@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
+import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
 import { setDeviceInDeviceSavePageActionCreator } from '../../../redux/deviceSavePageReducer';
 import { devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
@@ -12,6 +13,7 @@ let DeviceSaveContainer = connect(
         users: state.usersState.users,
         device: state.deviceSavePageState.device,
         brands: state.brandsState.brands,
+        categories: state.categoriesState.categories,
     }),
     dispatch => ({
         onSubmit: (values) => {
@@ -28,6 +30,9 @@ let DeviceSaveContainer = connect(
         },
         onBrandsGet: (data) => {
             dispatch(brandsGetActionCreator(data));
+        },
+        onCategoriesGet: (data) => {
+            dispatch(categoriesGetActionCreator(data));
         },
         onDeviceSet: (deviceId) => {
             dispatch(setDeviceInDeviceSavePageActionCreator(deviceId));
