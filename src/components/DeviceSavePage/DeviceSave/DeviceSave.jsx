@@ -11,14 +11,12 @@ let Form = (props) => {
     let optionsResponsibles = [];
     let optionsBrands = [];
 
-    if (!isEmptyObject(props.responsibles) && !isEmptyObject(props.users) && !isEmptyObject(props.brands)) {
-        for (let id in props.responsibles) {
-            optionsResponsibles.push(<option value={id} key={id}>{props.users[id].full_name}</option>);
-        }
+    for (let id in props.responsibles) {
+        optionsResponsibles.push(<option value={id} key={id}>{props.users[id].full_name}</option>);
+    }
 
-        for (let id in props.brands) {
-            optionsBrands.push(<option value={id} key={id}>{props.brands[id].brand}</option>);
-        }
+    for (let id in props.brands) {
+        optionsBrands.push(<option value={id} key={id}>{props.brands[id].brand}</option>);
     }
 
     return (
@@ -75,41 +73,37 @@ let DeviceSave = (props) => {
         return <Redirect to="/devices" />
     }
 
-    let initialValues = {};
+    let initialValues = {...props.device};
 
-    if (props.match.params.device !== 'add') {
-        initialValues = {...props.device};
+    for (let prop in initialValues) {
+        if (prop !== 'specifications' && initialValues[prop] !== null && initialValues[prop] !== undefined) {
+            initialValues[prop] = String(initialValues[prop]);
+        }
+        if (prop === 'date_purchase' || prop === 'date_warranty_end') {
+            let date = new Date(initialValues[prop]);
 
-        for (let prop in initialValues) {
-            if (prop !== 'specifications' && initialValues[prop] !== null && initialValues[prop] !== undefined) {
-                initialValues[prop] = String(initialValues[prop]);
+            let month = Number(date.getUTCMonth()) + 1;
+            if (month < 10) {
+                month = '0' + String(month);
             }
-            if (prop === 'date_purchase' || prop === 'date_warranty_end') {
-                let date = new Date(initialValues[prop]);
-
-                let month = Number(date.getUTCMonth()) + 1;
-                if (month < 10) {
-                    month = '0' + String(month);
-                }
-                else {
-                    month = String(month);
-                }
-
-                let day = Number(date.getUTCDate());
-                if (day < 10) {
-                    day = '0' + String(day);
-                }
-                else {
-                    day = String(day);
-                }
-
-                initialValues[prop] = date.getUTCFullYear() + '-' + month + '-' + day;
+            else {
+                month = String(month);
             }
-            if (prop === 'specifications') {
-                for (let specificationsProp in initialValues[prop]) {
-                    if (initialValues[prop][specificationsProp] !== null && initialValues[prop][specificationsProp] !== undefined) {
-                        initialValues[prop][specificationsProp] = String(initialValues[prop][specificationsProp]);
-                    }
+
+            let day = Number(date.getUTCDate());
+            if (day < 10) {
+                day = '0' + String(day);
+            }
+            else {
+                day = String(day);
+            }
+
+            initialValues[prop] = date.getUTCFullYear() + '-' + month + '-' + day;
+        }
+        if (prop === 'specifications') {
+            for (let specificationsProp in initialValues[prop]) {
+                if (initialValues[prop][specificationsProp] !== null && initialValues[prop][specificationsProp] !== undefined) {
+                    initialValues[prop][specificationsProp] = String(initialValues[prop][specificationsProp]);
                 }
             }
         }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPage from '../InnerPage/InnerPageContainer';
 import DevicesContainer from './Devices/DevicesContainer';
 import DevicesPaginationContainer from './Pagination/DevicesPaginationContainer';
 import DevicesSearchContainer from './Search/DevicesSearchContainer';

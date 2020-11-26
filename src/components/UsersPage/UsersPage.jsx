@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPage from '../InnerPage/InnerPageContainer';
 
 let UsersPage = (props) => {
     return (
