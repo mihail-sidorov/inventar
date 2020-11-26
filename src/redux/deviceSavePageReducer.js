@@ -14,9 +14,10 @@ export let setDeviceInDeviceSavePageActionCreator = (deviceId) => {
     };
 }
 
-export let resetDeviceActionCreator = () => {
+export let resetDeviceActionCreator = (emptyObject) => {
     return {
         type: RESET_DEVICES,
+        emptyObject: emptyObject,
     };
 }
 
@@ -30,7 +31,7 @@ let deviceSavePageReducer = (state = initialState, action) => {
         case RESET_DEVICES:
             return {
                 ...state,
-                device: {},
+                device: action.emptyObject,
             };
         default:
             return state;

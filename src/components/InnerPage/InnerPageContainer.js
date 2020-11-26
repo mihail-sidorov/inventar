@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { resetDeviceActionCreator } from '../../redux/deviceSavePageReducer';
 import InnerPage from './InnerPage';
 
 let InnerPageContainer = connect(
@@ -7,9 +6,7 @@ let InnerPageContainer = connect(
 
     }),
     dispatch => ({
-        onResetDevice: () => {
-            dispatch(resetDeviceActionCreator());
-        },
+
     })
 )(InnerPage);
 

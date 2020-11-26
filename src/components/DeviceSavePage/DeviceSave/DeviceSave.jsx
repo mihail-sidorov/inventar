@@ -175,7 +175,9 @@ let DeviceSave = (props) => {
 }
 
 let DeviceSaveClassComponent = class extends React.Component {
-    componentDidMount() {
+    emptyDeviceObject = {};
+
+    loadDeviceSaveData() {
         let state = window.store.getState();
 
         if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories)) {
@@ -185,6 +187,9 @@ let DeviceSaveClassComponent = class extends React.Component {
                 if (isEmptyObject(state.devicesState.devices)) {
                     promiseArr.push(devicesGet());
                 }
+            }
+            else {
+                this.props.onResetDevice(this.emptyDeviceObject);
             }
 
             if (isEmptyObject(state.usersState.users)) {
@@ -233,8 +238,22 @@ let DeviceSaveClassComponent = class extends React.Component {
                             console.log(error);
                         });
                 }
+                else {
+                    this.props.onDeviceSet(this.props.match.params.device);
+                }
+            }
+            else {
+                this.props.onResetDevice(this.emptyDeviceObject);
             }
         }
+    }
+
+    componentDidMount() {
+        this.loadDeviceSaveData();
+    }
+
+    componentDidUpdate() {
+        this.loadDeviceSaveData();
     }
 
     render() {

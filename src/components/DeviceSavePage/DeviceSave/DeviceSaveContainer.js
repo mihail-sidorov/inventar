@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
-import { setDeviceInDeviceSavePageActionCreator } from '../../../redux/deviceSavePageReducer';
+import { resetDeviceActionCreator, setDeviceInDeviceSavePageActionCreator } from '../../../redux/deviceSavePageReducer';
 import { devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
@@ -36,6 +36,9 @@ let DeviceSaveContainer = connect(
         },
         onDeviceSet: (deviceId) => {
             dispatch(setDeviceInDeviceSavePageActionCreator(deviceId));
+        },
+        onResetDevice: (emptyObject) => {
+            dispatch(resetDeviceActionCreator(emptyObject));
         },
     })
 )(DeviceSave);
