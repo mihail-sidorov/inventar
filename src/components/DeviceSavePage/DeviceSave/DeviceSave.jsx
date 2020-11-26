@@ -49,7 +49,7 @@ let CategoriesField = (categories) => {
                     {tree.map((value, index) => {
                         return (
                             <li key={index}>
-                                {value.category.category}
+                                {value.categories.length === 0 ? <><label><Field name="category_id" component="input" type="radio" value={String(value.category.id)} />{value.category.category}</label></> : value.category.category}
                                 {printTree(value.categories)}
                             </li>
                         );
