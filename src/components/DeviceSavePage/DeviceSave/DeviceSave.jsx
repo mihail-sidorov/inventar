@@ -168,7 +168,16 @@ let DeviceSaveClassComponent = class extends React.Component {
         }
         else {
             if (this.props.match.params.device !== 'add') {
-                this.props.onDeviceSet(this.props.match.params.device);
+                if (isEmptyObject(state.devicesState.devices)) {
+                    devicesGet()
+                        .then((response) => {
+                            this.props.onDevicesGet(response.data);
+                            this.props.onDeviceSet(this.props.match.params.device);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }
             }
         }
     }
