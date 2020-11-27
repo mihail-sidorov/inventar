@@ -7,8 +7,9 @@ import { categoriesGet } from '../../../redux/categoriesReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
 import { responsiblesGet } from '../../../redux/responsiblesReducer';
 import { usersGet } from '../../../redux/usersReducer';
+import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
 
-let CategoriesField = (categories) => {
+let CategoriesField = (categories, props) => {
     let tree = [];
 
     let getRootCategories = (categories) => {
@@ -49,7 +50,10 @@ let CategoriesField = (categories) => {
                     {tree.map((value, index) => {
                         return (
                             <li key={index}>
-                                {value.categories.length === 0 ? <><label><Field name="category_id" component="input" type="radio" value={String(value.category.id)} />{value.category.category}</label></> : value.category.category}
+                                {value.categories.length === 0 ? <><label><Field name="category_id" component="input" type="radio" value={String(value.category.id)} onClick={(e) => {
+                                    props.onSpecificationsReset();
+                                    props.onSpecificationsSet(e.currentTarget.value);
+                                }} />{value.category.category}</label></> : value.category.category}
                                 {printTree(value.categories)}
                             </li>
                         );
@@ -77,7 +81,8 @@ let Form = (props) => {
     return (
         <form action="" className="device-save__form form" onSubmit={props.handleSubmit}>
             <div className="device-save__form-fields form__fields">
-                {CategoriesField(props.categories)}
+                {CategoriesField(props.categories, props)}
+                <SpecificationsFieldsContainer />
                 <div className="device-save__form-field form__field">
                     <label><Field name="model" type="text" component="input" placeholder="Модель" /></label>
                 </div>
@@ -248,12 +253,22 @@ let DeviceSaveClassComponent = class extends React.Component {
         }
     }
 
+    loadSpecificationsFields() {
+        let state = window.store.getState();
+
+        if (state.deviceSavePageState.device.category_id !== undefined) {
+            this.props.onSpecificationsSet(state.deviceSavePageState.device.category_id);
+        }
+    }
+
     componentDidMount() {
         this.loadDeviceSaveData();
+        this.loadSpecificationsFields();
     }
 
     componentDidUpdate() {
         this.loadDeviceSaveData();
+        this.loadSpecificationsFields();
     }
 
     render() {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
-import { resetDeviceActionCreator, setDeviceInDeviceSavePageActionCreator } from '../../../redux/deviceSavePageReducer';
+import { resetDeviceActionCreator, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator } from '../../../redux/deviceSavePageReducer';
 import { devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
@@ -39,6 +39,24 @@ let DeviceSaveContainer = connect(
         },
         onResetDevice: (emptyObject) => {
             dispatch(resetDeviceActionCreator(emptyObject));
+        },
+        onSpecificationsSet: (categoryId) => {
+            dispatch(specificationsSetActionCreator(categoryId));
+        },
+        onSpecificationsReset: () => {
+            let state = window.store.getState();
+            let device = state.deviceSavePageState.device;
+
+            for (let prop in device) {
+                let pattern = new RegExp(/^specifications_/);
+
+                if (prop.match(pattern)) {
+                    delete device[prop];
+                }
+            }
+
+            state.form.deviceSaveForm.initial = device;
+            state.form.deviceSaveForm.values = device;
         },
     })
 )(DeviceSave);

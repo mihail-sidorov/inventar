@@ -1,23 +1,45 @@
-const SET_DEVICE_IN_DEVICE_SAVE_PAGE = 'SET_DEVICE_IN_DEVICE_SAVE_PAGE', RESET_DEVICES = 'RESET_DEVICES';
+const SET_DEVICE_IN_DEVICE_SAVE_PAGE = 'SET_DEVICE_IN_DEVICE_SAVE_PAGE', RESET_DEVICE = 'RESET_DEVICE', SPECIFICATIONS_SET = 'SPECIFICATIONS_SET';
 
 let initialState = {
     device: {},
+    category: {},
 };
 
 // Создание Action Creators
 export let setDeviceInDeviceSavePageActionCreator = (deviceId) => {
-    let state = window.store.getState();
+    let state = window.store.getState(), device = {};
+
+    if (state.devicesState.devices[deviceId] !== undefined) {
+        device = state.devicesState.devices[deviceId];
+
+        for (let field in device.specifications) {
+            device[`specifications_${field}`] = device.specifications[field];
+        }
+    }
 
     return {
         type: SET_DEVICE_IN_DEVICE_SAVE_PAGE,
-        device: state.devicesState.devices[deviceId],
+        device: device,
     };
 }
 
 export let resetDeviceActionCreator = (emptyObject) => {
     return {
-        type: RESET_DEVICES,
+        type: RESET_DEVICE,
         emptyObject: emptyObject,
+    };
+}
+
+export let specificationsSetActionCreator = (categoryId) => {
+    let state = window.store.getState(), category = {};
+
+    if (state.categoriesState.categories[categoryId] !== undefined) {
+        category = state.categoriesState.categories[categoryId];
+    }
+
+    return {
+        type: SPECIFICATIONS_SET,
+        category: category,
     };
 }
 
@@ -28,10 +50,16 @@ let deviceSavePageReducer = (state = initialState, action) => {
                 ...state,
                 device: action.device,
             };
-        case RESET_DEVICES:
+        case RESET_DEVICE:
             return {
                 ...state,
                 device: action.emptyObject,
+                category: {},
+            };
+        case SPECIFICATIONS_SET:
+            return {
+                ...state,
+                category: action.category,
             };
         default:
             return state;
