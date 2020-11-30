@@ -46,6 +46,8 @@ let DeviceSaveContainer = connect(
         onSpecificationsReset: () => {
             let state = window.store.getState();
             let device = state.deviceSavePageState.device;
+            let initial = state.form.deviceSaveForm.initial;
+            let values = state.form.deviceSaveForm.values;
 
             for (let prop in device) {
                 let pattern = new RegExp(/^specifications_/);
@@ -55,8 +57,21 @@ let DeviceSaveContainer = connect(
                 }
             }
 
-            state.form.deviceSaveForm.initial = device;
-            state.form.deviceSaveForm.values = device;
+            for (let prop in initial) {
+                let pattern = new RegExp(/^specifications_/);
+
+                if (prop.match(pattern)) {
+                    delete initial[prop];
+                }
+            }
+
+            for (let prop in values) {
+                let pattern = new RegExp(/^specifications_/);
+
+                if (prop.match(pattern)) {
+                    delete values[prop];
+                }
+            }
         },
     })
 )(DeviceSave);

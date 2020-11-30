@@ -51,8 +51,11 @@ let CategoriesField = (categories, props) => {
                         return (
                             <li key={index}>
                                 {value.categories.length === 0 ? <><label><Field name="category_id" component="input" type="radio" value={String(value.category.id)} onClick={(e) => {
-                                    props.onSpecificationsReset();
-                                    props.onSpecificationsSet(e.currentTarget.value);
+                                    let categoryId = window.store.getState().form.deviceSaveForm.values.category_id;
+                                    if (categoryId !== e.currentTarget.value) {
+                                        props.onSpecificationsReset();
+                                        props.onSpecificationsSet(e.currentTarget.value);
+                                    }
                                 }} />{value.category.category}</label></> : value.category.category}
                                 {printTree(value.categories)}
                             </li>
