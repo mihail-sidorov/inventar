@@ -53,7 +53,7 @@ let CategoriesField = (categories, props) => {
                                 {value.categories.length === 0 ? <><label><Field name="category_id" component="input" type="radio" value={String(value.category.id)} onClick={(e) => {
                                     let categoryId = window.store.getState().form.deviceSaveForm.values.category_id;
                                     if (categoryId !== e.currentTarget.value) {
-                                        props.onSpecificationsReset();
+                                        props.onSpecificationsReset(props);
                                         props.onSpecificationsSet(e.currentTarget.value);
                                     }
                                 }} />{value.category.category}</label></> : value.category.category}
@@ -128,6 +128,7 @@ let Form = (props) => {
 Form = reduxForm({
     form: 'deviceSaveForm',
     enableReinitialize: true,
+    keepDirtyOnReinitialize: true,
 })(Form);
 
 let DeviceSave = (props) => {
@@ -137,47 +138,11 @@ let DeviceSave = (props) => {
         return <Redirect to="/devices" />
     }
 
-    let initialValues = {...props.device};
-
-    for (let prop in initialValues) {
-        if (prop !== 'specifications' && initialValues[prop] !== null && initialValues[prop] !== undefined) {
-            initialValues[prop] = String(initialValues[prop]);
-        }
-        if (prop === 'date_purchase' || prop === 'date_warranty_end') {
-            let date = new Date(initialValues[prop]);
-
-            let month = Number(date.getUTCMonth()) + 1;
-            if (month < 10) {
-                month = '0' + String(month);
-            }
-            else {
-                month = String(month);
-            }
-
-            let day = Number(date.getUTCDate());
-            if (day < 10) {
-                day = '0' + String(day);
-            }
-            else {
-                day = String(day);
-            }
-
-            initialValues[prop] = date.getUTCFullYear() + '-' + month + '-' + day;
-        }
-        if (prop === 'specifications') {
-            for (let specificationsProp in initialValues[prop]) {
-                if (initialValues[prop][specificationsProp] !== null && initialValues[prop][specificationsProp] !== undefined) {
-                    initialValues[prop][specificationsProp] = String(initialValues[prop][specificationsProp]);
-                }
-            }
-        }
-    }
-
     return (
         <div className="device-save">
             <NavLink className="device-save__back-to-devices btn" to="/devices">Вернуться к списку оборудования</NavLink>
             <h1 className="device-save__title">{props.match.params.device === 'add' ? 'Добавление нового оборудования': 'Редактирование оборудования'}</h1>
-            <Form initialValues={initialValues} {...props} />
+            <Form {...props} />
         </div>
     );
 }
