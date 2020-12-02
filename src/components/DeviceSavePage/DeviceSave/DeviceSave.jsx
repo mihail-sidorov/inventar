@@ -283,6 +283,8 @@ let DeviceSaveClassComponent = class extends React.Component {
     }
 
     render() {
+        if (this.props.wasAdd) return <Redirect to="/devices" />
+
         return (
             <DeviceSave {...this.props} />
         );

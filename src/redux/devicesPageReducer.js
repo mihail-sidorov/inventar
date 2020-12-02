@@ -1,6 +1,6 @@
 import isEmptyObject from "../functions/isEmptyObject";
 
-const CHANGE_DEVICES_SEARCH = 'CHANGE_DEVICES_SEARCH', MAKE_SHORT_DEVICES = 'MAKE_SHORT_DEVICES', CHANGE_DEVICES_PAGE = 'CHANGE_DEVICES_PAGE';
+const CHANGE_DEVICES_SEARCH = 'CHANGE_DEVICES_SEARCH', MAKE_SHORT_DEVICES = 'MAKE_SHORT_DEVICES', CHANGE_DEVICES_PAGE = 'CHANGE_DEVICES_PAGE', CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE = 'CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE';
 
 let makeShortDevices = (devices, pagination, search, users, brands, isLastPage = false) => {
     let searchDevices = {}, shortDevices = {};
@@ -111,6 +111,7 @@ let initialState = {
         pages: 0,
     },
     shortDevices: {},
+    wasAdd: false,
 };
 
 // Запросы к API
@@ -128,6 +129,7 @@ export let makeShortDevicesActionCreator = () => {
     let devicesPageState = window.store.getState().devicesPageState;
     let usersState = window.store.getState().usersState;
     let brandsState = window.store.getState().brandsState;
+    let isLastPage = window.store.getState().devicesPageState.wasAdd;
 
     return {
         type: MAKE_SHORT_DEVICES,
@@ -136,6 +138,7 @@ export let makeShortDevicesActionCreator = () => {
         search: devicesPageState.search,
         users: usersState.users,
         brands: brandsState.brands,
+        isLastPage: isLastPage,
     };
 }
 
@@ -143,6 +146,13 @@ export let changeDevicesPageActionCreator = (page) => {
     return {
         type: CHANGE_DEVICES_PAGE,
         page: page,
+    };
+}
+
+export let changeWasAddInDevicesPageStateActionCreator = (flag) => {
+    return {
+        type: CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE,
+        flag: flag,
     };
 }
 
@@ -158,7 +168,7 @@ let devicesPageReducer = (state = initialState, action) => {
                 },
             };
         case MAKE_SHORT_DEVICES:
-            let makeShortDevicesResult = makeShortDevices(action.devices, action.pagination, action.search, action.users, action.brands);
+            let makeShortDevicesResult = makeShortDevices(action.devices, action.pagination, action.search, action.users, action.brands, action.isLastPage);
 
             return {
                 ...state,
@@ -168,6 +178,7 @@ let devicesPageReducer = (state = initialState, action) => {
                     currentPage: makeShortDevicesResult.currentPage,
                     pages: makeShortDevicesResult.pages,
                 },
+                wasAdd: false,
             };
         case CHANGE_DEVICES_PAGE:
             return {
@@ -176,6 +187,11 @@ let devicesPageReducer = (state = initialState, action) => {
                     ...state.pagination,
                     currentPage: action.page,
                 },
+            };
+        case CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE:
+            return {
+                ...state,
+                wasAdd: action.flag,
             };
         default:
             return state;

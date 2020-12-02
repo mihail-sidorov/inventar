@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 import { initialize } from 'redux-form';
+import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
 import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator } from '../../../redux/deviceSavePageReducer';
-import { devicesGetActionCreator } from '../../../redux/devicesReducer';
+import { changeWasAddInDevicesPageStateActionCreator } from '../../../redux/devicesPageReducer';
+import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { locationsGetActionCreator } from '../../../redux/locationsReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
 import { statusesGetActionCreator } from '../../../redux/statusesReducer';
@@ -21,6 +23,7 @@ let DeviceSaveContainer = connect(
             categories: state.categoriesState.categories,
             suppliers: state.suppliersState.suppliers,
             locations: state.locationsState.locations,
+            wasAdd: state.devicesPageState.wasAdd,
         };
     },
     dispatch => ({
@@ -60,8 +63,22 @@ let DeviceSaveContainer = connect(
 
                     if (props.match.params.device === 'add') {
                         saveDevice(values)
-                            .then((response) => {
-                                console.log(response);
+                            .then((device) => {
+                                if (isEmptyObject(window.store.getState().devicesState.devices)) {
+                                    devicesGet()
+                                        .then((response) => {
+                                            dispatch(devicesGetActionCreator(response.data));
+                                            dispatch(saveDeviceActionCreator(device.data));
+                                            dispatch(changeWasAddInDevicesPageStateActionCreator(true));
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                        });
+                                }
+                                else {
+                                    dispatch(saveDeviceActionCreator(device.data));
+                                    dispatch(changeWasAddInDevicesPageStateActionCreator(true));
+                                }
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -70,7 +87,8 @@ let DeviceSaveContainer = connect(
                     else {
                         editDevice(values)
                             .then((response) => {
-                                console.log(response);
+                                dispatch(saveDeviceActionCreator(response.data));
+                                alert('Оборудование отредактировано!');
                             })
                             .catch((error) => {
                                 console.log(error);
