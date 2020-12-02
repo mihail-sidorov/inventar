@@ -1,9 +1,20 @@
+import Axios from "../config/axiosConfig";
+
 const SET_DEVICE_IN_DEVICE_SAVE_PAGE = 'SET_DEVICE_IN_DEVICE_SAVE_PAGE', RESET_DEVICE = 'RESET_DEVICE', SPECIFICATIONS_SET = 'SPECIFICATIONS_SET';
 
 let initialState = {
     device: {},
     category: {},
 };
+
+// Запросы к API
+export let saveDevice = (data) => {
+    return Axios.post('devices', data);
+}
+
+export let editDevice = (data) => {
+    return Axios.patch('devices', data);
+}
 
 // Создание Action Creators
 export let setDeviceInDeviceSavePageActionCreator = (deviceId) => {

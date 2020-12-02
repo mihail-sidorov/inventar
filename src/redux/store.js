@@ -9,6 +9,9 @@ import brandsReducer from './brandsReducer';
 import responsiblesReducer from './responsiblesReducer';
 import deviceSavePageReducer from './deviceSavePageReducer';
 import categoriesReducer from './categoriesReducer';
+import suppliersReducer from './suppliersReducer';
+import statusesReducer from './statusesReducer';
+import locationsReducer from './locationsReducer';
 
 let reducers = combineReducers({
     mainPageState: mainPageReducer,
@@ -19,7 +22,10 @@ let reducers = combineReducers({
     brandsState: brandsReducer,
     responsiblesState: responsiblesReducer,
     categoriesState: categoriesReducer,
+    suppliersState: suppliersReducer,
+    statusesState: statusesReducer,
     deviceSavePageState: deviceSavePageReducer,
+    locationsState: locationsReducer,
     form: formReducer,
 });
 

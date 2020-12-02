@@ -5,7 +5,10 @@ import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGet } from '../../../redux/brandsReducer';
 import { categoriesGet } from '../../../redux/categoriesReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
+import { locationsGet } from '../../../redux/locationsReducer';
 import { responsiblesGet } from '../../../redux/responsiblesReducer';
+import { statusesGet } from '../../../redux/statusesReducer';
+import { suppliersGet } from '../../../redux/suppliersReducer';
 import { usersGet } from '../../../redux/usersReducer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
 
@@ -72,6 +75,8 @@ let CategoriesField = (categories, props) => {
 let Form = (props) => {
     let optionsResponsibles = [];
     let optionsBrands = [];
+    let optionsSuppliers = [];
+    let optionsLocations = [];
 
     for (let id in props.responsibles) {
         optionsResponsibles.push(<option value={id} key={id}>{props.users[id].full_name}</option>);
@@ -81,8 +86,16 @@ let Form = (props) => {
         optionsBrands.push(<option value={id} key={id}>{props.brands[id].brand}</option>);
     }
 
+    for (let id in props.suppliers) {
+        optionsSuppliers.push(<option value={id} key={id}>{props.suppliers[id].supplier}</option>);
+    }
+
+    for (let id in props.locations) {
+        optionsLocations.push(<option value={id} key={id}>{props.locations[id].location}</option>);
+    }
+
     return (
-        <form action="" className="device-save__form form" onSubmit={props.handleSubmit}>
+        <form action="" className="device-save__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
             <div className="device-save__form-fields form__fields">
                 {CategoriesField(props.categories, props)}
                 <SpecificationsFieldsContainer />
@@ -114,6 +127,22 @@ let Form = (props) => {
                         <Field name="brand_id" component="select">
                             <option></option>
                             {optionsBrands}
+                        </Field>
+                    </label>
+                </div>
+                <div className="device-save__form-field form__field">
+                    <label>
+                        <Field name="supplier_id" component="select">
+                            <option></option>
+                            {optionsSuppliers}
+                        </Field>
+                    </label>
+                </div>
+                <div className="device-save__form-field form__field">
+                    <label>
+                        <Field name="location_id" component="select">
+                            <option></option>
+                            {optionsLocations}
                         </Field>
                     </label>
                 </div>
@@ -153,7 +182,7 @@ let DeviceSaveClassComponent = class extends React.Component {
     loadDeviceSaveData() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories)) {
+        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.suppliersState.suppliers) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.locationsState.locations)) {
             let promiseArr = [];
 
             if (this.props.match.params.device !== 'add') {
@@ -181,6 +210,17 @@ let DeviceSaveClassComponent = class extends React.Component {
                 promiseArr.push(categoriesGet());
             }
 
+            if (isEmptyObject(state.suppliersState.suppliers)) {
+                promiseArr.push(suppliersGet());
+            }
+
+            if (isEmptyObject(state.statusesState.statuses)) {
+                promiseArr.push(statusesGet());
+            }
+            if (isEmptyObject(state.locationsState.locations)) {
+                promiseArr.push(locationsGet());
+            }
+
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
@@ -189,6 +229,9 @@ let DeviceSaveClassComponent = class extends React.Component {
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
                         if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
+                        if (value.config.url === 'suppliers') this.props.onSuppliersGet(value.data);
+                        if (value.config.url === 'statuses') this.props.onStatusesGet(value.data);
+                        if (value.config.url === 'locations') this.props.onLocationsGet(value.data);
                     });
 
                     if (this.props.match.params.device !== 'add') {
