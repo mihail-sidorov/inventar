@@ -155,13 +155,6 @@ let DeviceSaveContainer = connect(
 
                         initialValues[prop] = date.getUTCFullYear() + '-' + month + '-' + day;
                     }
-                    if (prop === 'specifications') {
-                        for (let specificationsProp in initialValues[prop]) {
-                            if (initialValues[prop][specificationsProp] !== null && initialValues[prop][specificationsProp] !== undefined) {
-                                initialValues[prop][specificationsProp] = String(initialValues[prop][specificationsProp]);
-                            }
-                        }
-                    }
                 }
             }
 
@@ -196,19 +189,6 @@ let DeviceSaveContainer = connect(
             }
 
             let initialValues = {...values};
-
-            for (let prop in initialValues) {
-                if (prop !== 'specifications' && initialValues[prop] !== null && initialValues[prop] !== undefined) {
-                    initialValues[prop] = String(initialValues[prop]);
-                }
-                else {
-                    for (let specificationsProp in initialValues[prop]) {
-                        if (initialValues[prop][specificationsProp] !== null && initialValues[prop][specificationsProp] !== undefined) {
-                            initialValues[prop][specificationsProp] = String(initialValues[prop][specificationsProp]);
-                        }
-                    }
-                }
-            }
 
             props.initialize(initialValues);
         },
