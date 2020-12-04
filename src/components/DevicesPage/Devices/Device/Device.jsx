@@ -1,8 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 let Device = (props) => {
     return (
-        <tr>
+        <tr onClick={() => {
+            props.onGoToDeviceCard(props);
+        }}>
             <td>{`${props.brand.brand} ${props.device.model}`}</td>
             <td>{props.device.inv_number}</td>
             <td>{props.user.full_name}</td>
@@ -10,4 +13,4 @@ let Device = (props) => {
     );
 }
 
-export default Device;
+export default withRouter(Device);

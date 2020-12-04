@@ -75,7 +75,7 @@ export let subDevicesSetActionCreator = (categoryId) => {
     if (!isEmptyObject(devices) && state.categoriesState.categories[categoryId] !== undefined && state.categoriesState.categories[categoryId].sub_devices !== null) {
         for (let catProp in state.categoriesState.categories[categoryId].sub_devices.sub_cat_id) {
             for (let devicesProp in devices) {
-                if ((devices[devicesProp].category_id == catProp) && (devices[devicesProp].parent_id === null || devices[devicesProp].parent_id === device.id)) {
+                if ((devices[devicesProp].category_id == catProp) && (device.id != devices[devicesProp].id) && (devices[devicesProp].parent_id === null || devices[devicesProp].parent_id === device.id)) {
                     subDevices[devicesProp] = devices[devicesProp];
                 }
             }

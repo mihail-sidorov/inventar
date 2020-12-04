@@ -9,7 +9,9 @@ let DeviceContainer = (id) => {
             brand: state.brandsState.brands[state.devicesPageState.shortDevices[id].brand_id],
         }),
         dispatch => ({
-
+            onGoToDeviceCard: (props) => {
+                props.history.push(`/devices/${props.device.id}`);
+            },
         })
     )(Device);
 }

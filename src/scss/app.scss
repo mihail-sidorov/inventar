@@ -401,12 +401,25 @@ html, body {
 
         tbody {
 
-            td {
+            tr {
+                
+                cursor: pointer;
 
-                border: 0;
-                border-bottom: 1px solid #B1B1AF;
-                padding-top: 10px;
-                padding-left: 20px;
+                td {
+
+                    border: 0;
+                    border-bottom: 1px solid #B1B1AF;
+                    padding-top: 10px;
+                    padding-left: 20px;
+                }
+
+                &:hover {
+
+                    td {
+
+                        background-color: rgba(251, 186, 181, 0.2);
+                    }
+                }
             }
         }
     }
