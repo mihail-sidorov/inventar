@@ -164,12 +164,6 @@ Form = reduxForm({
 })(Form);
 
 let DeviceSave = (props) => {
-    if (props.device === undefined) {
-        let state = window.store.getState();
-        state.deviceSavePageState.device = {};
-        return <Redirect to="/devices" />
-    }
-
     return (
         <div className="device-save">
             <NavLink className="device-save__back-to-devices btn" to="/devices">Вернуться к списку оборудования</NavLink>
@@ -185,17 +179,11 @@ let DeviceSaveClassComponent = class extends React.Component {
     loadDeviceSaveData() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.suppliersState.suppliers) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.locationsState.locations)) {
+        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.suppliersState.suppliers) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.locationsState.locations) || isEmptyObject(state.devicesState.devices)) {
             let promiseArr = [];
 
-            if (this.props.match.params.device !== 'add') {
-                if (isEmptyObject(state.devicesState.devices)) {
-                    promiseArr.push(devicesGet());
-                }
-            }
-            else {
-                this.props.onResetDevice(this.emptyDeviceObject);
-                this.props.onResetSubDevices(this.emptyDeviceObject);
+            if (isEmptyObject(state.devicesState.devices)) {
+                promiseArr.push(devicesGet());
             }
 
             if (isEmptyObject(state.usersState.users)) {
@@ -230,7 +218,7 @@ let DeviceSaveClassComponent = class extends React.Component {
                     response.forEach((value) => {
                         if (value.config.url === 'users') this.props.onUsersGet(value.data);
                         if (value.config.url === 'warehouseResponsible') this.props.onResponsiblesGet(value.data);
-                        if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
+                        if (value.config.url === 'devices') this.props.onDevicesGet(value.data, this.props);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
                         if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                         if (value.config.url === 'suppliers') this.props.onSuppliersGet(value.data);
@@ -241,6 +229,10 @@ let DeviceSaveClassComponent = class extends React.Component {
                     if (this.props.match.params.device !== 'add') {
                         this.props.onDeviceSet(this.props.match.params.device);
                     }
+                    else {
+                        this.props.onResetDevice(this.emptyDeviceObject);
+                        this.props.onResetSubDevices(this.emptyDeviceObject);
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -248,19 +240,7 @@ let DeviceSaveClassComponent = class extends React.Component {
         }
         else {
             if (this.props.match.params.device !== 'add') {
-                if (isEmptyObject(state.devicesState.devices)) {
-                    devicesGet()
-                        .then((response) => {
-                            this.props.onDevicesGet(response.data);
-                            this.props.onDeviceSet(this.props.match.params.device);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
-                }
-                else {
-                    this.props.onDeviceSet(this.props.match.params.device);
-                }
+                this.props.onDeviceSet(this.props.match.params.device);
             }
             else {
                 this.props.onResetDevice(this.emptyDeviceObject);

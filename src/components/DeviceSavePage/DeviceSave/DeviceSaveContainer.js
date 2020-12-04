@@ -140,8 +140,22 @@ let DeviceSaveContainer = connect(
         onResponsiblesGet: (data) => {
             dispatch(responsiblesGetActionCreator(data));
         },
-        onDevicesGet: (data) => {
-            dispatch(devicesGetActionCreator(data));
+        onDevicesGet: (data, props) => {
+            let isDevicePage = false;
+
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].id == props.match.params.device) {
+                    isDevicePage = true;
+                    break;
+                }
+            }
+
+            if (isDevicePage) {
+                dispatch(devicesGetActionCreator(data));
+            }
+            else {
+                props.history.push('/devices');
+            }
         },
         onBrandsGet: (data) => {
             dispatch(brandsGetActionCreator(data));
