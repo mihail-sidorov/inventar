@@ -11,6 +11,7 @@ import { statusesGet } from '../../../redux/statusesReducer';
 import { suppliersGet } from '../../../redux/suppliersReducer';
 import { usersGet } from '../../../redux/usersReducer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
+import SubDevicesContainer from './SubDevices/SubDevicesContainer';
 
 let CategoriesField = (categories, props) => {
     let tree = [];
@@ -58,6 +59,7 @@ let CategoriesField = (categories, props) => {
                                     if (categoryId !== e.currentTarget.value) {
                                         props.onSpecificationsReset(props);
                                         props.onSpecificationsSet(e.currentTarget.value);
+                                        props.onSubDevicesSet(e.currentTarget.value);
                                     }
                                 }} />{value.category.category}</label></> : value.category.category}
                                 {printTree(value.categories)}
@@ -146,6 +148,7 @@ let Form = (props) => {
                         </Field>
                     </label>
                 </div>
+                <SubDevicesContainer {...props} />
             </div>
             <div className="device-save__form-btns">
                 <button className="device-save__form-submit-btn btn">Сохранить</button>
@@ -192,6 +195,7 @@ let DeviceSaveClassComponent = class extends React.Component {
             }
             else {
                 this.props.onResetDevice(this.emptyDeviceObject);
+                this.props.onResetSubDevices(this.emptyDeviceObject);
             }
 
             if (isEmptyObject(state.usersState.users)) {
@@ -260,6 +264,7 @@ let DeviceSaveClassComponent = class extends React.Component {
             }
             else {
                 this.props.onResetDevice(this.emptyDeviceObject);
+                this.props.onResetSubDevices(this.emptyDeviceObject);
             }
         }
     }
@@ -272,14 +277,24 @@ let DeviceSaveClassComponent = class extends React.Component {
         }
     }
 
+    loadSubDevices() {
+        let state = window.store.getState();
+
+        if (state.deviceSavePageState.device.category_id !== undefined) {
+            this.props.onSubDevicesSet(state.deviceSavePageState.device.category_id);
+        }
+    }
+
     componentDidMount() {
         this.loadDeviceSaveData();
         this.loadSpecificationsFields();
+        this.loadSubDevices();
     }
 
     componentDidUpdate() {
         this.loadDeviceSaveData();
         this.loadSpecificationsFields();
+        this.loadSubDevices();
     }
 
     render() {

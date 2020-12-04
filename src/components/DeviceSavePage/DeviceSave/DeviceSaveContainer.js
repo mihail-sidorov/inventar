@@ -3,7 +3,7 @@ import { initialize } from 'redux-form';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
-import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator } from '../../../redux/deviceSavePageReducer';
+import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator, subDevicesSetActionCreator, resetSubDevicesActionCreator } from '../../../redux/deviceSavePageReducer';
 import { changeWasAddInDevicesPageStateActionCreator } from '../../../redux/devicesPageReducer';
 import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { locationsGetActionCreator } from '../../../redux/locationsReducer';
@@ -164,8 +164,14 @@ let DeviceSaveContainer = connect(
             dispatch(resetDeviceActionCreator(emptyObject));
             dispatch(initialize('deviceSaveForm', emptyObject));
         },
+        onResetSubDevices: (emptyObject) => {
+            dispatch(resetSubDevicesActionCreator(emptyObject));
+        },
         onSpecificationsSet: (categoryId) => {
             dispatch(specificationsSetActionCreator(categoryId));
+        },
+        onSubDevicesSet: (categoryId) => {
+            dispatch(subDevicesSetActionCreator(categoryId));
         },
         onSpecificationsReset: (props) => {
             let state = window.store.getState();
@@ -181,7 +187,7 @@ let DeviceSaveContainer = connect(
             }
 
             for (let prop in values) {
-                let pattern = new RegExp(/^specifications_/);
+                let pattern = new RegExp(/^(specifications_)|(sub-device-)/);
 
                 if (prop.match(pattern)) {
                     delete values[prop];
