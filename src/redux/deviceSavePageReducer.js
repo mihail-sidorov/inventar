@@ -14,6 +14,10 @@ export let saveDevice = (data) => {
     return Axios.post('devices', data);
 }
 
+export let subDevices = (data) => {
+    return Axios.post('subDevices', data);
+}
+
 export let editDevice = (data) => {
     return Axios.patch('devices', data);
 }
@@ -68,13 +72,11 @@ export let subDevicesSetActionCreator = (categoryId) => {
     let devices = state.devicesState.devices;
     let device = state.deviceSavePageState.device;
 
-    if (!isEmptyObject(devices) && state.categoriesState.categories[categoryId] !== undefined) {
-        if (state.categoriesState.categories[categoryId].sub_devices !== null) {
-            for (let catProp in state.categoriesState.categories[categoryId].sub_devices.sub_cat_id) {
-                for (let devicesProp in devices) {
-                    if ((devices[devicesProp].category_id == catProp) && (devices[devicesProp].parent_id === null || devices[devicesProp].parent_id === device.id)) {
-                        subDevices[devicesProp] = devices[devicesProp];
-                    }
+    if (!isEmptyObject(devices) && state.categoriesState.categories[categoryId] !== undefined && state.categoriesState.categories[categoryId].sub_devices !== null) {
+        for (let catProp in state.categoriesState.categories[categoryId].sub_devices.sub_cat_id) {
+            for (let devicesProp in devices) {
+                if ((devices[devicesProp].category_id == catProp) && (devices[devicesProp].parent_id === null || devices[devicesProp].parent_id === device.id)) {
+                    subDevices[devicesProp] = devices[devicesProp];
                 }
             }
         }

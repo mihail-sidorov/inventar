@@ -1,6 +1,5 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import isEmptyObject from '../../../../functions/isEmptyObject';
 
 let SubDevices = (props) => {
     let subDevicesArr = [];
@@ -17,33 +16,6 @@ let SubDevices = (props) => {
     }
 
     return subDevicesArr;
-
 }
 
-let SubDeviceClassComponent = class extends React.Component {
-    setDefaultSubDevices() {
-        if (!isEmptyObject(this.props.subDevices)) {
-            for (let prop in this.props.subDevices) {
-                if (this.props.subDevices[prop].parent_id !== null) {
-                    this.props.change(`sub-device-${prop}`, true);
-                }
-            }
-        }
-    }
-
-    componentDidMount() {
-        this.setDefaultSubDevices();
-    }
-
-    componentDidUpdate() {
-        this.setDefaultSubDevices();
-    }
-
-    render() {
-        return(
-            <SubDevices {...this.props} />
-        );
-    }
-}
-
-export default SubDeviceClassComponent;
+export default SubDevices;

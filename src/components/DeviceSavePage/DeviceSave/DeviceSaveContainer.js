@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import { initialize } from 'redux-form';
+import { change, initialize } from 'redux-form';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
-import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator, subDevicesSetActionCreator, resetSubDevicesActionCreator } from '../../../redux/deviceSavePageReducer';
+import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator, subDevicesSetActionCreator, resetSubDevicesActionCreator, subDevices } from '../../../redux/deviceSavePageReducer';
 import { changeWasAddInDevicesPageStateActionCreator } from '../../../redux/devicesPageReducer';
-import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator } from '../../../redux/devicesReducer';
+import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator, subDevicesAttachActionCreator } from '../../../redux/devicesReducer';
 import { locationsGetActionCreator } from '../../../redux/locationsReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
 import { statusesGetActionCreator } from '../../../redux/statusesReducer';
@@ -30,23 +30,25 @@ let DeviceSaveContainer = connect(
         onSubmit: (values, props) => {
             let state = window.store.getState();
 
-            if (values.category_id && state.categoriesState.categories[values.category_id]) {
-                let category = state.categoriesState.categories[values.category_id];
+            let deviceSaveData = {...values};
+
+            if (deviceSaveData.category_id && state.categoriesState.categories[deviceSaveData.category_id]) {
+                let category = state.categoriesState.categories[deviceSaveData.category_id];
                 let specificationsFields = true;
 
-                values.specifications = {};
+                deviceSaveData.specifications = {};
 
                 for (let prop in category.schema.properties) {
-                    if (!values[`specifications_${prop}`]) {
+                    if (!deviceSaveData[`specifications_${prop}`]) {
                         specificationsFields = false;
                         break;
                     }
                     else {
-                        values.specifications[prop] = values[`specifications_${prop}`];
+                        deviceSaveData.specifications[prop] = deviceSaveData[`specifications_${prop}`];
                     }
                 }
 
-                if (specificationsFields && values.model && values.inv_number && values.price && values.date_purchase && values.date_warranty_end && values.user_id && values.brand_id && values.supplier_id && values.location_id) {
+                if (specificationsFields && deviceSaveData.model && deviceSaveData.inv_number && deviceSaveData.price && deviceSaveData.date_purchase && deviceSaveData.date_warranty_end && deviceSaveData.user_id && deviceSaveData.brand_id && deviceSaveData.supplier_id && deviceSaveData.location_id) {
                     let state = window.store.getState();
                     let statuses = state.statusesState.statuses;
                     let statusId = null;
@@ -57,19 +59,39 @@ let DeviceSaveContainer = connect(
                         }
                     }
 
-                    if (values.status_id === undefined && statusId !== null) {
-                        values.status_id = String(statusId);
+                    if (deviceSaveData.status_id === undefined && statusId !== null) {
+                        deviceSaveData.status_id = String(statusId);
+                    }
+
+                    let ids = [];
+                    for (let prop in deviceSaveData) {
+                        let pattern = new RegExp(/^sub-device-/);
+                        if (prop.match(pattern)) {
+                            if (deviceSaveData[prop] === true) {
+                                ids.push(prop.split('-')[2]);
+                            }
+                            delete deviceSaveData[prop];
+                        }
                     }
 
                     if (props.match.params.device === 'add') {
-                        saveDevice(values)
+                        saveDevice(deviceSaveData)
                             .then((device) => {
+                                let deviceId = device.data.id;
+
                                 if (isEmptyObject(window.store.getState().devicesState.devices)) {
                                     devicesGet()
                                         .then((response) => {
                                             dispatch(devicesGetActionCreator(response.data));
                                             dispatch(saveDeviceActionCreator(device.data));
                                             dispatch(changeWasAddInDevicesPageStateActionCreator(true));
+                                            subDevices({id: deviceId, ids: ids})
+                                                .then((response) => {
+                                                    dispatch(subDevicesAttachActionCreator(deviceId, response.data));
+                                                })
+                                                .catch((error) => {
+                                                    console.log(error);
+                                                });
                                         })
                                         .catch((error) => {
                                             console.log(error);
@@ -78,6 +100,13 @@ let DeviceSaveContainer = connect(
                                 else {
                                     dispatch(saveDeviceActionCreator(device.data));
                                     dispatch(changeWasAddInDevicesPageStateActionCreator(true));
+                                    subDevices({id: deviceId, ids: ids})
+                                        .then((response) => {
+                                            dispatch(subDevicesAttachActionCreator(deviceId, response.data));
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                        });
                                 }
                             })
                             .catch((error) => {
@@ -85,9 +114,17 @@ let DeviceSaveContainer = connect(
                             });
                     }
                     else {
-                        editDevice(values)
+                        editDevice(deviceSaveData)
                             .then((response) => {
+                                let deviceId = response.data.id;
                                 dispatch(saveDeviceActionCreator(response.data));
+                                subDevices({id: deviceId, ids: ids})
+                                    .then((response) => {
+                                        dispatch(subDevicesAttachActionCreator(deviceId, response.data));
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
                                 alert('Оборудование отредактировано!');
                             })
                             .catch((error) => {
@@ -172,6 +209,19 @@ let DeviceSaveContainer = connect(
         },
         onSubDevicesSet: (categoryId) => {
             dispatch(subDevicesSetActionCreator(categoryId));
+
+            let state = window.store.getState();
+            let subDevices = state.deviceSavePageState.subDevices;
+
+            if (!isEmptyObject(subDevices)) {
+                for (let prop in subDevices) {
+                    if (subDevices[prop].parent_id !== null) {
+                        setTimeout(() => {
+                            dispatch(change('deviceSaveForm', `sub-device-${prop}`, true));
+                        }, 0);
+                    }
+                }
+            }
         },
         onSpecificationsReset: (props) => {
             let state = window.store.getState();

@@ -1,7 +1,7 @@
 import Axios from "../config/axiosConfig";
 import arrayToObject from "../functions/arrayToObject";
 
-const DEVICES_GET = 'DEVICES_GET', SAVE_DEVICE = 'SAVE_DEVICE';
+const DEVICES_GET = 'DEVICES_GET', SAVE_DEVICE = 'SAVE_DEVICE', SUB_DEVICES_ATTACH = 'SUB_DEVICES_ATTACH';
 
 let initialState = {
     devices: {},
@@ -27,7 +27,17 @@ export let saveDeviceActionCreator = (device) => {
     };
 }
 
+export let subDevicesAttachActionCreator = (deviceId, subDevicesArr) => {
+    return {
+        type: SUB_DEVICES_ATTACH,
+        deviceId: deviceId,
+        subDevicesArr: subDevicesArr,
+    };
+}
+
 let devicesReducer = (state = initialState, action) => {
+    let devices;
+
     switch (action.type) {
         case DEVICES_GET:
             return {
@@ -35,9 +45,26 @@ let devicesReducer = (state = initialState, action) => {
                 devices: arrayToObject(action.data),
             };
         case SAVE_DEVICE:
-            let devices = {...state.devices};
+            devices = {...state.devices};
 
             devices[action.device.id] = action.device;
+
+            return {
+                ...state,
+                devices: devices,
+            };
+        case SUB_DEVICES_ATTACH:
+            devices = {...state.devices};
+
+            for (let prop in devices) {
+                if (devices[prop].parent_id == action.deviceId) {
+                    devices[prop].parent_id = null;
+                }
+            }
+
+            action.subDevicesArr.forEach((value) => {
+                devices[value.id] = value;
+            });
 
             return {
                 ...state,
