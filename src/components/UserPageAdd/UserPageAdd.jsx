@@ -83,8 +83,6 @@ Form = reduxForm({
     keepDirtyOnReinitialize: true,
 })(Form);
 
-Form = withRouter(Form);
-
 let UserPageAdd = (props) => {
     return (
         <div className="user-page-add">
@@ -98,6 +96,8 @@ let UserPageAdd = (props) => {
         </div>
     );
 }
+
+UserPageAdd = withRouter(UserPageAdd);
 
 export let UserPageAddClassCompopnent = class extends React.Component {
     componentDidMount() {
