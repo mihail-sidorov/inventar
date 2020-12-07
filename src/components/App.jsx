@@ -8,6 +8,7 @@ import LoginPageContainer from './LoginPage/LoginPageContainer';
 import MainPage from './MainPage/MainPage';
 import ServicesPage from './ServicesPage/ServicesPage';
 import UserPageAddContainer from './UserPageAdd/UserPageAddContainer';
+import UserPageEditContainer from './UserPageEdit/UserPageEditContainer';
 import UsersPage from './UsersPage/UsersPage';
 
 let App = () => {
@@ -24,6 +25,7 @@ let App = () => {
                 <Route path="/acts" render={() => <ActsPage />} />
                 <Route exact path="/devices/:device" render={() => <DeviceSavePage />} />
                 <Route exact path="/users/add" render={() => <UserPageAddContainer />} />
+                <Route exact path="/users/:userId" render={() => <UserPageEditContainer />} />
             </Switch>
         </div>
     );

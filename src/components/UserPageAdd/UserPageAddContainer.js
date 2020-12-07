@@ -26,8 +26,14 @@ let UserPageAddContainer = connect(
 
             if (sendValues.appointment_date && sendValues.employer_id && sendValues.full_name && sendValues.location_id && sendValues.phone && sendValues.post_dep_loc_id) {
                 sendValues.contact = {};
-                sendValues.contact.phone = sendValues.phone;
-                delete sendValues.phone;
+                if (sendValues.phone !== undefined) {
+                    sendValues.contact.phone = sendValues.phone;
+                    delete sendValues.phone;
+                }
+                if (sendValues.email !== undefined) {
+                    sendValues.contact.email = sendValues.email;
+                    delete sendValues.email;
+                }
 
                 usersPost(sendValues)
                     .then((response) => {

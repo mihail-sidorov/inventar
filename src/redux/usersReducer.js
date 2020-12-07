@@ -16,6 +16,10 @@ export let usersPost = (userObj) => {
     return Axios.post('users', userObj);
 }
 
+export let usersPatch = (userObj) => {
+    return Axios.patch('users', userObj);
+}
+
 // Создание Action Creators
 export let usersGetActionCreator = (data) => {
     return {
