@@ -12,6 +12,9 @@ import categoriesReducer from './categoriesReducer';
 import suppliersReducer from './suppliersReducer';
 import statusesReducer from './statusesReducer';
 import locationsReducer from './locationsReducer';
+import userPageAddReducer from './userPageAddReducer';
+import employersReducer from './employersReducer';
+import postDepLocsReducer from './postDepLocsReducer';
 
 let reducers = combineReducers({
     mainPageState: mainPageReducer,
@@ -26,6 +29,9 @@ let reducers = combineReducers({
     statusesState: statusesReducer,
     deviceSavePageState: deviceSavePageReducer,
     locationsState: locationsReducer,
+    userPageAddState: userPageAddReducer,
+    employersState: employersReducer,
+    postDepLocsState: postDepLocsReducer,
     form: formReducer,
 });
 

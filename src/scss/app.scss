@@ -348,6 +348,12 @@ html, body {
             display: block;
             color: #403539;
             text-decoration: none;
+            margin-bottom: 10px;
+
+            &:last-child {
+                
+                margin-bottom: 0;
+            }
         }
     }
 }
@@ -477,6 +483,23 @@ html, body {
 }
 
 .device-save-page {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+}
+
+.user-page-add {
 
     background-color: #A3DEE6;
 
