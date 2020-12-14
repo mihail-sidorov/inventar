@@ -8,8 +8,14 @@ let initialState = {
 };
 
 // Запросы к API
-export let postDepLocsGet = () => {
-    return Axios.get('post_dep_loc_united?status=free');
+export let postDepLocsGet = (all = false) => {
+    let status = 'free';
+
+    if (all) {
+        status = 'all';
+    }
+
+    return Axios.get(`post_dep_loc_united?status=${status}`);
 }
 
 // Создание Action Creators
