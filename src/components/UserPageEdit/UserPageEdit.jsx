@@ -7,6 +7,7 @@ import { postDepLocsGet } from '../../redux/postDepLocsReducer';
 import { usersGet } from '../../redux/usersReducer';
 import InnerPage from '../InnerPage/InnerPage';
 import { Field, reduxForm } from 'redux-form';
+import UserDevicesContainer from './UserDevices/UserDevicesContainer';
 
 let Form = (props) => {
     let optionsEmployers = [];
@@ -94,6 +95,7 @@ let UserPageEdit = (props) => {
                 <Route path="/:page" render={() => (
                     <InnerPage>
                         <Form {...props} />
+                        <Route path="/users/:userId" render={() => <UserDevicesContainer /> } />
                     </InnerPage>
                 )} />
             </div>

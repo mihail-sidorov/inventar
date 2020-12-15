@@ -16,6 +16,7 @@ import userPageAddReducer from './userPageAddReducer';
 import employersReducer from './employersReducer';
 import postDepLocsReducer from './postDepLocsReducer';
 import usersPageReducer from './usersPageReducer';
+import userDevicesReducer from './userDevicesReducer';
 
 let reducers = combineReducers({
     mainPageState: mainPageReducer,
@@ -34,6 +35,7 @@ let reducers = combineReducers({
     employersState: employersReducer,
     postDepLocsState: postDepLocsReducer,
     usersPageState: usersPageReducer,
+    userDevicesState: userDevicesReducer,
     form: formReducer,
 });
 
