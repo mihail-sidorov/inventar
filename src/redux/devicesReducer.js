@@ -1,7 +1,7 @@
 import Axios from "../config/axiosConfig";
 import arrayToObject from "../functions/arrayToObject";
 
-const DEVICES_GET = 'DEVICES_GET', SAVE_DEVICE = 'SAVE_DEVICE', SUB_DEVICES_ATTACH = 'SUB_DEVICES_ATTACH';
+const DEVICES_GET = 'DEVICES_GET', SAVE_DEVICE = 'SAVE_DEVICE', SUB_DEVICES_ATTACH = 'SUB_DEVICES_ATTACH', ATTACH_DEVICE_TO_USER = 'ATTACH_DEVICE_TO_USER';
 
 let initialState = {
     devices: {},
@@ -32,6 +32,13 @@ export let subDevicesAttachActionCreator = (deviceId, subDevicesArr) => {
         type: SUB_DEVICES_ATTACH,
         deviceId: deviceId,
         subDevicesArr: subDevicesArr,
+    };
+}
+
+export let attachDeviceToUserActionCreator = (device) => {
+    return {
+        type: ATTACH_DEVICE_TO_USER,
+        device: device,
     };
 }
 
@@ -70,6 +77,10 @@ let devicesReducer = (state = initialState, action) => {
                 ...state,
                 devices: devices,
             };
+        case ATTACH_DEVICE_TO_USER:
+            let newState = {...state};
+            newState.devices[action.device.id] = action.device;
+            return newState;
         default:
             return state;
     }

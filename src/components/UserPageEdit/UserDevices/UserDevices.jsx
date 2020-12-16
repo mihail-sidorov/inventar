@@ -1,7 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import isEmptyObject from '../../../functions/isEmptyObject';
+import { brandsGet } from '../../../redux/brandsReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
+import UserDevicesSearchContainer from './UserDevicesSearch/UserDevicesSearchContainer';
 
 let UserDevices = (props) => {
     let userDevices = [];
@@ -9,15 +11,19 @@ let UserDevices = (props) => {
     for (let prop in props.userDevices) {
         userDevices.push(
             <tr key={prop}>
-                <td>{props.userDevices[prop].model}</td>
-                <td>{props.userDevices[prop].price}</td>
+                <td>{`${props.brands[props.userDevices[prop].brand_id].brand} ${props.userDevices[prop].model}`}</td>
+                <td>{props.userDevices[prop].inv_number}</td>
+                <td><button className="user-devices__unattach-btn">Открепить</button></td>
             </tr>
         );
     }
 
     return (
         <div className="user-devices">
+            <hr/>
             <div className="user-devices__title">Оборудование сотрудника</div>
+            <UserDevicesSearchContainer />
+            <hr/>
             <div className="user-devices__table">
                 <table>
                     <tbody>
@@ -39,17 +45,22 @@ let UserDevicesClassComponent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.devicesState.devices)) {
+        if (isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.devicesState.devices)) {
                 promiseArr.push(devicesGet());
             }
 
+            if (isEmptyObject(state.brandsState.brands)) {
+                promiseArr.push(brandsGet());
+            }
+
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
+                        if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
                     });
 
                     this.props.onUserIdSet(this.props.match.params.userId);
