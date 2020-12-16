@@ -8,7 +8,7 @@ let SubDevices = (props) => {
         subDevicesArr.push(
             <div className="device-save__form-field form__field" key={prop}>
                 <label>
-                    {props.brands[props.subDevices[prop].brand_id].brand + ' ' + props.subDevices[prop].model}
+                    <span><span>{props.brands[props.subDevices[prop].brand_id].brand + ' ' + props.subDevices[prop].model}</span></span>
                     <Field name={`sub-device-${prop}`} component="input" type="checkbox" />
                 </label>
             </div>

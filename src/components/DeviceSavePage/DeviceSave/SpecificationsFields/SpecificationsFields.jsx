@@ -11,7 +11,7 @@ let SpecificationsFields = (props) => {
         if (props.category.schema.properties[field].enum === undefined) {
             formFields.push(
                 <div className="device-save__form-field form__field" key={field}>
-                    <label><Field name={`specifications_${field}`} type="text" component="input" /></label>
+                    <label><span><span>{props.category.schema.properties[field].title}</span></span><Field name={`specifications_${field}`} type="text" component="input" /></label>
                 </div>
             );
         }
@@ -25,6 +25,7 @@ let SpecificationsFields = (props) => {
             formFields.push(
                 <div className="device-save__form-field form__field" key={field}>
                     <label>
+                        <span><span>{props.category.schema.properties[field].title}</span></span>
                         <Field name={`specifications_${field}`} component="select">
                             <option></option>
                             {options}

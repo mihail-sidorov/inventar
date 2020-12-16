@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { NavLink, Route, withRouter } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { employersGet } from '../../redux/employersReducer';
@@ -34,42 +34,42 @@ let Form = (props) => {
         <form className="user-page-add__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
             <div className="user-page-add__form-fields form__fields">
                 <div className="user-page-add__form-field form__field">
-                    <label><Field name="full_name" component="input" type="text" />ФИО</label>
+                    <label><span><span>ФИО</span></span><Field name="full_name" component="input" type="text" /></label>
                 </div>
                 <div className="user-page-add__form-field form__field">
-                    <label><Field name="phone" component="input" type="text" />Телефон</label>
+                    <label><span><span>Телефон</span></span><Field name="phone" component="input" type="text" /></label>
                 </div>
                 <div className="user-page-add__form-field form__field">
-                    <label><Field name="email" component="input" type="text" />EMail</label>
+                    <label><span><span>EMail</span></span><Field name="email" component="input" type="text" /></label>
                 </div>
                 <div className="user-page-add__form-field form__field">
-                    <label><Field name="appointment_date" component="input" type="date" />Дата принятия</label>
+                    <label><span><span>Дата принятия</span></span><Field name="appointment_date" component="input" type="date" /></label>
                 </div>
                 <div className="user-page-add__form-field form__field">
                     <label>
+                        <span><span>Работодатель</span></span>
                         <Field name="employer_id" component="select">
                             <option></option>
                             {optionsEmployers}
                         </Field>
-                        Работодатель
                     </label>
                 </div>
                 <div className="user-page-add__form-field form__field">
                     <label>
+                        <span><span>Местонахождение</span></span>
                         <Field name="location_id" component="select">
                             <option></option>
                             {optionsLocations}
                         </Field>
-                        Местонахождение
                     </label>
                 </div>
                 <div className="user-page-add__form-field form__field">
                     <label>
+                        <span><span>Должность</span></span>
                         <Field name="post_dep_loc_id" component="select">
                             <option></option>
                             {optionsPostDepLocs}
                         </Field>
-                        Должность
                     </label>
                 </div>
             </div>
@@ -92,7 +92,11 @@ let UserPageAdd = (props) => {
             <div className="user-page-add__wrapper section-2">
                 <Route path="/:page" render={() => (
                     <InnerPage>
-                        <Form {...props} />
+                        <NavLink className="user-page-add__back-to-users btn" to="/users">Вернуться к списку сотрудников</NavLink>
+                        <div className="user-page-add__form-container">
+                            <div className="user-page-add__title">Добавление сотрудника</div>
+                            <Form {...props} />
+                        </div>
                     </InnerPage>
                 )}/>
             </div>

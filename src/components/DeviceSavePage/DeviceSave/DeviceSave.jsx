@@ -102,22 +102,23 @@ let Form = (props) => {
                 {CategoriesField(props.categories, props)}
                 <SpecificationsFieldsContainer />
                 <div className="device-save__form-field form__field">
-                    <label><Field name="model" type="text" component="input" placeholder="Модель" /></label>
+                    <label><span><span>Модель</span></span><Field name="model" type="text" component="input" /></label>
                 </div>
                 <div className="device-save__form-field form__field">
-                    <label><Field name="inv_number" type="text" component="input" placeholder="Инвентарный номер" /></label>
+                    <label><span><span>Инвентарный номер</span></span><Field name="inv_number" type="text" component="input" /></label>
                 </div>
                 <div className="device-save__form-field form__field">
-                    <label><Field name="price" type="text" component="input" placeholder="Закупочная цена" /></label>
+                    <label><span><span>Закупочная цена</span></span><Field name="price" type="text" component="input" /></label>
                 </div>
                 <div className="device-save__form-field form__field">
-                    <label><Field name="date_purchase" type="date" component="input" /></label>
+                    <label><span><span>Дата покупки</span></span><Field name="date_purchase" type="date" component="input" /></label>
                 </div>
                 <div className="device-save__form-field form__field">
-                    <label><Field name="date_warranty_end" type="date" component="input" /></label>
+                    <label><span><span>Дата окончания гарантии</span></span><Field name="date_warranty_end" type="date" component="input" /></label>
                 </div>
                 <div className="device-save__form-field form__field">
                     <label>
+                        <span><span>Ответственный на складе</span></span>
                         <Field name="user_id" component="select">
                             <option></option>
                             {optionsResponsibles}
@@ -126,6 +127,7 @@ let Form = (props) => {
                 </div>
                 <div className="device-save__form-field form__field">
                     <label>
+                        <span><span>Марка</span></span>
                         <Field name="brand_id" component="select">
                             <option></option>
                             {optionsBrands}
@@ -134,6 +136,7 @@ let Form = (props) => {
                 </div>
                 <div className="device-save__form-field form__field">
                     <label>
+                        <span><span>Поставщик</span></span>
                         <Field name="supplier_id" component="select">
                             <option></option>
                             {optionsSuppliers}
@@ -142,6 +145,7 @@ let Form = (props) => {
                 </div>
                 <div className="device-save__form-field form__field">
                     <label>
+                        <span><span>Местонахождение</span></span>
                         <Field name="location_id" component="select">
                             <option></option>
                             {optionsLocations}
@@ -167,8 +171,10 @@ let DeviceSave = (props) => {
     return (
         <div className="device-save">
             <NavLink className="device-save__back-to-devices btn" to="/devices">Вернуться к списку оборудования</NavLink>
-            <h1 className="device-save__title">{props.match.params.device === 'add' ? 'Добавление нового оборудования': 'Редактирование оборудования'}</h1>
-            <Form {...props} />
+            <div className="device-save__form-container">
+                <div className="device-save__title">{props.match.params.device === 'add' ? 'Добавление нового оборудования': 'Редактирование оборудования'}</div>
+                <Form {...props} />
+            </div>
         </div>
     );
 }

@@ -13,7 +13,6 @@ let UserDevices = (props) => {
             <tr key={prop}>
                 <td>{`${props.brands[props.userDevices[prop].brand_id].brand} ${props.userDevices[prop].model}`}</td>
                 <td>{props.userDevices[prop].inv_number}</td>
-                <td>{props.userDevices[prop].status}</td>
                 <td><button className="user-devices__unattach-btn" onClick={() => {
                     props.onUnAttachDeviceFromUser(props.userId, prop);
                 }}>Открепить</button></td>
@@ -23,10 +22,8 @@ let UserDevices = (props) => {
 
     return (
         <div className="user-devices">
-            <hr/>
             <div className="user-devices__title">Оборудование сотрудника</div>
             <UserDevicesSearchContainer />
-            <hr/>
             <div className="user-devices__table">
                 <table>
                     <tbody>
