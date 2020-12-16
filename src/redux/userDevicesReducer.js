@@ -13,6 +13,10 @@ export let attachDeviceToUser = (userId, deviceId) => {
     return Axios.patch('devices?action=bind', {user_id: userId, id: deviceId});
 }
 
+export let unAttachDeviceFromUser = (userId, deviceId) => {
+    return Axios.patch('devices?action=remove', {user_id: userId, id: deviceId});
+}
+
 // Создание Action Creators
 export let userDevicesUserIdSetActionCreator = (userId) => {
     return {
