@@ -13,6 +13,7 @@ let InnerPage = (props) => {
                                 <div className="inner-page__add-menu-items">
                                     <NavLink className="inner-page__add-menu-item" to="/devices/add">Добавить оборудование</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/users/add">Добавить сотрудника</NavLink>
+                                    <NavLink className="inner-page__add-menu-item" to="/services/add">Добавить сервис</NavLink>
                                 </div>                                
                             </div>
                         </div>

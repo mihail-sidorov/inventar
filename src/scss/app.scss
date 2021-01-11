@@ -551,6 +551,42 @@ html, body {
     }
 }
 
+.service-page-add {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+
+    &__back-to-services {
+
+        color: #403539;
+        text-decoration: none;
+        font-weight: normal;
+        padding-left: 30px;
+        border-radius: 30px;
+        font-size: 10px;
+        background: url('../imgs/back-arrow.svg') no-repeat 5px center;
+        background-color: #C4C4C4;
+        margin-top: 20px;
+    }
+
+    &__title {
+
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+}
+
 .pagination {
 
     height: 24px;
