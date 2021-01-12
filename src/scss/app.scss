@@ -555,6 +555,23 @@ html, body {
 
     background-color: #A3DEE6;
 
+    &__form {
+
+        &-btns {
+
+            margin-top: 75px;
+            text-align: center;
+        }
+    }
+
+    &__form-container {
+
+        padding: 20px;
+        border: 1px solid #B1B1AF;
+        border-radius: 5px;
+        margin-top: 40px;
+    }
+
     &__wrapper {
 
         .inner-page {
