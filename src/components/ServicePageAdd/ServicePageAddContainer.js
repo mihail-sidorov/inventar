@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
-import { serviceAdd } from '../../redux/servicePageAddReducer';
+import { serviceAdd } from '../../redux/accountsReducer';
 import ServicePageAdd from './ServicePageAdd';
 
 let ServicePageAddContainer = connect(
@@ -13,7 +13,6 @@ let ServicePageAddContainer = connect(
         },
         onSubmit: (values) => {
             if (values.account_type_id && values.login && values.password) {
-                console.log(values);
                 serviceAdd(values)
                     .then((data) => {
                         console.log(data.data);

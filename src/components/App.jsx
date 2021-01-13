@@ -7,6 +7,7 @@ import HeaderContainer from './Header/HeaderContainer';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
 import MainPage from './MainPage/MainPage';
 import ServicePageAddContainer from './ServicePageAdd/ServicePageAddContainer';
+import ServicePageEditContainer from './ServicePageEdit/ServicePageEditContainer';
 import ServicesPage from './ServicesPage/ServicesPage';
 import UserPageAddContainer from './UserPageAdd/UserPageAddContainer';
 import UserPageEditContainer from './UserPageEdit/UserPageEditContainer';
@@ -28,6 +29,7 @@ let App = () => {
                 <Route exact path="/users/add" render={() => <UserPageAddContainer />} />
                 <Route exact path="/users/:userId" render={() => <UserPageEditContainer />} />
                 <Route exact path="/services/add" render={() => <ServicePageAddContainer />} />
+                <Route exact path="/services/:serviceId" render={() => <ServicePageEditContainer />} />
             </Switch>
         </div>
     );
