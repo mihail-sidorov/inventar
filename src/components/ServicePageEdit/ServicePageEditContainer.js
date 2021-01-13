@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { initialize } from 'redux-form';
-import { accountsSetActionCreator, serviceEdit } from '../../redux/accountsReducer';
+import { accountsSetActionCreator, serviceAddActionCreator, serviceEdit } from '../../redux/accountsReducer';
 import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
 import ServicePageEdit from './ServicePageEdit';
 
@@ -37,7 +37,8 @@ let ServicePageEditContainer = connect(
             if (values.account_type_id && values.login && values.password) {
                 serviceEdit(values)
                     .then((data) => {
-                        console.log(data.data);
+                        dispatch(serviceAddActionCreator(data.data));
+                        alert('Сервис отредактирован!');
                     })
                     .catch((error) => {
                         console.log(error);

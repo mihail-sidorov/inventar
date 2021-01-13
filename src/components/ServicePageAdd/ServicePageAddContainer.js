@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
-import { serviceAdd } from '../../redux/accountsReducer';
+import { serviceAdd, serviceAddActionCreator } from '../../redux/accountsReducer';
 import ServicePageAdd from './ServicePageAdd';
+import { makeShortServicesActionCreator } from '../../redux/servicesPageReducer';
 
 let ServicePageAddContainer = connect(
     state => ({
@@ -11,11 +12,13 @@ let ServicePageAddContainer = connect(
         accountTypesSet: (data) => {
             dispatch(accountTypesSetActionCreator(data));
         },
-        onSubmit: (values) => {
+        onSubmit: (values, props) => {
             if (values.account_type_id && values.login && values.password) {
                 serviceAdd(values)
                     .then((data) => {
-                        console.log(data.data);
+                        dispatch(serviceAddActionCreator(data.data));
+                        dispatch(makeShortServicesActionCreator(true));
+                        props.history.push('/services');
                     })
                     .catch((error) => {
                         console.log(error);

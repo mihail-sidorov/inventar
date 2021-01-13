@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink, Route, withRouter } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import { accountTypesGet } from '../../redux/accountTypesReducer';
 import InnerPage from '../InnerPage/InnerPage';
@@ -62,6 +62,8 @@ let ServicePageAdd = (props) => {
         </div>
     );
 }
+
+ServicePageAdd = withRouter(ServicePageAdd);
 
 let ServicePageAddClassComponent = class extends React.Component {
     render() {

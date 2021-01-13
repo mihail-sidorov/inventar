@@ -1,7 +1,7 @@
 import Axios from "../config/axiosConfig";
 import arrayToObject from "../functions/arrayToObject";
 
-const ACCOUNTS_SET = 'ACCOUNTS_SET';
+const ACCOUNTS_SET = 'ACCOUNTS_SET', SERVICE_ADD_ACTION_CREATOR = 'SERVICE_ADD_ACTION_CREATOR';
 
 let initialState = {
     accounts: {},
@@ -28,6 +28,13 @@ export let accountsSetActionCreator = (data) => {
     };
 }
 
+export let serviceAddActionCreator = (service) => {
+    return {
+        type: SERVICE_ADD_ACTION_CREATOR,
+        service: service,
+    };
+}
+
 let accountsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACCOUNTS_SET:
@@ -35,6 +42,10 @@ let accountsReducer = (state = initialState, action) => {
                 ...state,
                 accounts: arrayToObject(action.data),
             };
+        case SERVICE_ADD_ACTION_CREATOR:
+            let newState = {...state};
+            newState.accounts[action.service.id] = action.service;
+            return newState;
         default:
             return state;
     }

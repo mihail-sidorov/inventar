@@ -1,6 +1,6 @@
 import isEmptyObject from "../functions/isEmptyObject";
 
-const MAKE_SHORT_SERVICES = 'MAKE_SHORT_SERVICES';
+const MAKE_SHORT_SERVICES = 'MAKE_SHORT_SERVICES', CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION = 'CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION', CHANGE_SERVICES_PAGE_SEARCH = 'CHANGE_SERVICES_PAGE_SEARCH';
 
 let makeShortServices = (services, pagination, search, accountTypes, isLastPage) => {
     let searchServices = {}, shortServices = {};
@@ -99,7 +99,7 @@ export let makeShortServicesActionCreator = (isLastPage = false) => {
     let services = state.accountsState.accounts;
     let accountTypes = state.accountTypesState.accountTypes;
     let pagination = state.servicesPageState.pagination;
-    let search = '';
+    let search = state.servicesPageState.search;
 
     return {
         type: MAKE_SHORT_SERVICES,
@@ -108,6 +108,20 @@ export let makeShortServicesActionCreator = (isLastPage = false) => {
         search: search,
         accountTypes: accountTypes,
         isLastPage: isLastPage,
+    };
+}
+
+export let changePageOnServicesPagePaginationActionCreator = (page) => {
+    return {
+        type: CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION,
+        page: page,
+    };
+}
+
+export let changeServicesPageSearchActionCreator = (search) => {
+    return {
+        type: CHANGE_SERVICES_PAGE_SEARCH,
+        search: search,
     };
 }
 
@@ -124,6 +138,19 @@ let servicesPageReducer = (state = initialState, action) => {
                     currentPage: makeShortServicesResult.currentPage,
                     pages: makeShortServicesResult.pages,
                 },
+            };
+        case CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION:
+            return {
+                ...state,
+                pagination: {
+                    ...state.pagination,
+                    currentPage: action.page,
+                },
+            };
+        case CHANGE_SERVICES_PAGE_SEARCH:
+            return {
+                ...state,
+                search: action.search,
             };
         default:
             return state;

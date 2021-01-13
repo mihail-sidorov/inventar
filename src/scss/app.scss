@@ -376,7 +376,7 @@ html, body {
     }
 }
 
-.devices {
+.devices, .services {
 
     table {
 
@@ -478,6 +478,24 @@ html, body {
 
                 min-height: calc(100vh - 80px);
                 border-radius: 20px 20px 0 0;
+                display: flex;
+                flex-direction: column;
+
+                .search {
+
+                    margin-bottom: 40px;
+                }
+
+                .services {
+
+                    margin-bottom: 20px;
+                }
+
+                .pagination {
+
+                    margin-top: auto;
+                    align-self: center;
+                }
             }
         }
     }
