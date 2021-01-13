@@ -19,6 +19,7 @@ import usersPageReducer from './usersPageReducer';
 import userDevicesReducer from './userDevicesReducer';
 import accountTypesReducer from './accountTypesReducer';
 import accountsReducer from './accountsReducer';
+import servicesPageReducer from './servicesPageReducer';
 
 let reducers = combineReducers({
     mainPageState: mainPageReducer,
@@ -40,6 +41,7 @@ let reducers = combineReducers({
     userDevicesState: userDevicesReducer,
     accountTypesState: accountTypesReducer,
     accountsState: accountsReducer,
+    servicesPageState: servicesPageReducer,
     form: formReducer,
 });
 
