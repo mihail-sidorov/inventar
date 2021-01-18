@@ -5,6 +5,7 @@ import isEmptyObject from '../../functions/isEmptyObject';
 import { accountsGet } from '../../redux/accountsReducer';
 import { accountTypesGet } from '../../redux/accountTypesReducer';
 import InnerPage from '../InnerPage/InnerPage';
+import ServiceEntitiesContainer from './ServiceEntities/ServiceEntitiesContainer';
 
 let Form = (props) => {
     let optionsAccountTypes = [];
@@ -58,6 +59,7 @@ let ServicePageEdit = (props) => {
                             <div className="service-page-edit__title">Редактирование сервиса</div>
                             <Form {...props} />
                         </div>
+                        <ServiceEntitiesContainer serviceId={props.match.params.serviceId} />
                     </InnerPage>
                 } />
             </div>
