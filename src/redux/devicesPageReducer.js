@@ -2,7 +2,7 @@ import isEmptyObject from "../functions/isEmptyObject";
 
 const CHANGE_DEVICES_SEARCH = 'CHANGE_DEVICES_SEARCH', MAKE_SHORT_DEVICES = 'MAKE_SHORT_DEVICES', CHANGE_DEVICES_PAGE = 'CHANGE_DEVICES_PAGE', CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE = 'CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE';
 
-let makeShortDevices = (devices, pagination, search, users, brands, isLastPage = false) => {
+let makeShortDevices = (devices, pagination, search, users, brands, categories, isLastPage = false) => {
     let searchDevices = {}, shortDevices = {};
 
     if (search !== '') {
@@ -33,6 +33,14 @@ let makeShortDevices = (devices, pagination, search, users, brands, isLastPage =
                                 }
                             }
                             break;
+                        case 'category_id':
+                            if (!isEmptyObject(categories)) {
+                                let category = categories[devices[id][property]].category;
+                                if (category !== undefined && category !== null && category !== '') {
+                                    propertiesArr.push(String(category));
+                                }
+                            }
+                            break;
                         case 'specifications':
                             for (let specificationsProperty in devices[id][property]) {
                                 if (devices[id][property][specificationsProperty] !== undefined && devices[id][property][specificationsProperty] !== null && devices[id][property][specificationsProperty] !== '') {
@@ -42,6 +50,11 @@ let makeShortDevices = (devices, pagination, search, users, brands, isLastPage =
                             break;
                         default:
                             if (property === 'model') {
+                                if (devices[id][property] !== undefined && devices[id][property] !== null && devices[id][property] !== '') {
+                                    propertiesArr.push(String(devices[id][property]));
+                                }
+                            }
+                            if (property === 'inv_number') {
                                 if (devices[id][property] !== undefined && devices[id][property] !== null && devices[id][property] !== '') {
                                     propertiesArr.push(String(devices[id][property]));
                                 }
@@ -129,6 +142,7 @@ export let makeShortDevicesActionCreator = () => {
     let devicesPageState = window.store.getState().devicesPageState;
     let usersState = window.store.getState().usersState;
     let brandsState = window.store.getState().brandsState;
+    let categoriesState = window.store.getState().categoriesState;
     let isLastPage = window.store.getState().devicesPageState.wasAdd;
 
     return {
@@ -138,6 +152,7 @@ export let makeShortDevicesActionCreator = () => {
         search: devicesPageState.search,
         users: usersState.users,
         brands: brandsState.brands,
+        categories: categoriesState.categories,
         isLastPage: isLastPage,
     };
 }
@@ -168,7 +183,7 @@ let devicesPageReducer = (state = initialState, action) => {
                 },
             };
         case MAKE_SHORT_DEVICES:
-            let makeShortDevicesResult = makeShortDevices(action.devices, action.pagination, action.search, action.users, action.brands, action.isLastPage);
+            let makeShortDevicesResult = makeShortDevices(action.devices, action.pagination, action.search, action.users, action.brands, action.categories, action.isLastPage);
 
             return {
                 ...state,

@@ -1,6 +1,7 @@
 import React from 'react';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGet } from '../../../redux/brandsReducer';
+import { categoriesGet } from '../../../redux/categoriesReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
 import { usersGet } from '../../../redux/usersReducer';
 import DeviceContainer from './Device/DeviceContainer';
@@ -19,6 +20,7 @@ let Devices = (props) => {
                 <thead>
                     <tr>
                         <th>Наименование</th>
+                        <th>Категория</th>
                         <th>Инвентарный номер</th>
                         <th>Сотрудник</th>
                     </tr>
@@ -35,7 +37,7 @@ let DevicesClassComponent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.devicesState.devices) || isEmptyObject(state.usersState.users) || isEmptyObject(state.brandsState.brands)) {
+        if (isEmptyObject(state.devicesState.devices) || isEmptyObject(state.usersState.users) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.devicesState.devices)) {
@@ -50,12 +52,17 @@ let DevicesClassComponent = class extends React.Component {
                 promiseArr.push(brandsGet());
             }
 
+            if (isEmptyObject(state.categoriesState.categories)) {
+                promiseArr.push(categoriesGet());
+            }
+
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'users') this.props.onUsersGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
+                        if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                     });
 
                     this.props.onMakeShortDevices();

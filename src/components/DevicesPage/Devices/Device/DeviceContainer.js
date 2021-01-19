@@ -7,6 +7,7 @@ let DeviceContainer = (id) => {
             device: state.devicesPageState.shortDevices[id],
             user: state.usersState.users[state.devicesPageState.shortDevices[id].user_id],
             brand: state.brandsState.brands[state.devicesPageState.shortDevices[id].brand_id],
+            category: state.categoriesState.categories[state.devicesPageState.shortDevices[id].category_id],
         }),
         dispatch => ({
             onGoToDeviceCard: (props) => {
