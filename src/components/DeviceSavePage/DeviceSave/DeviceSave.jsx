@@ -170,7 +170,7 @@ Form = reduxForm({
 let DeviceSave = (props) => {
     return (
         <div className="device-save">
-            <NavLink className="device-save__back-to-devices btn" to="/devices">Вернуться к списку оборудования</NavLink>
+            <NavLink className="device-save__back-to-devices btn" to={`/devices/card/${props.match.params.device}`}>Вернуться в карточку оборудования</NavLink>
             <div className="device-save__form-container">
                 <div className="device-save__title">{props.match.params.device === 'add' ? 'Добавление нового оборудования': 'Редактирование оборудования'}</div>
                 <Form {...props} />

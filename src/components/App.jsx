@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ActsPage from './ActsPage/ActsPage';
+import DevicePageCardContainer from './DevicePageCard/DevicePageCardContainer';
 import DeviceSavePage from './DeviceSavePage/DeviceSavePage';
 import DevicesPage from './DevicesPage/DevicesPage';
 import HeaderContainer from './Header/HeaderContainer';
@@ -30,6 +31,7 @@ let App = () => {
                 <Route exact path="/users/:userId" render={() => <UserPageEditContainer />} />
                 <Route exact path="/services/add" render={() => <ServicePageAddContainer />} />
                 <Route exact path="/services/:serviceId" render={() => <ServicePageEditContainer />} />
+                <Route exact path="/devices/card/:deviceId" render={() => <DevicePageCardContainer />} />
             </Switch>
         </div>
     );

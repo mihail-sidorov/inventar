@@ -11,7 +11,7 @@ let DeviceContainer = (id) => {
         }),
         dispatch => ({
             onGoToDeviceCard: (props) => {
-                props.history.push(`/devices/${props.device.id}`);
+                props.history.push(`/devices/card/${props.device.id}`);
             },
         })
     )(Device);
