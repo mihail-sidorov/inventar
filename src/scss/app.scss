@@ -710,19 +710,27 @@ html, body {
         margin-top: 20px;
     }
 
-    &__title {
+    &__title, &__status-container-title {
 
         margin-bottom: 40px;
         margin-top: 0;
         font-size: 36px;
     }
 
-    &__form-container {
+    &__form-container, &__status-container {
 
         padding: 20px;
         border: 1px solid #B1B1AF;
         border-radius: 5px;
         margin-top: 40px;
+    }
+
+    &__status-container {
+
+        .search-users-for-attach {
+
+            margin-top: 40px;
+        }
     }
 
     &__form {
@@ -745,6 +753,24 @@ html, body {
 
             margin-top: 75px;
             text-align: center;
+        }
+    }
+}
+
+.search-users-for-attach {
+
+    &__items {
+
+        margin-top: 20px;
+    }
+
+    &__item {
+
+        margin-bottom: 10px;
+
+        &:last-child {
+
+            margin-bottom: 0;
         }
     }
 }

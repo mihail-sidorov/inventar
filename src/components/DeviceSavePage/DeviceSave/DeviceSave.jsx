@@ -10,6 +10,7 @@ import { responsiblesGet } from '../../../redux/responsiblesReducer';
 import { statusesGet } from '../../../redux/statusesReducer';
 import { suppliersGet } from '../../../redux/suppliersReducer';
 import { usersGet } from '../../../redux/usersReducer';
+import SearchUsersForAttachContainer from './SearchUsersForAttach/SearchUsersForAttachContainer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
 import SubDevicesContainer from './SubDevices/SubDevicesContainer';
 
@@ -168,12 +169,42 @@ Form = reduxForm({
 })(Form);
 
 let DeviceSave = (props) => {
+    let status, statusFlag, user, userId, deviceId;
+
+    if (!isEmptyObject(props.device)) {
+        deviceId = props.device.id;
+
+        if (props.statuses[props.device.status_id] !== undefined) {
+            status = props.statuses[props.device.status_id].status_rus;
+            statusFlag = props.statuses[props.device.status_id].status;
+        }
+
+        if (props.users[props.device.user_id] !== undefined) {
+            user = props.users[props.device.user_id].full_name;
+            userId = props.users[props.device.user_id].id;
+        }
+    }
+
     return (
         <div className="device-save">
             <NavLink className="device-save__back-to-devices btn" to={`/devices/card/${props.match.params.device}`}>Вернуться в карточку оборудования</NavLink>
             <div className="device-save__form-container">
                 <div className="device-save__title">{props.match.params.device === 'add' ? 'Добавление нового оборудования': 'Редактирование оборудования'}</div>
                 <Form {...props} />
+            </div>
+            <div className="device-save__status-container">
+                <div className="device-save__status-container-title">
+                    Статус оборудования
+                </div>
+                <div className="device-save__status-container-inform">
+                    Статус: {status}
+                    <br/>
+                    Ответственный: {user} {userId !== undefined && deviceId !== undefined && statusFlag !== undefined && (statusFlag === 'given' || statusFlag === 'givenIncomplete') && <button onClick={() => {props.onUnAttachUserFromDevice(userId, deviceId)}}>Открепить</button>}
+                </div>
+                {
+                    statusFlag === 'stock' &&
+                    <SearchUsersForAttachContainer />
+                }
             </div>
         </div>
     );
@@ -185,7 +216,7 @@ let DeviceSaveClassComponent = class extends React.Component {
     loadDeviceSaveData() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.suppliersState.suppliers) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.locationsState.locations) || isEmptyObject(state.devicesState.devices)) {
+        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.suppliersState.suppliers) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.locationsState.locations) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.devicesState.devices)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.devicesState.devices)) {
@@ -212,11 +243,12 @@ let DeviceSaveClassComponent = class extends React.Component {
                 promiseArr.push(suppliersGet());
             }
 
-            if (isEmptyObject(state.statusesState.statuses)) {
-                promiseArr.push(statusesGet());
-            }
             if (isEmptyObject(state.locationsState.locations)) {
                 promiseArr.push(locationsGet());
+            }
+
+            if (isEmptyObject(state.statusesState.statuses)) {
+                promiseArr.push(statusesGet());
             }
 
             Promise.all(promiseArr)
@@ -228,8 +260,8 @@ let DeviceSaveClassComponent = class extends React.Component {
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
                         if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                         if (value.config.url === 'suppliers') this.props.onSuppliersGet(value.data);
-                        if (value.config.url === 'statuses') this.props.onStatusesGet(value.data);
                         if (value.config.url === 'locations') this.props.onLocationsGet(value.data);
+                        if (value.config.url === 'statuses') this.props.onStatusesGet(value.data);
                     });
 
                     if (this.props.match.params.device !== 'add') {

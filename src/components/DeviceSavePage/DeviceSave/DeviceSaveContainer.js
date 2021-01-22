@@ -5,11 +5,12 @@ import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
 import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator, subDevicesSetActionCreator, resetSubDevicesActionCreator, subDevices } from '../../../redux/deviceSavePageReducer';
 import { changeWasAddInDevicesPageStateActionCreator } from '../../../redux/devicesPageReducer';
-import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator, subDevicesAttachActionCreator } from '../../../redux/devicesReducer';
+import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator, subDevicesAttachActionCreator, attachDeviceToUserActionCreator } from '../../../redux/devicesReducer';
 import { locationsGetActionCreator } from '../../../redux/locationsReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
 import { statusesGetActionCreator } from '../../../redux/statusesReducer';
 import { suppliersGetActionCreator } from '../../../redux/suppliersReducer';
+import { unAttachDeviceFromUser } from '../../../redux/userDevicesReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
 import DeviceSave from './DeviceSave';
 
@@ -23,6 +24,7 @@ let DeviceSaveContainer = connect(
             categories: state.categoriesState.categories,
             suppliers: state.suppliersState.suppliers,
             locations: state.locationsState.locations,
+            statuses: state.statusesState.statuses,
             wasAdd: state.devicesPageState.wasAdd,
         };
     },
@@ -261,6 +263,16 @@ let DeviceSaveContainer = connect(
             let initialValues = {...values};
 
             props.initialize(initialValues);
+        },
+        onUnAttachUserFromDevice: (userId, deviceId) => {
+            unAttachDeviceFromUser(userId, deviceId)
+                .then((response) => {
+                    dispatch(attachDeviceToUserActionCreator(response.data));
+                    dispatch(setDeviceInDeviceSavePageActionCreator(deviceId));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     })
 )(DeviceSave);

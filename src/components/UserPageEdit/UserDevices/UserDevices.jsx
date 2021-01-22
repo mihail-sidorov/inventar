@@ -13,9 +13,14 @@ let UserDevices = (props) => {
             <tr key={prop}>
                 <td>{`${props.brands[props.userDevices[prop].brand_id].brand} ${props.userDevices[prop].model}`}</td>
                 <td>{props.userDevices[prop].inv_number}</td>
-                <td><button className="user-devices__unattach-btn" onClick={() => {
-                    props.onUnAttachDeviceFromUser(props.userId, prop);
-                }}>Открепить</button></td>
+                <td>
+                    {
+                        props.userDevices[prop].status !== 'return' &&
+                        <button className="user-devices__unattach-btn" onClick={() => {
+                            props.onUnAttachDeviceFromUser(props.userId, prop);
+                        }}>Открепить</button>
+                    }
+                </td>
             </tr>
         );
     }

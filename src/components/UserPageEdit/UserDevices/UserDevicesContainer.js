@@ -10,7 +10,7 @@ let UserDevicesContainer = connect(
 
         if (state.userDevicesState.userId !== null) {
             for (let prop in state.devicesState.devices) {
-                if (state.devicesState.devices[prop].user_id == state.userDevicesState.userId) {
+                if ((state.devicesState.devices[prop].user_id == state.userDevicesState.userId) && (state.devicesState.devices[prop].status === 'given' || state.devicesState.devices[prop].status === 'givenIncomplete' || state.devicesState.devices[prop].status === 'return')) {
                     userDevices[prop] = state.devicesState.devices[prop];
                 }
             }

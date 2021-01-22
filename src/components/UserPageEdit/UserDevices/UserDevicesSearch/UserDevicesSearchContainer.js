@@ -6,11 +6,11 @@ import UserDevicesSearch from './UserDevicesSearch';
 
 let UserDevicesSearchContainer = connect(
     state => {
-        let devices = state.devicesState.devices, brands = state.brandsState.brands, search = state.userDevicesState.search, searchDevices = {};
+        let devices = state.devicesState.devices, brands = state.brandsState.brands, search = state.userDevicesState.search, userId = state.userDevicesState.userId, searchDevices = {};
 
-        if (search !== '') {
+        if (search !== '' && userId !== null) {
             for (let id in devices) {
-                if (devices[id].status === 'stock') {
+                if (devices[id].status === 'stock' || (devices[id].status === 'return' && devices[id].user_id == userId)) {
                     let searchWords = search.split(' ');
                     let deviceAccord = true;
 
@@ -69,7 +69,7 @@ let UserDevicesSearchContainer = connect(
         return {
             search: state.userDevicesState.search,
             searchDevices: searchDevices,
-            userId: state.userDevicesState.userId,
+            userId: userId,
             brands: state.brandsState.brands,
         };
     },

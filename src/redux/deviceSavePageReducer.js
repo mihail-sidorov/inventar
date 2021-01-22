@@ -1,12 +1,13 @@
 import Axios from "../config/axiosConfig";
 import isEmptyObject from "../functions/isEmptyObject";
 
-const SET_DEVICE_IN_DEVICE_SAVE_PAGE = 'SET_DEVICE_IN_DEVICE_SAVE_PAGE', RESET_DEVICE = 'RESET_DEVICE', SPECIFICATIONS_SET = 'SPECIFICATIONS_SET', SUB_DEVICES_SET = 'SUB_DEVICES_SET', RESET_SUB_DEVICES = 'RESET_SUB_DEVICES';
+const SET_DEVICE_IN_DEVICE_SAVE_PAGE = 'SET_DEVICE_IN_DEVICE_SAVE_PAGE', RESET_DEVICE = 'RESET_DEVICE', SPECIFICATIONS_SET = 'SPECIFICATIONS_SET', SUB_DEVICES_SET = 'SUB_DEVICES_SET', RESET_SUB_DEVICES = 'RESET_SUB_DEVICES', SEARCH_USERS_INPUT_CHANGE = 'SEARCH_USERS_INPUT_CHANGE';
 
 let initialState = {
     device: {},
     category: {},
     subDevices: {},
+    searchUsersInput: '',
 };
 
 // Запросы к API
@@ -88,6 +89,13 @@ export let subDevicesSetActionCreator = (categoryId) => {
     };
 }
 
+export let searchUsersInputChangeActionCreator = (value) => {
+    return {
+        type: SEARCH_USERS_INPUT_CHANGE,
+        value: value,
+    };
+}
+
 let deviceSavePageReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_DEVICE_IN_DEVICE_SAVE_PAGE:
@@ -115,6 +123,11 @@ let deviceSavePageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 subDevices: action.subDevices,
+            };
+        case SEARCH_USERS_INPUT_CHANGE:
+            return {
+                ...state,
+                searchUsersInput: action.value,
             };
         default:
             return state;
