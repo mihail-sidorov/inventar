@@ -535,7 +535,7 @@ html, body {
     }
 }
 
-.device-page-card {
+.device-page-card, .user-page-card {
 
     background-color: #A3DEE6;
 
@@ -1107,6 +1107,73 @@ html, body {
                 }
             }
         }
+    }
+
+    &__btns {
+
+        margin-top: 75px;
+        text-align: center;
+    }
+}
+
+.user-page-card {
+
+    &__title, &__user-devices-title {
+
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    &__back-to-users {
+
+        color: #403539;
+        text-decoration: none;
+        font-weight: normal;
+        padding-left: 30px;
+        border-radius: 30px;
+        font-size: 10px;
+        background: url('../imgs/back-arrow.svg') no-repeat 5px center;
+        background-color: #C4C4C4;
+        margin-top: 20px;
+    }
+
+    &__border {
+
+        padding: 20px;
+        border: 1px solid #B1B1AF;
+        border-radius: 5px;
+        margin-top: 40px;
+    }
+
+    &__content, &__user-devices {
+
+        &-table {
+
+            margin-top: 40px;
+            margin-left: -5px;
+            margin-right: -5px;
+
+            table {
+
+                width: 100%;
+                border: 0;
+                border-spacing: 5px;
+    
+                td {
+    
+                    height: 50px;
+                    vertical-align: middle;
+                    text-align: left;
+                    background-color: #C4C4C4;
+                    padding: 0 20px;
+                }
+            }
+        }
+    }
+
+    &__user-devices {
+
+        margin-top: 40px;
     }
 
     &__btns {

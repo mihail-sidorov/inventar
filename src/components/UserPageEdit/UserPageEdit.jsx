@@ -58,7 +58,7 @@ let Form = (props) => {
                 </div>
                 <div className="user-page-edit__form-field form__field">
                     <label>
-                        <span><span>Местонахождение fdfdf fdfdff fdfdfd</span></span>
+                        <span><span>Местонахождение</span></span>
                         <Field name="location_id" component="select">
                             <option></option>
                             {optionsLocations}
@@ -94,7 +94,7 @@ let UserPageEdit = (props) => {
             <div className="user-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => (
                     <InnerPage>
-                        <NavLink className="user-page-edit__back-to-users btn" to="/users">Вернуться к списку сотрудников</NavLink>
+                        <NavLink className="user-page-edit__back-to-users btn" to={`/users/card/${props.match.params.userId}`}>Вернуться в карточку сотрудника</NavLink>
                         <div className="user-page-edit__form-container">
                             <Form {...props} />
                         </div>

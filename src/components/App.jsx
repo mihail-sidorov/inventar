@@ -11,6 +11,7 @@ import ServicePageAddContainer from './ServicePageAdd/ServicePageAddContainer';
 import ServicePageEditContainer from './ServicePageEdit/ServicePageEditContainer';
 import ServicesPage from './ServicesPage/ServicesPage';
 import UserPageAddContainer from './UserPageAdd/UserPageAddContainer';
+import UserPageCardContainer from './UserPageCard/UserPageCardContainer';
 import UserPageEditContainer from './UserPageEdit/UserPageEditContainer';
 import UsersPage from './UsersPage/UsersPage';
 
@@ -32,6 +33,7 @@ let App = () => {
                 <Route exact path="/services/add" render={() => <ServicePageAddContainer />} />
                 <Route exact path="/services/:serviceId" render={() => <ServicePageEditContainer />} />
                 <Route exact path="/devices/card/:deviceId" render={() => <DevicePageCardContainer />} />
+                <Route exact path="/users/card/:userId" render={() => <UserPageCardContainer />} />
             </Switch>
         </div>
     );

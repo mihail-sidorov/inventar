@@ -9,7 +9,7 @@ let UserContainer = (id) => {
         }),
         dispatch => ({
             onGoToUserCard: (props) => {
-                props.history.push(`/users/${props.user.id}`);
+                props.history.push(`/users/card/${props.user.id}`);
             },
         })
     )(User);
