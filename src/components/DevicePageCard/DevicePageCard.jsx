@@ -110,7 +110,7 @@ let DevicePageCard = (props) => {
                                             </tr>
                                             <tr>
                                                 <td>Инвентарный номер</td>
-                                                <td>{model}</td>
+                                                <td>{invNumber}</td>
                                             </tr>
                                             <tr>
                                                 <td>Закупочная цена</td>
