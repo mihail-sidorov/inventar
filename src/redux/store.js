@@ -46,7 +46,27 @@ let reducers = combineReducers({
     servicesPageState: servicesPageReducer,
     servicePageEditState: servicePageEditReducer,
     departmentsState: departmentsReducer,
-    form: formReducer,
+    form: formReducer.plugin({
+        deviceSaveForm: (state, action) => {
+            let newState;
+            switch (action.type) {
+                case 'VALIDATE_FIELDS':
+                    newState = {...state};
+                    newState.fields = {...newState.fields};
+                    newState.syncErrors = {...newState.syncErrors};
+                    action.errors.forEach(element => {
+                        let fieldName = element.dataPath.split('.')[1];
+                        let error = element.message;
+                        newState.fields[fieldName] = {touched: true};
+                        newState.syncErrors[fieldName] = error;
+                    });
+
+                    return newState;
+                default:
+                    return state;
+            }
+        },
+    }),
 });
 
 let store = createStore(reducers);

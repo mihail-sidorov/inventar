@@ -1,6 +1,9 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import isEmptyObject from '../../../../functions/isEmptyObject';
+import { required } from '../../../../validators/validators';
+import Input from '../../../common/FormControls/Input';
+import Select from '../../../common/FormControls/Select';
 
 let SpecificationsFields = (props) => {
     if (isEmptyObject(props.category)) return null;
@@ -10,9 +13,7 @@ let SpecificationsFields = (props) => {
     for (let field in props.category.schema.properties) {
         if (props.category.schema.properties[field].enum === undefined) {
             formFields.push(
-                <div className="device-save__form-field form__field" key={field}>
-                    <label><span><span>{props.category.schema.properties[field].title}</span></span><Field name={`specifications_${field}`} type="text" component="input" /></label>
-                </div>
+                <Field name={`specifications_${field}`} desc={props.category.schema.properties[field].title} type="text" component={Input} validate={[required]} key={field} />
             );
         }
         else {
@@ -23,15 +24,10 @@ let SpecificationsFields = (props) => {
             });
 
             formFields.push(
-                <div className="device-save__form-field form__field" key={field}>
-                    <label>
-                        <span><span>{props.category.schema.properties[field].title}</span></span>
-                        <Field name={`specifications_${field}`} component="select">
-                            <option></option>
-                            {options}
-                        </Field>
-                    </label>
-                </div>
+                <Field name={`specifications_${field}`} desc={props.category.schema.properties[field].title} component={Select} validate={[required]} key={field}>
+                    <option></option>
+                    {options}
+                </Field>
             );
         }
     }

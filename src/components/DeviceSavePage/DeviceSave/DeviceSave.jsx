@@ -10,6 +10,10 @@ import { responsiblesGet } from '../../../redux/responsiblesReducer';
 import { statusesGet } from '../../../redux/statusesReducer';
 import { suppliersGet } from '../../../redux/suppliersReducer';
 import { usersGet } from '../../../redux/usersReducer';
+import { required } from '../../../validators/validators';
+import Input from '../../common/FormControls/Input';
+import Radio from '../../common/FormControls/Radio';
+import Select from '../../common/FormControls/Select';
 import SearchUsersForAttachContainer from './SearchUsersForAttach/SearchUsersForAttachContainer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
 import SubDevicesContainer from './SubDevices/SubDevicesContainer';
@@ -55,14 +59,14 @@ let CategoriesField = (categories, props) => {
                     {tree.map((value, index) => {
                         return (
                             <li key={index}>
-                                {value.categories.length === 0 ? <><label><Field name="category_id" component="input" type="radio" value={String(value.category.id)} onClick={(e) => {
+                                {value.categories.length === 0 ? <><Field name="category_id" desc={value.category.category} component={Radio} validate={[required]} type="radio" value={String(value.category.id)} onClick={(e) => {
                                     let categoryId = window.store.getState().form.deviceSaveForm.values.category_id;
                                     if (categoryId !== e.currentTarget.value) {
                                         props.onSpecificationsReset(props);
                                         props.onSpecificationsSet(e.currentTarget.value);
                                         props.onSubDevicesSet(e.currentTarget.value);
                                     }
-                                }} />{value.category.category}</label></> : value.category.category}
+                                }} /></> : value.category.category}
                                 {printTree(value.categories)}
                             </li>
                         );
@@ -102,57 +106,27 @@ let Form = (props) => {
             <div className="device-save__form-fields form__fields">
                 {CategoriesField(props.categories, props)}
                 <SpecificationsFieldsContainer />
-                <div className="device-save__form-field form__field">
-                    <label><span><span>Модель</span></span><Field name="model" type="text" component="input" /></label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label><span><span>Инвентарный номер</span></span><Field name="inv_number" type="text" component="input" /></label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label><span><span>Закупочная цена</span></span><Field name="price" type="text" component="input" /></label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label><span><span>Дата покупки</span></span><Field name="date_purchase" type="date" component="input" /></label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label><span><span>Дата окончания гарантии</span></span><Field name="date_warranty_end" type="date" component="input" /></label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label>
-                        <span><span>Ответственный на складе</span></span>
-                        <Field name="user_id" component="select">
-                            <option></option>
-                            {optionsResponsibles}
-                        </Field>
-                    </label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label>
-                        <span><span>Марка</span></span>
-                        <Field name="brand_id" component="select">
-                            <option></option>
-                            {optionsBrands}
-                        </Field>
-                    </label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label>
-                        <span><span>Поставщик</span></span>
-                        <Field name="supplier_id" component="select">
-                            <option></option>
-                            {optionsSuppliers}
-                        </Field>
-                    </label>
-                </div>
-                <div className="device-save__form-field form__field">
-                    <label>
-                        <span><span>Местонахождение</span></span>
-                        <Field name="location_id" component="select">
-                            <option></option>
-                            {optionsLocations}
-                        </Field>
-                    </label>
-                </div>
+                <Field name="model" desc="Модель" type="text" component={Input} validate={[required]} />
+                <Field name="inv_number" desc="Инвентарный номер" type="text" component={Input} validate={[required]} />
+                <Field name="price" desc="Закупочная цена" type="text" component={Input} validate={[required]} />
+                <Field name="date_purchase" desc="Дата покупки" type="date" component={Input} validate={[required]} />
+                <Field name="date_warranty_end" desc="Дата окончания гарантии" type="date" component={Input} validate={[required]} />
+                <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
+                    <option></option>
+                    {optionsResponsibles}
+                </Field>
+                <Field name="brand_id" desc="Марка" component={Select} validate={[required]}>
+                    <option></option>
+                    {optionsBrands}
+                </Field>
+                <Field name="supplier_id" desc="Поставщик" component={Select} validate={[required]}>
+                    <option></option>
+                    {optionsSuppliers}
+                </Field>
+                <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
+                    <option></option>
+                    {optionsLocations}
+                </Field>
                 <SubDevicesContainer {...props} />
             </div>
             <div className="device-save__form-btns">

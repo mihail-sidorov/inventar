@@ -940,6 +940,54 @@ html, body {
                 }
             }
         }
+
+        &-message {
+
+            padding-left: 230px;
+        }
+
+        &_radio {
+
+            label {
+
+                display: inline-block;
+                height: auto;
+
+                input {
+
+                    width: auto;
+                    margin: 0 5px 0 0;
+                }
+            }
+
+            .form__field-message {
+
+                display: inline-block;
+                padding: 0;
+                margin-left: 10px;
+            }
+        }
+
+        &_error {
+
+            label {
+
+                & > span {
+
+                    background-color: #FBBAB5;
+                }
+
+                input, select {
+
+                    border-bottom: 1px solid #FBBAB5;
+                }
+            }
+
+            .form__field-message {
+
+                color: red;
+            }
+        }
     }
 }
 

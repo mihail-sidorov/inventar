@@ -50,7 +50,7 @@ let DeviceSaveContainer = connect(
                     }
                 }
 
-                if (specificationsFields && deviceSaveData.model && deviceSaveData.inv_number && deviceSaveData.price && deviceSaveData.date_purchase && deviceSaveData.date_warranty_end && deviceSaveData.user_id && deviceSaveData.brand_id && deviceSaveData.supplier_id && deviceSaveData.location_id) {
+                if (specificationsFields) {
                     let state = window.store.getState();
                     let statuses = state.statusesState.statuses;
                     let statusId = null;
@@ -112,7 +112,10 @@ let DeviceSaveContainer = connect(
                                 }
                             })
                             .catch((error) => {
-                                console.log(error);
+                                dispatch({
+                                    type: 'VALIDATE_FIELDS',
+                                    errors: error.response.data.message,
+                                });
                             });
                     }
                     else {
@@ -130,7 +133,10 @@ let DeviceSaveContainer = connect(
                                 alert('Оборудование отредактировано!');
                             })
                             .catch((error) => {
-                                console.log(error);
+                                dispatch({
+                                    type: 'VALIDATE_FIELDS',
+                                    errors: error.response.data.message,
+                                });
                             });
                     }
                 }
