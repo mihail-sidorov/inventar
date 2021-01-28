@@ -56,7 +56,9 @@ let UserPageCard = (props) => {
                 }
 
                 userDevices.push(
-                    <tr key={id}>
+                    <tr key={id} onClick={() => {
+                        props.deviceCardShow(id, props.history);
+                    }}>
                         <td>{brand} {props.devices[id].model}</td>
                         <td>{props.devices[id].inv_number}</td>
                     </tr>

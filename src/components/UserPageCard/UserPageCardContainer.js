@@ -38,6 +38,9 @@ let UserPageCardContainer = connect(
         onUsersGet: (data) => {
             dispatch(usersGetActionCreator(data));
         },
+        deviceCardShow: (deviceId, history) => {
+            history.push(`/devices/card/${deviceId}`);
+        },
     })
 )(UserPageCard);
 

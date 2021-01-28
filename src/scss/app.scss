@@ -1222,6 +1222,17 @@ html, body {
     &__user-devices {
 
         margin-top: 40px;
+
+        &-table {
+
+            table {
+
+                tr {
+
+                    cursor: pointer;
+                }
+            }
+        }
     }
 
     &__btns {
