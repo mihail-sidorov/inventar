@@ -8,6 +8,9 @@ import { usersGet } from '../../redux/usersReducer';
 import InnerPage from '../InnerPage/InnerPage';
 import { Field, reduxForm } from 'redux-form';
 import UserDevicesContainer from './UserDevices/UserDevicesContainer';
+import Input from '../common/FormControls/Input';
+import Select from '../common/FormControls/Select';
+import { required } from '../../validators/validators';
 
 let Form = (props) => {
     let optionsEmployers = [];
@@ -35,45 +38,22 @@ let Form = (props) => {
     return (
         <form className="user-page-edit__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
             <div className="user-page-edit__form-fields form__fields">
-                <div className="user-page-edit__form-field form__field">
-                    <label><span><span>ФИО</span></span><Field name="full_name" component="input" type="text" /></label>
-                </div>
-                <div className="user-page-edit__form-field form__field">
-                    <label><span><span>Телефон</span></span><Field name="phone" component="input" type="text" /></label>
-                </div>
-                <div className="user-page-edit__form-field form__field">
-                    <label><span><span>EMail</span></span><Field name="email" component="input" type="text" /></label>
-                </div>
-                <div className="user-page-edit__form-field form__field">
-                    <label><span><span>Дата принятия</span></span><Field name="appointment_date" component="input" type="date" /></label>
-                </div>
-                <div className="user-page-edit__form-field form__field">
-                    <label>
-                        <span><span>Работодатель</span></span>
-                        <Field name="employer_id" component="select">
-                            <option></option>
-                            {optionsEmployers}
-                        </Field>
-                    </label>
-                </div>
-                <div className="user-page-edit__form-field form__field">
-                    <label>
-                        <span><span>Местонахождение</span></span>
-                        <Field name="location_id" component="select">
-                            <option></option>
-                            {optionsLocations}
-                        </Field>
-                    </label>
-                </div>
-                <div className="user-page-edit__form-field form__field">
-                    <label>
-                        <span><span>Должность</span></span>
-                        <Field name="post_dep_loc_id" component="select">
-                            <option></option>
-                            {optionsPostDepLocs}
-                        </Field>
-                    </label>
-                </div>
+                <Field name="full_name" desc="ФИО" type="text" component={Input} validate={[required]} />
+                <Field name="phone" desc="Телефон" type="text" component={Input} validate={[required]} />
+                <Field name="email" desc="EMail" type="text" component={Input} validate={[required]} />
+                <Field name="appointment_date" desc="Дата принятия" type="date" component={Input} validate={[required]} />
+                <Field name="employer_id" desc="Работодатель" component={Select} validate={[required]}>
+                    <option></option>
+                    {optionsEmployers}
+                </Field>
+                <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
+                    <option></option>
+                    {optionsLocations}
+                </Field>
+                <Field name="post_dep_loc_id" desc="Должность" component={Select} validate={[required]}>
+                    <option></option>
+                    {optionsPostDepLocs}
+                </Field>
             </div>
             <div className="user-page-edit__form-btns">
                 <button className="user-page-edit__form-submit-btn btn">Сохранить</button>

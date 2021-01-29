@@ -113,7 +113,7 @@ let DeviceSaveContainer = connect(
                             })
                             .catch((error) => {
                                 dispatch({
-                                    type: 'VALIDATE_FIELDS',
+                                    type: 'DEVICE_SAVE_FORM_VALIDATE',
                                     errors: error.response.data.message,
                                 });
                             });
@@ -134,7 +134,7 @@ let DeviceSaveContainer = connect(
                             })
                             .catch((error) => {
                                 dispatch({
-                                    type: 'VALIDATE_FIELDS',
+                                    type: 'DEVICE_SAVE_FORM_VALIDATE',
                                     errors: error.response.data.message,
                                 });
                             });

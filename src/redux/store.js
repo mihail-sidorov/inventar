@@ -23,6 +23,29 @@ import servicesPageReducer from './servicesPageReducer';
 import servicePageEditReducer from './servicePageEditReducer';
 import departmentsReducer from './departmentsReducer';
 
+const ValidateReducer = actionType => {
+    return (state, action) => {
+        let newState;
+
+        if (action.type === actionType) {
+            newState = {...state};
+            newState.fields = {...newState.fields};
+            newState.syncErrors = {...newState.syncErrors};
+            action.errors.forEach(element => {
+                let fieldNameArray = element.dataPath.split('.');
+                let fieldName = fieldNameArray[fieldNameArray.length - 1];
+                let error = element.message;
+                newState.fields[fieldName] = {touched: true};
+                newState.syncErrors[fieldName] = error;
+            });
+
+            return newState;
+        }
+
+        return state;
+    }
+}
+
 let reducers = combineReducers({
     mainPageState: mainPageReducer,
     authState: authReducer,
@@ -47,25 +70,9 @@ let reducers = combineReducers({
     servicePageEditState: servicePageEditReducer,
     departmentsState: departmentsReducer,
     form: formReducer.plugin({
-        deviceSaveForm: (state, action) => {
-            let newState;
-            switch (action.type) {
-                case 'VALIDATE_FIELDS':
-                    newState = {...state};
-                    newState.fields = {...newState.fields};
-                    newState.syncErrors = {...newState.syncErrors};
-                    action.errors.forEach(element => {
-                        let fieldName = element.dataPath.split('.')[1];
-                        let error = element.message;
-                        newState.fields[fieldName] = {touched: true};
-                        newState.syncErrors[fieldName] = error;
-                    });
-
-                    return newState;
-                default:
-                    return state;
-            }
-        },
+        deviceSaveForm: ValidateReducer('DEVICE_SAVE_FORM_VALIDATE'),
+        userAddForm: ValidateReducer('USER_ADD_FORM_VALIDATE'),
+        userEditForm: ValidateReducer('USER_EDIT_FORM_VALIDATE'),
     }),
 });
 

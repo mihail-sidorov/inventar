@@ -69,26 +69,27 @@ let UserPageEditContainer = connect(
         onSubmit: (values) => {
             let sendValues = {...values};
 
-            if (sendValues.appointment_date && sendValues.employer_id && sendValues.full_name && sendValues.location_id && sendValues.phone && sendValues.post_dep_loc_id) {
-                sendValues.contact = {};
-                if (sendValues.phone !== undefined) {
-                    sendValues.contact.phone = sendValues.phone;
-                    delete sendValues.phone;
-                }
-                if (sendValues.email !== undefined) {
-                    sendValues.contact.email = sendValues.email;
-                    delete sendValues.email;
-                }
-
-                usersPatch(sendValues)
-                    .then((response) => {
-                        dispatch(usersPostActionCreator(response.data));
-                        alert('Пользователь отредактирован!');
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+            sendValues.contact = {};
+            if (sendValues.phone !== undefined) {
+                sendValues.contact.phone = sendValues.phone;
+                delete sendValues.phone;
             }
+            if (sendValues.email !== undefined) {
+                sendValues.contact.email = sendValues.email;
+                delete sendValues.email;
+            }
+
+            usersPatch(sendValues)
+                .then((response) => {
+                    dispatch(usersPostActionCreator(response.data));
+                    alert('Пользователь отредактирован!');
+                })
+                .catch((error) => {
+                    dispatch({
+                        type: 'USER_EDIT_FORM_VALIDATE',
+                        errors: error.response.data.message,
+                    });
+                });
         },
     })
 )(UserPageEdit);
