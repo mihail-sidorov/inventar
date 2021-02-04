@@ -1,6 +1,6 @@
 import isEmptyObject from "../functions/isEmptyObject";
 
-const MAKE_SHORT_EVENTS = 'MAKE_SHORT_EVENTS', CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION', CHANGE_EVENTS_PAGE_SEARCH = 'CHANGE_EVENTS_PAGE_SEARCH';
+const MAKE_SHORT_EVENTS = 'MAKE_SHORT_EVENTS', CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION', CHANGE_EVENTS_PAGE_SEARCH = 'CHANGE_EVENTS_PAGE_SEARCH', CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE = 'CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE', CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE = 'CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE';
 
 let makeShortEvents = (events, pagination, search, users, isLastPage) => {
     let searchEvents = {}, shortEvents = {};
@@ -91,6 +91,10 @@ let initialState = {
         pages: 0,
     },
     search: '',
+    filter: {
+        status: 'pending',
+        person: false,
+    },
 };
 
 // Создание Action Creators
@@ -125,6 +129,15 @@ export let changeEventsPageSearchActionCreator = (search) => {
     };
 }
 
+export let changeStatusInFilterOnEventsPageActionCreator = (status) => ({
+    type: CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE,
+    status: status,
+});
+
+export let changePersonInFilterOnEventsPageActionCreator = () => ({
+    type: CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE,
+});
+
 let eventsPageReducer = (state = initialState, action) => {
     switch (action.type) {
         case MAKE_SHORT_EVENTS:
@@ -153,6 +166,22 @@ let eventsPageReducer = (state = initialState, action) => {
                 pagination: {
                     ...state.pagination,
                     currentPage: 1,
+                },
+            };
+        case CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE:
+            return {
+                ...state,
+                filter: {
+                    ...state.filter,
+                    status: action.status,
+                },
+            };
+        case CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE:
+            return {
+                ...state,
+                filter: {
+                    ...state.filter,
+                    person: state.filter.person ? false : true,
                 },
             };
         default:

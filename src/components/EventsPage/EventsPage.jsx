@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
 import InnerPage from '../InnerPage/InnerPageContainer';
 import EventsContainer from './Events/EventsContainer';
+import EventsPageFilterContainer from './Filter/EventsPageFilterContainer';
 import EventsPaginationContainer from './Pagination/EventsPaginationContainer';
 import EventsSearchContainer from './Search/EventsSearchContainer';
 
@@ -13,6 +14,7 @@ let EventsPage = (props) => {
                 <Route exact path="/:page" render={() => (
                     <InnerPage>
                         <EventsSearchContainer />
+                        <EventsPageFilterContainer />
                         <EventsContainer />
                         <EventsPaginationContainer />
                     </InnerPage>

@@ -496,6 +496,11 @@ html, body {
                     margin-top: auto;
                     align-self: center;
                 }
+
+                .events-page-filter {
+
+                    margin-bottom: 3px;
+                }
             }
         }
     }
@@ -1274,5 +1279,64 @@ html, body {
 
         margin-top: 75px;
         text-align: center;
+    }
+}
+
+.events-page-filter {
+
+    display: flex;
+    padding: 0 20px;
+    font-size: 16px;
+    align-items: flex-end;
+
+    &__status {
+
+        &-items {
+
+            display: flex;
+            align-items: flex-end;
+        }
+
+        &-item {
+
+            flex-basis: 230px;
+            height: 44px;
+            line-height: 44px;
+            background-color: #F2E9E9;
+            border-radius: 5px;
+            flex-shrink: 0;
+            margin-right: 3px;
+            text-align: center;
+            cursor: pointer;
+
+            &:last-child {
+
+                margin-right: 0;
+            }
+
+            &_active {
+
+                height: 50px;
+                line-height: 50px;
+            }
+        }
+    }
+
+    &__person {
+
+        margin-left: auto;
+        flex-basis: 150px;
+        height: 44px;
+        line-height: 44px;
+        background-color: #F2E9E9;
+        border-radius: 5px;
+        flex-shrink: 0;
+        text-align: center;
+        cursor: pointer;
+
+        &_active {
+
+            background-color: #FBBAB5;
+        }
     }
 }
