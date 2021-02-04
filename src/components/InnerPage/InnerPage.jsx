@@ -23,7 +23,7 @@ let InnerPage = (props) => {
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование компании</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'users' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/users">Сотрудники компании</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы компании</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'acts' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/acts">Акты</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
                 </div>
             </div>
             <div className="inner-page__content">

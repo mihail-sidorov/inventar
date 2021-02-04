@@ -22,6 +22,8 @@ import accountsReducer from './accountsReducer';
 import servicesPageReducer from './servicesPageReducer';
 import servicePageEditReducer from './servicePageEditReducer';
 import departmentsReducer from './departmentsReducer';
+import eventsPageReducer from './eventsPageReducer';
+import eventsReducer from './eventsReducer';
 
 const ValidateReducer = actionType => {
     return (state, action) => {
@@ -74,6 +76,8 @@ let reducers = combineReducers({
         userAddForm: ValidateReducer('USER_ADD_FORM_VALIDATE'),
         userEditForm: ValidateReducer('USER_EDIT_FORM_VALIDATE'),
     }),
+    eventsState: eventsReducer,
+    eventsPageState: eventsPageReducer,
 });
 
 let store = createStore(reducers);
