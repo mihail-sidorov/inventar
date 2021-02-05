@@ -1,5 +1,16 @@
 import React from 'react';
 
+let ActionEventBtn = (props) => {
+    return (
+        <button className={`action-event-btn${props.className ? ' ' + props.className : ''}`} onClick={() => {
+            let type;
+            if (props.className === 'action-event-btn_accept') type = 'accept';
+            else type = 'reject';
+            props.actionEvent(props.id, type);
+        }}></button>
+    );
+}
+
 let Event = (props) => {
     let createDate, actorName;
 
@@ -24,11 +35,30 @@ let Event = (props) => {
     }
     createDate = date.getUTCFullYear() + '-' + month + '-' + day;
 
+    let showBtns = false;
+    for (let i = 0; i < props.event.confirm_need.length; i++) {
+        if (props.event.confirm_need[i].users[props.userId]) {
+            showBtns = true;
+            break;
+        }
+    }
+
     return (
         <tr>
             <td>{props.event.name_rus}</td>
             <td>{createDate}</td>
-            <td>{actorName}</td>
+            <td>
+                <div className="action-event-btns">
+                    {actorName}
+                    {
+                        showBtns &&
+                        <>
+                            <ActionEventBtn {...props} className="action-event-btn_accept" />
+                            <ActionEventBtn {...props} className="action-event-btn_reject" />
+                        </>
+                    }
+                </div>
+            </td>
         </tr>
     );
 }

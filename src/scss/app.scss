@@ -1340,3 +1340,42 @@ html, body {
         }
     }
 }
+
+.action-event-btn {
+
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    padding: 0;
+    border: 0;
+
+    &:hover {
+
+        opacity: 0.5;
+    }
+
+    &_accept {
+
+        background: url('../imgs/action-event-btn-accept.svg') no-repeat center;
+    }
+
+    &_reject {
+
+        background: url('../imgs/action-event-btn-reject.svg') no-repeat center;
+    }
+}
+
+.action-event-btns {
+
+    display: flex;
+
+    .action-event-btn {
+
+        &_accept {
+
+            margin-left: auto;
+            margin-right: 5px;
+        }
+    }
+}
