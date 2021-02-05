@@ -2,11 +2,27 @@ import isEmptyObject from "../functions/isEmptyObject";
 
 const MAKE_SHORT_EVENTS = 'MAKE_SHORT_EVENTS', CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION', CHANGE_EVENTS_PAGE_SEARCH = 'CHANGE_EVENTS_PAGE_SEARCH', CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE = 'CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE', CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE = 'CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE';
 
-let makeShortEvents = (events, pagination, search, users, isLastPage) => {
+let makeShortEvents = (events, pagination, search, users, isLastPage, filter, userId) => {
     let searchEvents = {}, shortEvents = {};
 
-    if (search !== '') {
-        for (let id in events) {
+    let filterEvent = (filter, event) => {
+        for (let filterName in filter) {
+            if (filterName === 'status') {
+                if (filter[filterName] !== event[filterName]) {
+                    return false;
+                }
+            }
+            if (filterName === 'person') {
+                if (filter[filterName] && event.personal_ids[userId] === undefined) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    for (let id in events) {
+        if (filterEvent(filter, events[id])) {
             let searchWords = search.split(' ');
             let eventAccord = true;
 
@@ -48,9 +64,6 @@ let makeShortEvents = (events, pagination, search, users, isLastPage) => {
             }
         }
     }
-    else {
-        searchEvents = events;
-    }
 
     let paginationCount = pagination.count;
     let currentPage = pagination.currentPage;
@@ -86,7 +99,7 @@ let makeShortEvents = (events, pagination, search, users, isLastPage) => {
 let initialState = {
     shortEvents: {},
     pagination: {
-        count: 1,
+        count: 5,
         currentPage: 1,
         pages: 0,
     },
@@ -104,6 +117,8 @@ export let makeShortEventsActionCreator = (isLastPage = false) => {
     let users = state.usersState.users;
     let pagination = state.eventsPageState.pagination;
     let search = state.eventsPageState.search;
+    let filter = state.eventsPageState.filter;
+    let userId = state.authState.userId;
 
     return {
         type: MAKE_SHORT_EVENTS,
@@ -112,6 +127,8 @@ export let makeShortEventsActionCreator = (isLastPage = false) => {
         pagination: pagination,
         search: search,
         isLastPage: isLastPage,
+        filter: filter,
+        userId: userId,
     };
 }
 
@@ -141,7 +158,7 @@ export let changePersonInFilterOnEventsPageActionCreator = () => ({
 let eventsPageReducer = (state = initialState, action) => {
     switch (action.type) {
         case MAKE_SHORT_EVENTS:
-            let makeShortEventsResult = makeShortEvents(action.events, action.pagination, action.search, action.users, action.isLastPage);
+            let makeShortEventsResult = makeShortEvents(action.events, action.pagination, action.search, action.users, action.isLastPage, action.filter, action.userId);
             return {
                 ...state,
                 shortEvents: makeShortEventsResult.shortEvents,

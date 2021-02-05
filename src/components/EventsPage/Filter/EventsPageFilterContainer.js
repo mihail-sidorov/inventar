@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changePersonInFilterOnEventsPageActionCreator, changeStatusInFilterOnEventsPageActionCreator } from '../../../redux/eventsPageReducer';
+import { changePersonInFilterOnEventsPageActionCreator, changeStatusInFilterOnEventsPageActionCreator, makeShortEventsActionCreator } from '../../../redux/eventsPageReducer';
 import EventsPageFilter from './EventsPageFilter';
 
 let EventsPageFilterContainer = connect(
@@ -9,9 +9,11 @@ let EventsPageFilterContainer = connect(
     dispatch => ({
         changeStatus: (status) => {
             dispatch(changeStatusInFilterOnEventsPageActionCreator(status));
+            dispatch(makeShortEventsActionCreator());
         },
         changePerson: () => {
             dispatch(changePersonInFilterOnEventsPageActionCreator());
+            dispatch(makeShortEventsActionCreator());
         },
     })
 )(EventsPageFilter);
