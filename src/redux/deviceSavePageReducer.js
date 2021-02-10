@@ -1,22 +1,17 @@
 import Axios from "../config/axiosConfig";
 import isEmptyObject from "../functions/isEmptyObject";
 
-const SET_DEVICE_IN_DEVICE_SAVE_PAGE = 'SET_DEVICE_IN_DEVICE_SAVE_PAGE', RESET_DEVICE = 'RESET_DEVICE', SPECIFICATIONS_SET = 'SPECIFICATIONS_SET', SUB_DEVICES_SET = 'SUB_DEVICES_SET', RESET_SUB_DEVICES = 'RESET_SUB_DEVICES', SEARCH_USERS_INPUT_CHANGE = 'SEARCH_USERS_INPUT_CHANGE';
+const SET_DEVICE_IN_DEVICE_SAVE_PAGE = 'SET_DEVICE_IN_DEVICE_SAVE_PAGE', RESET_DEVICE = 'RESET_DEVICE', SPECIFICATIONS_SET = 'SPECIFICATIONS_SET', SEARCH_USERS_INPUT_CHANGE = 'SEARCH_USERS_INPUT_CHANGE';
 
 let initialState = {
     device: {},
     category: {},
-    subDevices: {},
     searchUsersInput: '',
 };
 
 // Запросы к API
 export let saveDevice = (data) => {
     return Axios.post('devices', data);
-}
-
-export let subDevices = (data) => {
-    return Axios.post('subDevices', data);
 }
 
 export let editDevice = (data) => {
@@ -48,13 +43,6 @@ export let resetDeviceActionCreator = (emptyObject) => {
     };
 }
 
-export let resetSubDevicesActionCreator = (emptyObject) => {
-    return {
-        type: RESET_SUB_DEVICES,
-        emptyObject: emptyObject,
-    };
-}
-
 export let specificationsSetActionCreator = (categoryId) => {
     let state = window.store.getState(), category = {};
 
@@ -65,27 +53,6 @@ export let specificationsSetActionCreator = (categoryId) => {
     return {
         type: SPECIFICATIONS_SET,
         category: category,
-    };
-}
-
-export let subDevicesSetActionCreator = (categoryId) => {
-    let state = window.store.getState(), subDevices = {};
-    let devices = state.devicesState.devices;
-    let device = state.deviceSavePageState.device;
-
-    if (!isEmptyObject(devices) && state.categoriesState.categories[categoryId] !== undefined && state.categoriesState.categories[categoryId].sub_devices !== null) {
-        for (let catProp in state.categoriesState.categories[categoryId].sub_devices.sub_cat_id) {
-            for (let devicesProp in devices) {
-                if ((devices[devicesProp].category_id == catProp) && (device.id != devices[devicesProp].id) && (devices[devicesProp].parent_id === null || devices[devicesProp].parent_id === device.id)) {
-                    subDevices[devicesProp] = devices[devicesProp];
-                }
-            }
-        }
-    }
-
-    return {
-        type: SUB_DEVICES_SET,
-        subDevices: subDevices,
     };
 }
 
@@ -109,20 +76,10 @@ let deviceSavePageReducer = (state = initialState, action) => {
                 device: action.emptyObject,
                 category: {},
             };
-        case RESET_SUB_DEVICES:
-            return {
-                ...state,
-                subDevices: action.emptyObject,
-            };
         case SPECIFICATIONS_SET:
             return {
                 ...state,
                 category: action.category,
-            };
-        case SUB_DEVICES_SET:
-            return {
-                ...state,
-                subDevices: action.subDevices,
             };
         case SEARCH_USERS_INPUT_CHANGE:
             return {

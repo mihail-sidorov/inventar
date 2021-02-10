@@ -16,7 +16,6 @@ import Radio from '../../common/FormControls/Radio';
 import Select from '../../common/FormControls/Select';
 import SearchUsersForAttachContainer from './SearchUsersForAttach/SearchUsersForAttachContainer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
-import SubDevicesContainer from './SubDevices/SubDevicesContainer';
 
 let CategoriesField = (categories, props) => {
     let tree = [];
@@ -64,7 +63,6 @@ let CategoriesField = (categories, props) => {
                                     if (categoryId !== e.currentTarget.value) {
                                         props.onSpecificationsReset(props);
                                         props.onSpecificationsSet(e.currentTarget.value);
-                                        props.onSubDevicesSet(e.currentTarget.value);
                                     }
                                 }} /></> : value.category.category}
                                 {printTree(value.categories)}
@@ -127,7 +125,6 @@ let Form = (props) => {
                     <option></option>
                     {optionsLocations}
                 </Field>
-                <SubDevicesContainer {...props} />
             </div>
             <div className="device-save__form-btns">
                 <button className="device-save__form-submit-btn btn">Сохранить</button>
@@ -166,20 +163,23 @@ let DeviceSave = (props) => {
                 <div className="device-save__title">{props.match.params.device === 'add' ? 'Добавление нового оборудования': 'Редактирование оборудования'}</div>
                 <Form {...props} />
             </div>
-            <div className="device-save__status-container">
-                <div className="device-save__status-container-title">
-                    Статус оборудования
+            {
+                props.match.params.device !== 'add' &&
+                <div className="device-save__status-container">
+                    <div className="device-save__status-container-title">
+                        Статус оборудования
+                    </div>
+                    <div className="device-save__status-container-inform">
+                        Статус: {status}
+                        <br/>
+                        Ответственный: {user} {userId !== undefined && deviceId !== undefined && statusFlag !== undefined && (statusFlag === 'given' || statusFlag === 'givenIncomplete') && <button onClick={() => {props.onUnAttachUserFromDevice(userId, deviceId)}}>Открепить</button>}
+                    </div>
+                    {
+                        statusFlag === 'stock' &&
+                        <SearchUsersForAttachContainer />
+                    }
                 </div>
-                <div className="device-save__status-container-inform">
-                    Статус: {status}
-                    <br/>
-                    Ответственный: {user} {userId !== undefined && deviceId !== undefined && statusFlag !== undefined && (statusFlag === 'given' || statusFlag === 'givenIncomplete') && <button onClick={() => {props.onUnAttachUserFromDevice(userId, deviceId)}}>Открепить</button>}
-                </div>
-                {
-                    statusFlag === 'stock' &&
-                    <SearchUsersForAttachContainer />
-                }
-            </div>
+            }
         </div>
     );
 }
@@ -243,7 +243,6 @@ let DeviceSaveClassComponent = class extends React.Component {
                     }
                     else {
                         this.props.onResetDevice(this.emptyDeviceObject);
-                        this.props.onResetSubDevices(this.emptyDeviceObject);
                     }
                 })
                 .catch((error) => {
@@ -256,7 +255,6 @@ let DeviceSaveClassComponent = class extends React.Component {
             }
             else {
                 this.props.onResetDevice(this.emptyDeviceObject);
-                this.props.onResetSubDevices(this.emptyDeviceObject);
             }
         }
     }
@@ -269,24 +267,14 @@ let DeviceSaveClassComponent = class extends React.Component {
         }
     }
 
-    loadSubDevices() {
-        let state = window.store.getState();
-
-        if (state.deviceSavePageState.device.category_id !== undefined) {
-            this.props.onSubDevicesSet(state.deviceSavePageState.device.category_id);
-        }
-    }
-
     componentDidMount() {
         this.loadDeviceSaveData();
         this.loadSpecificationsFields();
-        this.loadSubDevices();
     }
 
     componentDidUpdate() {
         this.loadDeviceSaveData();
         this.loadSpecificationsFields();
-        this.loadSubDevices();
     }
 
     render() {

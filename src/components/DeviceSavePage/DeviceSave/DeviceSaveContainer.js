@@ -3,9 +3,9 @@ import { change, initialize } from 'redux-form';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
-import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator, subDevicesSetActionCreator, resetSubDevicesActionCreator, subDevices } from '../../../redux/deviceSavePageReducer';
+import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator } from '../../../redux/deviceSavePageReducer';
 import { changeWasAddInDevicesPageStateActionCreator } from '../../../redux/devicesPageReducer';
-import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator, subDevicesAttachActionCreator, attachDeviceToUserActionCreator } from '../../../redux/devicesReducer';
+import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator, attachDeviceToUserActionCreator } from '../../../redux/devicesReducer';
 import { locationsGetActionCreator } from '../../../redux/locationsReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
 import { statusesGetActionCreator } from '../../../redux/statusesReducer';
@@ -65,17 +65,6 @@ let DeviceSaveContainer = connect(
                         deviceSaveData.status_id = String(statusId);
                     }
 
-                    let ids = [];
-                    for (let prop in deviceSaveData) {
-                        let pattern = new RegExp(/^sub-device-/);
-                        if (prop.match(pattern)) {
-                            if (deviceSaveData[prop] === true) {
-                                ids.push(prop.split('-')[2]);
-                            }
-                            delete deviceSaveData[prop];
-                        }
-                    }
-
                     if (props.match.params.device === 'add') {
                         saveDevice(deviceSaveData)
                             .then((device) => {
@@ -87,13 +76,6 @@ let DeviceSaveContainer = connect(
                                             dispatch(devicesGetActionCreator(response.data));
                                             dispatch(saveDeviceActionCreator(device.data));
                                             dispatch(changeWasAddInDevicesPageStateActionCreator(true));
-                                            subDevices({id: deviceId, ids: ids})
-                                                .then((response) => {
-                                                    dispatch(subDevicesAttachActionCreator(deviceId, response.data));
-                                                })
-                                                .catch((error) => {
-                                                    console.log(error);
-                                                });
                                         })
                                         .catch((error) => {
                                             console.log(error);
@@ -102,13 +84,6 @@ let DeviceSaveContainer = connect(
                                 else {
                                     dispatch(saveDeviceActionCreator(device.data));
                                     dispatch(changeWasAddInDevicesPageStateActionCreator(true));
-                                    subDevices({id: deviceId, ids: ids})
-                                        .then((response) => {
-                                            dispatch(subDevicesAttachActionCreator(deviceId, response.data));
-                                        })
-                                        .catch((error) => {
-                                            console.log(error);
-                                        });
                                 }
                             })
                             .catch((error) => {
@@ -123,13 +98,6 @@ let DeviceSaveContainer = connect(
                             .then((response) => {
                                 let deviceId = response.data.id;
                                 dispatch(saveDeviceActionCreator(response.data));
-                                subDevices({id: deviceId, ids: ids})
-                                    .then((response) => {
-                                        dispatch(subDevicesAttachActionCreator(deviceId, response.data));
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                    });
                                 alert('Оборудование отредактировано!');
                             })
                             .catch((error) => {
@@ -223,27 +191,8 @@ let DeviceSaveContainer = connect(
             dispatch(resetDeviceActionCreator(emptyObject));
             dispatch(initialize('deviceSaveForm', emptyObject));
         },
-        onResetSubDevices: (emptyObject) => {
-            dispatch(resetSubDevicesActionCreator(emptyObject));
-        },
         onSpecificationsSet: (categoryId) => {
             dispatch(specificationsSetActionCreator(categoryId));
-        },
-        onSubDevicesSet: (categoryId) => {
-            dispatch(subDevicesSetActionCreator(categoryId));
-
-            let state = window.store.getState();
-            let subDevices = state.deviceSavePageState.subDevices;
-
-            if (!isEmptyObject(subDevices)) {
-                for (let prop in subDevices) {
-                    if (subDevices[prop].parent_id !== null) {
-                        setTimeout(() => {
-                            dispatch(change('deviceSaveForm', `sub-device-${prop}`, true));
-                        }, 0);
-                    }
-                }
-            }
         },
         onSpecificationsReset: (props) => {
             let state = window.store.getState();
@@ -259,7 +208,7 @@ let DeviceSaveContainer = connect(
             }
 
             for (let prop in values) {
-                let pattern = new RegExp(/^(specifications_)|(sub-device-)/);
+                let pattern = new RegExp(/^(specifications_)/);
 
                 if (prop.match(pattern)) {
                     delete values[prop];
