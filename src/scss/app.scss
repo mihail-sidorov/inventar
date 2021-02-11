@@ -1086,6 +1086,66 @@ html, body {
     }
 }
 
+.sub-devices {
+
+    padding: 20px;
+    border: 1px solid #B1B1AF;
+    border-radius: 5px;
+    margin-top: 40px;
+
+    &__title {
+
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    &__search {
+
+        &-items {
+    
+            margin-top: 20px;
+        }
+    
+        &-item {
+    
+            margin-bottom: 10px;
+    
+            &:last-child {
+    
+                margin-bottom: 0;
+            }
+
+            &-part-inform {
+
+                margin-right: 5px;
+            }
+        }
+    }
+
+    &__table {
+
+        margin-top: 40px;
+        margin-left: -5px;
+        margin-right: -5px;
+
+        table {
+
+            width: 100%;
+            border: 0;
+            border-spacing: 5px;
+
+            td {
+
+                height: 50px;
+                vertical-align: middle;
+                text-align: left;
+                background-color: #C4C4C4;
+                padding: 0 20px;
+            }
+        }
+    }
+}
+
 .service-entities {
 
     padding: 20px;

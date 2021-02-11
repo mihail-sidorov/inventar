@@ -16,6 +16,7 @@ import Radio from '../../common/FormControls/Radio';
 import Select from '../../common/FormControls/Select';
 import SearchUsersForAttachContainer from './SearchUsersForAttach/SearchUsersForAttachContainer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
+import SubDevicesContainer from './SubDevices/SubDevicesContainer';
 
 let CategoriesField = (categories, props) => {
     let tree = [];
@@ -102,7 +103,10 @@ let Form = (props) => {
     return (
         <form action="" className="device-save__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
             <div className="device-save__form-fields form__fields">
-                {CategoriesField(props.categories, props)}
+                {
+                    props.match.params.device === 'add' &&
+                    CategoriesField(props.categories, props)
+                }
                 <SpecificationsFieldsContainer />
                 <Field name="model" desc="Модель" type="text" component={Input} validate={[required]} />
                 <Field name="inv_number" desc="Инвентарный номер" type="text" component={Input} validate={[required]} />
@@ -165,20 +169,28 @@ let DeviceSave = (props) => {
             </div>
             {
                 props.match.params.device !== 'add' &&
-                <div className="device-save__status-container">
-                    <div className="device-save__status-container-title">
-                        Статус оборудования
-                    </div>
-                    <div className="device-save__status-container-inform">
-                        Статус: {status}
-                        <br/>
-                        Ответственный: {user} {userId !== undefined && deviceId !== undefined && statusFlag !== undefined && (statusFlag === 'given' || statusFlag === 'givenIncomplete') && <button onClick={() => {props.onUnAttachUserFromDevice(userId, deviceId)}}>Открепить</button>}
-                    </div>
+                <>
                     {
-                        statusFlag === 'stock' &&
-                        <SearchUsersForAttachContainer />
+                        !isEmptyObject(props.device) &&
+                        props.categories[props.device.category_id] &&
+                        props.categories[props.device.category_id].sub_devices &&
+                        <SubDevicesContainer deviceId={props.match.params.device} />
                     }
-                </div>
+                    <div className="device-save__status-container">
+                        <div className="device-save__status-container-title">
+                            Статус оборудования
+                        </div>
+                        <div className="device-save__status-container-inform">
+                            Статус: {status}
+                            <br/>
+                            Ответственный: {user} {userId !== undefined && deviceId !== undefined && statusFlag !== undefined && (statusFlag === 'given' || statusFlag === 'givenIncomplete') && <button onClick={() => {props.onUnAttachUserFromDevice(userId, deviceId)}}>Открепить</button>}
+                        </div>
+                        {
+                            statusFlag === 'stock' &&
+                            <SearchUsersForAttachContainer />
+                        }
+                    </div>
+                </>
             }
         </div>
     );
