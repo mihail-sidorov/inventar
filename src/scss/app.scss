@@ -777,14 +777,68 @@ html, body {
 
         &-fields {
 
+            ul, li {
+
+                list-style: none;
+            }
+
+            ul {
+
+                padding-left: 0;
+            }
+
+            ul ul {
+
+                display: none;
+                padding-left: 40px;
+                margin-top: 10px;
+            }
+
             & > ul {
 
                 margin: 0;
                 margin-bottom: 20px;
+            }
 
-                li {
+            li {
 
-                    margin-bottom: 10px;
+                margin-bottom: 10px;
+
+                &:last-child {
+
+                    margin-bottom: 0;
+                }
+
+                .form__field_radio {
+
+                    margin-bottom: 0;
+                }
+            }
+
+            .category-field {
+
+                display: inline-block;
+                cursor: pointer;
+                padding-left: 20px;
+                position: relative;
+
+                &::before {
+
+                    content: '+';
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 20px;
+                    height: 100%;
+                }
+
+                &.enter, &.enter-done {
+
+                    &::before {
+
+                        content: '-';
+                    }
                 }
             }
         }

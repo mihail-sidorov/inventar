@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, Redirect, withRouter } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import { Field, reduxForm } from 'redux-form';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGet } from '../../../redux/brandsReducer';
@@ -17,6 +18,7 @@ import Select from '../../common/FormControls/Select';
 import SearchUsersForAttachContainer from './SearchUsersForAttach/SearchUsersForAttachContainer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
 import SubDevicesContainer from './SubDevices/SubDevicesContainer';
+import $ from 'jquery';
 
 let CategoriesField = (categories, props) => {
     let tree = [];
@@ -52,22 +54,54 @@ let CategoriesField = (categories, props) => {
         tree.push(makeCategoryBranch(value.id, categories));
     });
 
+    let CategoryClassComponent = class extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                in: false,
+            };
+        }
+
+        changeIn() {
+            this.setState({in: !this.state.in});
+        }
+
+        render() {
+            return (
+                
+                    <li>
+                        {
+                            this.props.value.categories.length === 0 ? 
+                            <><Field name="category_id" desc={this.props.value.category.category} component={Radio} validate={[required]} type="radio" value={String(this.props.value.category.id)} onClick={(e) => {
+                                let categoryId = window.store.getState().form.deviceSaveForm.values.category_id;
+                                if (categoryId !== e.currentTarget.value) {
+                                    props.onSpecificationsSet(e.currentTarget.value);
+                                    props.onSpecificationsReset(props);
+                                }
+                            }} /></> : 
+                            <CSSTransition in={this.state.in} timeout={300} onEnter={(element) => {
+                                $(element).parent().find('>ul').slideToggle();
+                            }} onExit={(element) => {
+                                $(element).parent().find('>ul').slideToggle();
+                            }}>
+                                <div className="category-field" onClick={() => {
+                                    this.changeIn();
+                                }}>{this.props.value.category.category}</div>
+                            </CSSTransition>
+                        }
+                        {printTree(this.props.value.categories)}
+                    </li>
+            );
+        }
+    }
+
     let printTree = (tree) => {
         if (tree.length > 0) {
             return (
                 <ul>
                     {tree.map((value, index) => {
                         return (
-                            <li key={index}>
-                                {value.categories.length === 0 ? <><Field name="category_id" desc={value.category.category} component={Radio} validate={[required]} type="radio" value={String(value.category.id)} onClick={(e) => {
-                                    let categoryId = window.store.getState().form.deviceSaveForm.values.category_id;
-                                    if (categoryId !== e.currentTarget.value) {
-                                        props.onSpecificationsReset(props);
-                                        props.onSpecificationsSet(e.currentTarget.value);
-                                    }
-                                }} /></> : value.category.category}
-                                {printTree(value.categories)}
-                            </li>
+                            <CategoryClassComponent value={value} key={index} />
                         );
                     })}
                 </ul>
@@ -76,6 +110,18 @@ let CategoriesField = (categories, props) => {
     }
 
     return printTree(tree);
+}
+
+let CategoriesBlockClassComponent = class extends React.Component {
+    shouldComponentUpdate() {
+        return false;
+    }
+
+    render() {
+        return (
+            CategoriesField(this.props.categories, this.props) ?? null
+        );
+    }
 }
 
 let Form = (props) => {
@@ -105,7 +151,7 @@ let Form = (props) => {
             <div className="device-save__form-fields form__fields">
                 {
                     props.match.params.device === 'add' &&
-                    CategoriesField(props.categories, props)
+                    <CategoriesBlockClassComponent {...props} />
                 }
                 <SpecificationsFieldsContainer />
                 <Field name="model" desc="Модель" type="text" component={Input} validate={[required]} />

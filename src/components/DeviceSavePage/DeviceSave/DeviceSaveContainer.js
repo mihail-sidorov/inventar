@@ -208,7 +208,7 @@ let DeviceSaveContainer = connect(
             }
 
             for (let prop in values) {
-                let pattern = new RegExp(/^(specifications_)/);
+                let pattern = new RegExp(/^specifications_/);
 
                 if (prop.match(pattern)) {
                     delete values[prop];
