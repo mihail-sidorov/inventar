@@ -12,7 +12,7 @@ import { usersGet } from '../../redux/usersReducer';
 import InnerPage from '../InnerPage/InnerPage';
 
 let DevicePageCard = (props) => {
-    let device, categoryObj, category, specificationsFields, model, invNumber, price, datePurchase, dateWarrantyEnd, responsible, brand, supplier, location;
+    let device, categoryObj, category, specificationsFields, model, invNumber, price, datePurchase, dateWarrantyEnd, responsible, brand, supplier, location, subDevicesArr, status, user;
 
     if (props.devices[props.match.params.deviceId] !== undefined) {
         device = props.devices[props.match.params.deviceId];
@@ -85,6 +85,21 @@ let DevicePageCard = (props) => {
         if (props.locations[device.location_id] !== undefined) {
             location = props.locations[device.location_id].location;
         }
+
+        subDevicesArr = [];
+        for (let prop in props.devices) {
+            if (props.devices[prop].parent_id == device.id) {
+                subDevicesArr.push(
+                    <tr key={props.devices[prop].id}>
+                        <td>{props.brands[device.brand_id]?.brand} {device.model}</td>
+                        <td>{device.inv_number}</td>
+                    </tr>
+                );
+            }
+        }
+
+        status = props.statuses[device.status_id]?.status_rus;
+        user = props.users[device.user_id]?.full_name;
     }
 
     return(
@@ -148,6 +163,30 @@ let DevicePageCard = (props) => {
                                 <button className="device-page-card__btn btn" onClick={() => {
                                     props.editDevice(props);
                                 }}>Редактировать</button>
+                            </div>
+                        </div>
+                        {
+                            subDevicesArr.length ?
+                            <div className="device-page-card__border">
+                                <div className="device-page-card__title">Составное оборудование</div>
+                                <div className="device-page-card__content">
+                                    <div className="device-page-card__content-table">
+                                        <table>
+                                            <tbody>
+                                                {subDevicesArr}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            : null
+                        }
+                        <div className="device-page-card__border">
+                            <div className="device-page-card__title">Статус оборудования</div>
+                            <div className="device-save__status-container-inform">
+                                Статус: {status}
+                                <br/>
+                                Ответственный: {user}
                             </div>
                         </div>
                     </InnerPage>
