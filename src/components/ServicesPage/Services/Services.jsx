@@ -2,6 +2,8 @@ import React from 'react';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { accountsGet } from '../../../redux/accountsReducer';
 import { accountTypesGet } from '../../../redux/accountTypesReducer';
+import { departmentsGet } from '../../../redux/departmentsReducer';
+import { usersGet } from '../../../redux/usersReducer';
 import ServiceContainer from './Service/ServiceContainer';
 
 let Services = (props) => {
@@ -38,7 +40,7 @@ let ServicesClassComponent = class extends React.Component {
     loadServicesData() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.accountsState.accounts) || isEmptyObject(state.accountTypesState.accountTypes)) {
+        if (isEmptyObject(state.accountsState.accounts) || isEmptyObject(state.accountTypesState.accountTypes) || isEmptyObject(state.departmentsState.departments) || isEmptyObject(state.usersState.users)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.accountsState.accounts)) {
@@ -49,11 +51,24 @@ let ServicesClassComponent = class extends React.Component {
                 promiseArr.push(accountTypesGet());
             }
 
+            if (isEmptyObject(state.departmentsState.departments)) {
+                promiseArr.push(departmentsGet());
+            }
+
+            if (isEmptyObject(state.usersState.users)) {
+                promiseArr.push(usersGet());
+            }
+
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
-                        if (value.config.url === 'accounts') this.props.accountsSet(value.data);
+                        if (value.config.url === 'accounts') {
+                            this.props.accountsSet(value.data);
+                            this.props.attachedSet(window.store.getState().accountsState.accounts);
+                        }
                         if (value.config.url === 'account_types') this.props.accountTypesSet(value.data);
+                        if (value.config.url === 'dep_loc_united') this.props.departmentsSet(value.data);
+                        if (value.config.url === 'users') this.props.usersSet(value.data);
                     });
 
                     this.props.shortServicesSet();
@@ -63,6 +78,9 @@ let ServicesClassComponent = class extends React.Component {
                 });
         }
         else {
+            if (isEmptyObject(state.servicesPageState.attched)) {
+                this.props.attachedSet(state.accountsState.accounts);
+            }
             this.props.shortServicesSet();
         }
     }

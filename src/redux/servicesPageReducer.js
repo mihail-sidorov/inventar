@@ -1,8 +1,8 @@
 import isEmptyObject from "../functions/isEmptyObject";
 
-const MAKE_SHORT_SERVICES = 'MAKE_SHORT_SERVICES', CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION = 'CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION', CHANGE_SERVICES_PAGE_SEARCH = 'CHANGE_SERVICES_PAGE_SEARCH';
+const MAKE_SHORT_SERVICES = 'MAKE_SHORT_SERVICES', CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION = 'CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION', CHANGE_SERVICES_PAGE_SEARCH = 'CHANGE_SERVICES_PAGE_SEARCH', SET_ATTACHED_FOR_SERVICES = 'SET_ATTACHED_FOR_SERVICES';
 
-let makeShortServices = (services, pagination, search, accountTypes, isLastPage) => {
+let makeShortServices = (services, pagination, search, accountTypes, isLastPage, attached, departments, users) => {
     let searchServices = {}, shortServices = {};
 
     if (search !== '') {
@@ -24,6 +24,23 @@ let makeShortServices = (services, pagination, search, accountTypes, isLastPage)
                                     propertiesArr.push(String(serviceName));
                                 }
                             }
+                            break;
+                        case 'id':
+                            let departmentsStr = '';
+                            let usersStr = '';
+                            let departmentsArr = attached[services[id][property]]?.departments;
+                            let usersArr = attached[services[id][property]]?.users;
+                            if (departmentsArr !== undefined) {
+                                departmentsArr.forEach((id) => {
+                                    departmentsStr += (departments[id]?.department ?? '') + (departments[id]?.location ?? '');
+                                });
+                            }
+                            if (usersArr !== undefined) {
+                                usersArr.forEach((id) => {
+                                    usersStr += (users[id]?.full_name ?? '');
+                                });
+                            }
+                            propertiesArr.push(departmentsStr + usersStr);
                             break;
                         default:
                             break;
@@ -91,6 +108,7 @@ let initialState = {
         pages: 0,
     },
     search: '',
+    attached: {},
 };
 
 // Создание Action Creators
@@ -100,6 +118,9 @@ export let makeShortServicesActionCreator = (isLastPage = false) => {
     let accountTypes = state.accountTypesState.accountTypes;
     let pagination = state.servicesPageState.pagination;
     let search = state.servicesPageState.search;
+    let attached = state.servicesPageState.attached;
+    let departments = state.departmentsState.departments;
+    let users = state.usersState.users;
 
     return {
         type: MAKE_SHORT_SERVICES,
@@ -108,6 +129,9 @@ export let makeShortServicesActionCreator = (isLastPage = false) => {
         search: search,
         accountTypes: accountTypes,
         isLastPage: isLastPage,
+        attached: attached,
+        departments: departments,
+        users: users,
     };
 }
 
@@ -125,10 +149,17 @@ export let changeServicesPageSearchActionCreator = (search) => {
     };
 }
 
+export let setAttachedForServicesActionCreator = (attachedArr) => {
+    return {
+        type: SET_ATTACHED_FOR_SERVICES,
+        attachedArr: attachedArr,
+    };
+};
+
 let servicesPageReducer = (state = initialState, action) => {
     switch (action.type) {
         case MAKE_SHORT_SERVICES:
-            let makeShortServicesResult = makeShortServices(action.services, action.pagination, action.search, action.accountTypes, action.isLastPage);
+            let makeShortServicesResult = makeShortServices(action.services, action.pagination, action.search, action.accountTypes, action.isLastPage, action.attached, action.departments, action.users);
 
             return {
                 ...state,
@@ -151,6 +182,29 @@ let servicesPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 search: action.search,
+            };
+        case SET_ATTACHED_FOR_SERVICES:
+            let attached = {};
+            action.attachedArr.forEach((element) => {
+                if (element.length) {
+                    let obj = {
+                        departments: [],
+                        users: [],
+                    };
+                    element.forEach((el) => {
+                        if (el.dep_loc_id !== null) {
+                            obj.departments.push(el.dep_loc_id);
+                        }
+                        if (el.user_id !== null) {
+                            obj.users.push(el.user_id);
+                        }
+                    });
+                    attached[element[0].account_id] = obj;
+                }
+            });
+            return {
+                ...state,
+                attached: attached,
             };
         default:
             return state;

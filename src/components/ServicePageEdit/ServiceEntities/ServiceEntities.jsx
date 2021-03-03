@@ -35,7 +35,7 @@ let ServiceEntities = (props) => {
     for (let id in props.attachedDepartments) {
         attachedDepartmentsArray.push(
             <tr key={id}>
-                <td>{props.attachedDepartments[id].department}</td>
+                <td>Отдел {props.attachedDepartments[id].department} ({props.attachedDepartments[id].location})</td>
                 <td><button className="service-entities__attach-btn" onClick={() => {
                     props.unAttachDepartment(props.serviceId, id);
                 }}>Открепить</button></td>
