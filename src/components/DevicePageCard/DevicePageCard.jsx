@@ -166,7 +166,7 @@ let DevicePageCard = (props) => {
                             </div>
                         </div>
                         {
-                            subDevicesArr.length ?
+                            subDevicesArr && subDevicesArr.length ?
                             <div className="device-page-card__border">
                                 <div className="device-page-card__title">Составное оборудование</div>
                                 <div className="device-page-card__content">
