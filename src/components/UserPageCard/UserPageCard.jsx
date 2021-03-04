@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink, Route, withRouter } from 'react-router-dom';
 import isEmptyObject from '../../functions/isEmptyObject';
+import { accountsGet } from '../../redux/accountsReducer';
+import { accountTypesGet } from '../../redux/accountTypesReducer';
 import { brandsGet } from '../../redux/brandsReducer';
 import { devicesGet } from '../../redux/devicesReducer';
 import { employersGet } from '../../redux/employersReducer';
@@ -10,7 +12,7 @@ import { usersGet } from '../../redux/usersReducer';
 import InnerPage from '../InnerPage/InnerPage';
 
 let UserPageCard = (props) => {
-    let user, fio, phone, email, appointmentDate, employer, location, postName, postDepartment, postLocation, userDevices = [];
+    let user, fio, phone, email, appointmentDate, employer, location, postName, postDepartment, postLocation, userDevices = [], userServicesArr = [];
 
     if (props.users[props.match.params.userId] !== undefined) {
         user = props.users[props.match.params.userId];
@@ -65,6 +67,21 @@ let UserPageCard = (props) => {
                 );
             }
         }
+
+        let userServices = props.usersServices[props.match.params.userId]?.services;
+        if (userServices !== undefined) {
+            userServices.forEach((id) => {
+                userServicesArr.push(
+                    <tr key={id} onClick={() => {
+                        props.serviceCardShow(id, props.history);
+                    }}>
+                        <td>{props.serviceTypes[props.services[id]?.account_type_id]?.account_type}</td>
+                        <td>{props.services[id]?.login}</td>
+                        <td>{props.services[id]?.password}</td>
+                    </tr>
+                );
+            });
+        }
     }
 
     return(
@@ -110,16 +127,34 @@ let UserPageCard = (props) => {
                                         </tbody>
                                     </table>
                                 </div>
-                                <div className="user-page-card__user-devices">
-                                    <div className="user-page-card__user-devices-title">Оборудование сотрудника</div>
-                                    <div className="user-page-card__user-devices-table">
-                                        <table>
-                                            <tbody>
-                                                {userDevices}
-                                            </tbody>
-                                        </table>
+                                {
+                                    userDevices.length ?
+                                    <div className="user-page-card__user-devices">
+                                        <div className="user-page-card__user-devices-title">Оборудование сотрудника</div>
+                                        <div className="user-page-card__user-devices-table">
+                                            <table>
+                                                <tbody>
+                                                    {userDevices}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
+                                    : null
+                                }
+                                {
+                                    userServicesArr.length ?
+                                    <div className="user-page-card__user-services">
+                                        <div className="user-page-card__user-services-title">Сервисы сотрудника</div>
+                                        <div className="user-page-card__user-services-table">
+                                            <table>
+                                                <tbody>
+                                                    {userServicesArr}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    : null
+                                }
                             </div>
                             <div className="user-page-card__btns">
                                 <button className="user-page-card__btn btn" onClick={() => {
@@ -144,7 +179,8 @@ let UserPageCardClassComponent = class extends React.Component {
 
         if (isEmptyObject(state.employersState.employers) || isEmptyObject(state.locationsState.locations)
             || isEmptyObject(state.postDepLocsState.postDepLocs) || isEmptyObject(state.usersState.users)
-            || isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)) {
+            || isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)
+            || isEmptyObject(state.accountsState.accounts) || isEmptyObject(state.accountTypesState.accountTypes)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.employersState.employers)) {
@@ -171,6 +207,14 @@ let UserPageCardClassComponent = class extends React.Component {
                 promiseArr.push(usersGet());
             }
 
+            if (isEmptyObject(state.accountsState.accounts)) {
+                promiseArr.push(accountsGet());
+            }
+
+            if (isEmptyObject(state.accountTypesState.accountTypes)) {
+                promiseArr.push(accountTypesGet());
+            }
+
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
@@ -179,12 +223,20 @@ let UserPageCardClassComponent = class extends React.Component {
                         if (value.config.url === 'post_dep_loc_united?status=free') this.props.onPostDepLocsGet(value.data);
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
-                        if (value.config.url === 'users') this.props.onUsersGet(value.data);
+                        if (value.config.url === 'accounts') this.props.onAccountsGet(value.data);
+                        if (value.config.url === 'account_types') this.props.onAccountTypesGet(value.data);
+                        if (value.config.url === 'users') {
+                            this.props.onUsersGet(value.data);
+                            this.props.onUsersServicesSet(window.store.getState().usersState.users);
+                        }
                     });
                 })
                 .catch((error) => {
                     console.log(error);
                 });
+        }
+        else {
+            this.props.onUsersServicesSet(window.store.getState().usersState.users);
         }
     }
 }

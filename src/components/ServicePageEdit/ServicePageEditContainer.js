@@ -34,7 +34,7 @@ let ServicePageEditContainer = connect(
             }
         },
         onSubmit: (values) => {
-            if (values.account_type_id && values.login && values.password) {
+            if (values.account_type_id && values.login && values.password && values.url && values.comments) {
                 serviceEdit(values)
                     .then((data) => {
                         dispatch(serviceAddActionCreator(data.data));

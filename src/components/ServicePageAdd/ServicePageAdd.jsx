@@ -31,6 +31,12 @@ let Form = (props) => {
                 <div className="service-page-add__form-field form__field">
                     <label><span><span>Пароль</span></span><Field name="password" component="input" type="text" /></label>
                 </div>
+                <div className="service-page-add__form-field form__field">
+                    <label><span><span>Адрес сервиса</span></span><Field name="url" component="input" type="text" /></label>
+                </div>
+                <div className="service-page-add__form-field form__field">
+                    <label><span><span>Комментарии</span></span><Field name="comments" component="input" type="text" /></label>
+                </div>
             </div>
             <div className="service-page-add__form-btns">
                 <button className="service-page-add__form-submit-btn btn">Сохранить</button>

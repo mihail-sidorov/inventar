@@ -9,6 +9,8 @@ let Service = (props) => {
             <td>{props.serviceName}</td>
             <td>{props.service.login}</td>
             <td>{props.service.password}</td>
+            <td>{props.service.url}</td>
+            <td>{props.service.comments}</td>
         </tr>
     );
 }

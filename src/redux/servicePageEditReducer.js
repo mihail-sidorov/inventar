@@ -13,6 +13,10 @@ export let getAttached = (serviceId) => {
     return Axios.get(`account_owners?accountId=${serviceId}`);
 }
 
+export let getAttachedForUser = (userId) => {
+    return Axios.get(`account_owners?userId=${userId}`);
+};
+
 export let attachDepartment = (serviceId, departmentId) => {
     return Axios.post('account_owners', {account_id: serviceId, dep_loc_id: departmentId});
 }

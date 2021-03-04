@@ -13,7 +13,7 @@ let ServicePageAddContainer = connect(
             dispatch(accountTypesSetActionCreator(data));
         },
         onSubmit: (values, props) => {
-            if (values.account_type_id && values.login && values.password) {
+            if (values.account_type_id && values.login && values.password && values.url && values.comments) {
                 serviceAdd(values)
                     .then((data) => {
                         dispatch(serviceAddActionCreator(data.data));

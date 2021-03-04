@@ -22,6 +22,8 @@ let Services = (props) => {
                         <th>Наименование</th>
                         <th>Логин</th>
                         <th>Пароль</th>
+                        <th>Адрес сервиса</th>
+                        <th>Комментарии</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,9 +80,7 @@ let ServicesClassComponent = class extends React.Component {
                 });
         }
         else {
-            if (isEmptyObject(state.servicesPageState.attched)) {
-                this.props.attachedSet(state.accountsState.accounts);
-            }
+            this.props.attachedSet(state.accountsState.accounts);
             this.props.shortServicesSet();
         }
     }

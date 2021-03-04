@@ -1320,7 +1320,7 @@ html, body {
 
 .user-page-card {
 
-    &__title, &__user-devices-title {
+    &__title, &__user-devices-title, &__user-services-title {
 
         font-size: 36px;
         margin-bottom: 40px;
@@ -1347,7 +1347,7 @@ html, body {
         margin-top: 40px;
     }
 
-    &__content, &__user-devices {
+    &__content, &__user-devices, &__user-services {
 
         &-table {
 
@@ -1373,7 +1373,7 @@ html, body {
         }
     }
 
-    &__user-devices {
+    &__user-devices, &__user-services {
 
         margin-top: 40px;
 

@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
+import { accountsSetActionCreator } from '../../redux/accountsReducer';
+import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
 import { brandsGetActionCreator } from '../../redux/brandsReducer';
 import { devicesGetActionCreator } from '../../redux/devicesReducer';
 import { employersGetActionCreator } from '../../redux/employersReducer';
 import { locationsGetActionCreator } from '../../redux/locationsReducer';
 import { postDepLocsGetActionCreator } from '../../redux/postDepLocsReducer';
-import { usersGetActionCreator } from '../../redux/usersReducer';
+import { getAttachedForUser } from '../../redux/servicePageEditReducer';
+import { usersGetActionCreator, usersServicesSetActionCreator } from '../../redux/usersReducer';
 import UserPageCard from './UserPageCard';
 
 let UserPageCardContainer = connect(
@@ -15,6 +18,9 @@ let UserPageCardContainer = connect(
         devices: state.devicesState.devices,
         brands: state.brandsState.brands,
         users: state.usersState.users,
+        usersServices: state.usersState.usersServices,
+        services: state.accountsState.accounts,
+        serviceTypes: state.accountTypesState.accountTypes,
     }),
     dispatch => ({
         editUser: (props) => {
@@ -38,8 +44,42 @@ let UserPageCardContainer = connect(
         onUsersGet: (data) => {
             dispatch(usersGetActionCreator(data));
         },
+        onAccountsGet: (data) => {
+            dispatch(accountsSetActionCreator(data));
+        },
+        onAccountTypesGet: (data) => {
+            dispatch(accountTypesSetActionCreator(data));
+        },
         deviceCardShow: (deviceId, history) => {
             history.push(`/devices/card/${deviceId}`);
+        },
+        serviceCardShow: (serviceId, history) => {
+            history.push(`/services/${serviceId}`);
+        },
+        onUsersServicesSet: (users) => {
+            let promiseArr = [];
+            for (let id in users) {
+                promiseArr.push(getAttachedForUser(id));
+            }
+            Promise.all(promiseArr)
+                .then((response) => {
+                    let usersServices = {};
+                    response.forEach((value) => {
+                        if (value.data.length)  {
+                            let obj = {
+                                services: [],
+                            };
+                            value.data.forEach((el) => {
+                                obj.services.push(el.account_id);
+                            });
+                            usersServices[value.data[0].user_id] = obj;
+                        }
+                    });
+                    dispatch(usersServicesSetActionCreator(usersServices));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     })
 )(UserPageCard);

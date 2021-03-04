@@ -1,10 +1,11 @@
 import Axios from "../config/axiosConfig";
 import arrayToObject from "../functions/arrayToObject";
 
-const USERS_GET = 'USERS_GET', USERS_POST = 'USERS_POST';
+const USERS_GET = 'USERS_GET', USERS_POST = 'USERS_POST', USERS_SERVICES_SET = 'USERS_SERVICES_SET';
 
 let initialState = {
     users: {},
+    usersServices: {},
 };
 
 // Запросы к API
@@ -35,6 +36,11 @@ export let usersPostActionCreator = (userObj) => {
     };
 }
 
+export let usersServicesSetActionCreator = (usersServices) => ({
+    type: USERS_SERVICES_SET,
+    usersServices: usersServices,
+});
+
 let usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case USERS_GET:
@@ -48,6 +54,12 @@ let usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: users,
+            };
+        case USERS_SERVICES_SET:
+
+            return {
+                ...state,
+                usersServices: action.usersServices,
             };
         default:
             return state;
