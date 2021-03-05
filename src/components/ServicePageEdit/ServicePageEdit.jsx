@@ -60,7 +60,7 @@ let ServicePageEdit = (props) => {
             <div className="service-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => 
                     <InnerPage>
-                        <NavLink className="service-page-edit__back-to-services btn" to="/services">Вернуться к списку сервисов</NavLink>
+                        <NavLink className="service-page-edit__back-to-services btn" to={`/services/card/${props.match.params.serviceId}`}>Вернуться в карточку сервиса</NavLink>
                         <div className="service-page-edit__form-container">
                             <div className="service-page-edit__title">Редактирование сервиса</div>
                             <Form {...props} />

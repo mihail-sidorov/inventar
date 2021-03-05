@@ -1,11 +1,15 @@
 import Axios from "../config/axiosConfig";
 
-const CHANGE_SERVICE_ENTITIES_SEARCH = 'CHANGE_SERVICE_ENTITIES_SEARCH', SET_ATTACHED = 'SET_ATTACHED', ATTACH_DEPARTMENT_TO_SERVICE = 'ATTACH_DEPARTMENT_TO_SERVICE', ATTACH_USER_TO_SERVICE = 'ATTACH_USER_TO_SERVICE', UN_ATTACH_DEPARTMENT_FROM_SERVICE = 'UN_ATTACH_DEPARTMENT_FROM_SERVICE', UN_ATTACH_USER_FROM_SERVICE = 'UN_ATTACH_USER_FROM_SERVICE';
+const CHANGE_SERVICE_ENTITIES_SEARCH = 'CHANGE_SERVICE_ENTITIES_SEARCH', SET_ATTACHED = 'SET_ATTACHED', ATTACH_DEPARTMENT_TO_SERVICE = 'ATTACH_DEPARTMENT_TO_SERVICE', ATTACH_USER_TO_SERVICE = 'ATTACH_USER_TO_SERVICE', UN_ATTACH_DEPARTMENT_FROM_SERVICE = 'UN_ATTACH_DEPARTMENT_FROM_SERVICE', UN_ATTACH_USER_FROM_SERVICE = 'UN_ATTACH_USER_FROM_SERVICE', SET_SERVICE_ATTACHED = 'SET_SERVICE_ATTACHED';
 
 let initialState = {
     attachedDepartments: {},
     attachedUsers: {},
     search: '',
+    serviceAttached: {
+        departments: [],
+        users: [],
+    },
 };
 
 // Запросы к API
@@ -87,6 +91,23 @@ export let unAttachUserFromServiceActionCreator = (data) => {
     };
 }
 
+export let setServiceAttachedActionCreator = (data) => {
+    let serviceAttached = {
+        departments: [],
+        users: [],
+    };
+
+    data.forEach((el) => {
+        el.dep_loc_id !== null && serviceAttached.departments.push(el.dep_loc_id);
+        el.user_id !== null && serviceAttached.users.push(el.user_id);
+    });
+
+    return {
+        type: SET_SERVICE_ATTACHED,
+        serviceAttached: serviceAttached,
+    };
+};
+
 let servicePageEditReducer = (state = initialState, action) => {
     let newState;
 
@@ -137,6 +158,11 @@ let servicePageEditReducer = (state = initialState, action) => {
             delete newState.attachedUsers[action.userId];
 
             return newState;
+        case SET_SERVICE_ATTACHED:
+            return {
+                ...state,
+                serviceAttached: action.serviceAttached,
+            };
         default:
             return state;
     }

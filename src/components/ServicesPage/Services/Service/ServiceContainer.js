@@ -20,7 +20,7 @@ let ServiceContainer = (id) => {
         },
         dispatch => ({
             onGoToServiceCard: (props) => {
-                props.history.push(`/services/${props.service.id}`);
+                props.history.push(`/services/card/${props.service.id}`);
             },
         })
     )(Service);
