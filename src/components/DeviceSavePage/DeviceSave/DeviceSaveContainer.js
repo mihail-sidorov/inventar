@@ -119,10 +119,15 @@ let DeviceSaveContainer = connect(
         onDevicesGet: (data, props) => {
             let isDevicePage = false;
 
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].id == props.match.params.device) {
-                    isDevicePage = true;
-                    break;
+            if (props.match.params.device === 'add') {
+                isDevicePage = true;
+            }
+            else {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].id == props.match.params.device) {
+                        isDevicePage = true;
+                        break;
+                    }
                 }
             }
 

@@ -114,7 +114,10 @@ let CategoriesField = (categories, props) => {
 
 let CategoriesBlockClassComponent = class extends React.Component {
     shouldComponentUpdate() {
-        return false;
+        if (!isEmptyObject(this.props.categories)) {
+            return false;
+        }
+        return true;
     }
 
     render() {

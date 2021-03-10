@@ -37,6 +37,9 @@ const ValidateReducer = actionType => {
             action.errors.forEach(element => {
                 let fieldNameArray = element.dataPath.split('.');
                 let fieldName = fieldNameArray[fieldNameArray.length - 1];
+                if (fieldNameArray[fieldNameArray.length - 2] === 'specifications') {
+                    fieldName = 'specifications_' + fieldName;
+                }
                 let error = element.message;
                 newState.fields[fieldName] = {touched: true};
                 newState.syncErrors[fieldName] = error;
