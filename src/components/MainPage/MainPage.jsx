@@ -18,6 +18,4 @@ let MainPage = (props) => {
     );
 }
 
-MainPage = authHOC(MainPage);
-
-export default MainPage;
+export default authHOC(MainPage);

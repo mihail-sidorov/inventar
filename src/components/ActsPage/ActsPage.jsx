@@ -17,6 +17,4 @@ let ActsPage = (props) => {
     );
 }
 
-ActsPage = authHOC(ActsPage);
-
-export default ActsPage;
+export default authHOC(ActsPage);

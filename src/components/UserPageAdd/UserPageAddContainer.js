@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import authHOC from '../../HOC/authHOC';
 import { employersGetActionCreator } from '../../redux/employersReducer';
 import { locationsGetActionCreator } from '../../redux/locationsReducer';
 import { postDepLocsGetActionCreator } from '../../redux/postDepLocsReducer';
@@ -49,4 +50,4 @@ let UserPageAddContainer = connect(
     })
 )(UserPageAdd);
 
-export default UserPageAddContainer;
+export default authHOC(UserPageAddContainer);

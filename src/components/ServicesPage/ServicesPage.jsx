@@ -22,6 +22,4 @@ let ServicesPage = (props) => {
     );
 }
 
-ServicesPage = authHOC(ServicesPage);
-
-export default ServicesPage;
+export default authHOC(ServicesPage);

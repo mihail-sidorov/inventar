@@ -3,6 +3,7 @@ import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
 import { serviceAdd, serviceAddActionCreator } from '../../redux/accountsReducer';
 import ServicePageAdd from './ServicePageAdd';
 import { makeShortServicesActionCreator } from '../../redux/servicesPageReducer';
+import authHOC from '../../HOC/authHOC';
 
 let ServicePageAddContainer = connect(
     state => ({
@@ -28,4 +29,4 @@ let ServicePageAddContainer = connect(
     })
 )(ServicePageAdd);
 
-export default ServicePageAddContainer;
+export default authHOC(ServicePageAddContainer);

@@ -376,7 +376,7 @@ html, body {
     }
 }
 
-.devices, .services {
+.devices, .services, .employers {
 
     table {
 
@@ -426,6 +426,20 @@ html, body {
                         background-color: rgba(251, 186, 181, 0.2);
                     }
                 }
+            }
+        }
+    }
+}
+
+.employers {
+
+    table {
+
+        thead {
+
+            th {
+
+                border-radius: 20px 20px 0 0 !important;
             }
         }
     }
@@ -506,7 +520,7 @@ html, body {
     }
 }
 
-.services-page {
+.services-page, .employers-page {
 
     background-color: #A3DEE6;
 

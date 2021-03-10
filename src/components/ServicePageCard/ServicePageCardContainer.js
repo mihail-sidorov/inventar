@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import authHOC from '../../HOC/authHOC';
 import { accountsSetActionCreator } from '../../redux/accountsReducer';
 import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
 import { departmentsSetActionCreator } from '../../redux/departmentsReducer';
@@ -36,4 +37,4 @@ let ServicePageCardContainer = connect(
     })
 )(ServicePageCard);
 
-export default ServicePageCardContainer;
+export default authHOC(ServicePageCardContainer);

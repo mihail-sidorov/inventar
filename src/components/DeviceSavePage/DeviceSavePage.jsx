@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import authHOC from '../../HOC/authHOC';
 import InnerPage from '../InnerPage/InnerPageContainer';
 import DeviceSaveContainer from './DeviceSave/DeviceSaveContainer';
 
@@ -17,4 +18,4 @@ let DeviceSavePage = (props) => {
     );
 }
 
-export default DeviceSavePage;
+export default authHOC(DeviceSavePage);

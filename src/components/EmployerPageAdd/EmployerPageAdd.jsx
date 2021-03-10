@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
@@ -63,4 +63,4 @@ let EmployerPageAddClassComponent = class extends React.Component {
     }
 }
 
-export default EmployerPageAddClassComponent;
+export default withRouter(EmployerPageAddClassComponent);

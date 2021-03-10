@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import authHOC from '../../HOC/authHOC';
+import { makeShortEmployersActionCreator } from '../../redux/employersPageReducer';
 import { employerAddActionCreator, employerAdd, employersGetActionCreator } from '../../redux/employersReducer';
 import EmployerPageAdd from './EmployerPageAdd';
 
@@ -7,11 +9,13 @@ let EmployerPageAddContainer = connect(
 
     }),
     dispatch => ({
-        onSubmit: (values) => {
+        onSubmit: (values, props) => {
             if (values.employer) {
                 employerAdd(values)
                     .then((res) => {
                         dispatch(employerAddActionCreator(res.data));
+                        dispatch(makeShortEmployersActionCreator(true));
+                        props.history.push('/employers');
                     })
                     .catch((error) => {
                         console.log(error);
@@ -24,4 +28,4 @@ let EmployerPageAddContainer = connect(
     })
 )(EmployerPageAdd);
 
-export default EmployerPageAddContainer;
+export default authHOC(EmployerPageAddContainer);

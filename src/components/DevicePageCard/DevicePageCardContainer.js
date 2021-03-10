@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import authHOC from '../../HOC/authHOC';
 import { brandsGetActionCreator } from '../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../redux/categoriesReducer';
 import { devicesGetActionCreator } from '../../redux/devicesReducer';
@@ -51,4 +52,4 @@ let DevicePageCardContainer = connect(
     })
 )(DevicePageCard);
 
-export default DevicePageCardContainer;
+export default authHOC(DevicePageCardContainer);

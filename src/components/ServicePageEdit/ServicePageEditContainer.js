@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { initialize } from 'redux-form';
+import authHOC from '../../HOC/authHOC';
 import { accountsSetActionCreator, serviceAddActionCreator, serviceEdit } from '../../redux/accountsReducer';
 import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
 import ServicePageEdit from './ServicePageEdit';
@@ -48,4 +49,4 @@ let ServicePageEditContainer = connect(
     })
 )(ServicePageEdit);
 
-export default ServicePageEditContainer;
+export default authHOC(ServicePageEditContainer);

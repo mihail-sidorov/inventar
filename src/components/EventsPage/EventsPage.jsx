@@ -26,4 +26,4 @@ let EventsPage = (props) => {
 
 EventsPage = authHOC(EventsPage);
 
-export default EventsPage;
+export default authHOC(EventsPage);

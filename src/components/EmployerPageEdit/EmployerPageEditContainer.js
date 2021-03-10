@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { employerAddActionCreator, employerEdit, employersGetActionCreator } from '../../redux/employersReducer';
 import EmployerPageEdit from './EmployerPageEdit';
 import { initialize } from 'redux-form';
+import authHOC from '../../HOC/authHOC';
 
 let EmployerPageEditContainer = connect(
     state => ({
@@ -35,4 +36,4 @@ let EmployerPageEditContainer = connect(
     })
 )(EmployerPageEdit);
 
-export default EmployerPageEditContainer;
+export default authHOC(EmployerPageEditContainer);

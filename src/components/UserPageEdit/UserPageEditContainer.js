@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { initialize } from 'redux-form';
+import authHOC from '../../HOC/authHOC';
 import { employersGetActionCreator } from '../../redux/employersReducer';
 import { locationsGetActionCreator } from '../../redux/locationsReducer';
 import { postDepLocsGetActionCreator } from '../../redux/postDepLocsReducer';
@@ -94,4 +95,4 @@ let UserPageEditContainer = connect(
     })
 )(UserPageEdit);
 
-export default UserPageEditContainer;
+export default authHOC(UserPageEditContainer);

@@ -33,6 +33,4 @@ let HeaderContainer = connect(
     })
 )(Header);
 
-HeaderContainer = authHOC(HeaderContainer);
-
-export default HeaderContainer;
+export default authHOC(HeaderContainer);
