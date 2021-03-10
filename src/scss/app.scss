@@ -632,7 +632,7 @@ html, body {
     }
 }
 
-.service-page-add, .service-page-edit {
+.service-page-add, .service-page-edit, .employer-page-add, .employer-page-edit {
 
     background-color: #A3DEE6;
 
@@ -665,7 +665,7 @@ html, body {
         }
     }
 
-    &__back-to-services {
+    &__back-to-services, &__back-to-employers {
 
         color: #403539;
         text-decoration: none;

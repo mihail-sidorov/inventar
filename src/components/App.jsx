@@ -4,6 +4,8 @@ import ActsPage from './ActsPage/ActsPage';
 import DevicePageCardContainer from './DevicePageCard/DevicePageCardContainer';
 import DeviceSavePage from './DeviceSavePage/DeviceSavePage';
 import DevicesPage from './DevicesPage/DevicesPage';
+import EmployerPageAddContainer from './EmployerPageAdd/EmployerPageAddContainer';
+import EmployerPageEditContainer from './EmployerPageEdit/EmployerPageEditContainer';
 import EventsPage from './EventsPage/EventsPage';
 import HeaderContainer from './Header/HeaderContainer';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
@@ -38,6 +40,8 @@ let App = () => {
                 <Route exact path="/users/card/:userId" render={() => <UserPageCardContainer />} />
                 <Route exact path="/events" render={() => <EventsPage />} />
                 <Route exact path="/services/card/:serviceId" render={() => <ServicePageCardContainer />} />
+                <Route exact path="/employers/add" render={() => <EmployerPageAddContainer />} />
+                <Route exact path="/employers/:employerId" render={() => <EmployerPageEditContainer />} />
             </Switch>
         </div>
     );
