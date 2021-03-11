@@ -14,6 +14,8 @@ export let locationsGet = () => {
 
 export let locationAdd = location => Axios.post('locations', location);
 
+export let locationEdit = location => Axios.patch('locations', location);
+
 // Создание Action Creators
 export let locationsGetActionCreator = (data) => {
     return {
