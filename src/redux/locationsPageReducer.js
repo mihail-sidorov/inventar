@@ -81,7 +81,7 @@ let makeShortLocations = (locations, pagination, search, isLastPage) => {
 let initialState = {
     shortLocations: {},
     pagination: {
-        count: 1,
+        count: 5,
         currentPage: 1,
         pages: 0,
     },
