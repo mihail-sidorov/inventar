@@ -1,5 +1,3 @@
-import isEmptyObject from "../functions/isEmptyObject";
-
 const MAKE_SHORT_EMPLOYERS = 'MAKE_SHORT_EMPLOYERS', CHANGE_PAGE_ON_EMPLOYERS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_EMPLOYERS_PAGE_PAGINATION', CHANGE_EMPLOYERS_PAGE_SEARCH = 'CHANGE_EMPLOYERS_PAGE_SEARCH';
 
 let makeShortEmployers = (employers, pagination, search, isLastPage) => {

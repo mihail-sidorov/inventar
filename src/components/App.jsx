@@ -9,6 +9,7 @@ import EmployerPageEditContainer from './EmployerPageEdit/EmployerPageEditContai
 import EmployersPage from './EmployersPage/EmployersPage';
 import EventsPage from './EventsPage/EventsPage';
 import HeaderContainer from './Header/HeaderContainer';
+import LocationsPage from './LocationsPage/LocationsPage';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
 import MainPage from './MainPage/MainPage';
 import ServicePageAddContainer from './ServicePageAdd/ServicePageAddContainer';
@@ -44,6 +45,7 @@ let App = () => {
                 <Route exact path="/employers/add" render={() => <EmployerPageAddContainer />} />
                 <Route exact path="/employers/:employerId" render={() => <EmployerPageEditContainer />} />
                 <Route exact path="/employers" render={() => <EmployersPage />} />
+                <Route exact path="/locations" render={() => <LocationsPage />} />
             </Switch>
         </div>
     );
