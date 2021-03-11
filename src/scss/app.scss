@@ -319,6 +319,7 @@ html, body {
             .inner-page__add-menu {
 
                 display: block;
+                z-index: 1;
             }
         }
     }
@@ -376,7 +377,7 @@ html, body {
     }
 }
 
-.devices, .services, .employers, .locations {
+.devices, .services, .employers, .locations, .posts {
 
     table {
 
@@ -431,7 +432,7 @@ html, body {
     }
 }
 
-.employers, .locations {
+.employers, .locations, .posts {
 
     table {
 
@@ -520,7 +521,7 @@ html, body {
     }
 }
 
-.services-page, .employers-page, .locations-page {
+.services-page, .employers-page, .locations-page, .posts-page {
 
     background-color: #A3DEE6;
 
@@ -646,7 +647,7 @@ html, body {
     }
 }
 
-.service-page-add, .service-page-edit, .employer-page-add, .employer-page-edit, .location-page-add, .location-page-edit {
+.service-page-add, .service-page-edit, .employer-page-add, .employer-page-edit, .location-page-add, .location-page-edit, .post-page-add, .post-page-edit {
 
     background-color: #A3DEE6;
 
@@ -679,7 +680,7 @@ html, body {
         }
     }
 
-    &__back-to-services, &__back-to-employers, &__back-to-locations {
+    &__back-to-services, &__back-to-employers, &__back-to-locations, &__back-to-posts {
 
         color: #403539;
         text-decoration: none;

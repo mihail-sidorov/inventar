@@ -14,6 +14,9 @@ import LocationPageEditContainer from './LocationPageEdit/LocationPageEditContai
 import LocationsPage from './LocationsPage/LocationsPage';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
 import MainPage from './MainPage/MainPage';
+import PostPageAddContainer from './PostPageAdd/PostPageAddContainer';
+import PostPageEditContainer from './PostPageEdit/PostPageEditContainer';
+import PostsPage from './PostsPage/PostsPage';
 import ServicePageAddContainer from './ServicePageAdd/ServicePageAddContainer';
 import ServicePageCardContainer from './ServicePageCard/ServicePageCardContainer';
 import ServicePageEditContainer from './ServicePageEdit/ServicePageEditContainer';
@@ -50,6 +53,9 @@ let App = () => {
                 <Route exact path="/locations" render={() => <LocationsPage />} />
                 <Route exact path="/locations/add" render={() => <LocationPageAddContainer />} />
                 <Route exact path="/locations/:locationId" render={() => <LocationPageEditContainer />} />
+                <Route exact path="/posts" render={() => <PostsPage />} />
+                <Route exact path="/posts/add" render={() => <PostPageAddContainer />} />
+                <Route exact path="/posts/:postId" render={() => <PostPageEditContainer />} />
             </Switch>
         </div>
     );

@@ -16,6 +16,7 @@ let InnerPage = (props) => {
                                     <NavLink className="inner-page__add-menu-item" to="/services/add">Добавить сервис</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/employers/add">Добавить работодателя</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/locations/add">Добавить местонахождение</NavLink>
+                                    <NavLink className="inner-page__add-menu-item" to="/posts/add">Добавить должность</NavLink>
                                 </div>                                
                             </div>
                         </div>
@@ -27,7 +28,8 @@ let InnerPage = (props) => {
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы компании</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'employers' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/employers">Работодатели</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'locations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/locations">Местонахождение</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'locations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/locations">Местонахождения</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'posts' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/posts">Должности</NavLink>
                 </div>
             </div>
             <div className="inner-page__content">

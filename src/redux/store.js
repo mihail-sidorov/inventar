@@ -27,6 +27,8 @@ import eventsReducer from './eventsReducer';
 import subDevicesReducer from './subDevicesReducer';
 import employersPageReducer from './employersPageReducer';
 import locationsPageReducer from './locationsPageReducer';
+import postsReducer from './postsReducer';
+import postsPageReducer from './postsPageReducer';
 
 const ValidateReducer = actionType => {
     return (state, action) => {
@@ -87,6 +89,8 @@ let reducers = combineReducers({
     subDevicesState: subDevicesReducer,
     employersPageState: employersPageReducer,
     locationsPageState: locationsPageReducer,
+    postsState: postsReducer,
+    postsPageState: postsPageReducer,
 });
 
 let store = createStore(reducers);
