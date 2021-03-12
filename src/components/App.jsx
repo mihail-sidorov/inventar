@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ActsPage from './ActsPage/ActsPage';
+import DepartmentNamesPage from './DepartmentNamesPage/DepartmentNamesPage';
 import DevicePageCardContainer from './DevicePageCard/DevicePageCardContainer';
 import DeviceSavePage from './DeviceSavePage/DeviceSavePage';
 import DevicesPage from './DevicesPage/DevicesPage';
@@ -56,6 +57,7 @@ let App = () => {
                 <Route exact path="/posts" render={() => <PostsPage />} />
                 <Route exact path="/posts/add" render={() => <PostPageAddContainer />} />
                 <Route exact path="/posts/:postId" render={() => <PostPageEditContainer />} />
+                <Route exact path="/departmentNames" render={() => <DepartmentNamesPage />} />
             </Switch>
         </div>
     );

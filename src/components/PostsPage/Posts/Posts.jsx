@@ -38,7 +38,6 @@ let PostsClassComponent = class extends React.Component {
         if (isEmptyObject(state.postsState.posts)) {
             postsGet()
                 .then((res) => {
-                    console.log(res.data);
                     this.props.postsSet(res.data);
                     this.props.shortPostsSet();
                 });
