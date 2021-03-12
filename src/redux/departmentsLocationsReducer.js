@@ -13,6 +13,7 @@ export let departmentsLocationsGet = () => {
 }
 
 export let departmentLocationAdd = departmentLocation => Axios.post('dep_loc', departmentLocation);
+export let departmentLocationEdit = departmentLocation => Axios.patch('dep_loc', departmentLocation);
 
 // Создание Action Creators
 export let departmentsLocationsSetActionCreator = (data) => {
