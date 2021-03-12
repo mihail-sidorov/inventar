@@ -13,10 +13,10 @@ export let departmentNamesGet = () => {
 }
 
 export let departmentNameAdd = (departmentName) => {
-    return Axios.departmentName('departmentNames', departmentName);
+    return Axios.post('departments', departmentName);
 };
 
-export let departmentNameEdit = (departmentName) => Axios.patch('departmentNames', departmentName);
+export let departmentNameEdit = (departmentName) => Axios.patch('departments', departmentName);
 
 // Создание Action Creators
 export let departmentNamesGetActionCreator = (data) => {
@@ -40,7 +40,6 @@ let departmentNamesReducer = (state = initialState, action) => {
             };
         case DEPARTMENT_NAME_ADD:
             return {
-                ...state,
                 departmentNames: {
                     ...state.departmentNames,
                     [action.departmentName.id]: action.departmentName,
