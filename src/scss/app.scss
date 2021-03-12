@@ -648,7 +648,7 @@ html, body {
 }
 
 .service-page-add, .service-page-edit, .employer-page-add, .employer-page-edit, .location-page-add, .location-page-edit, .post-page-add, .post-page-edit,
-.departmentName-page-add, .departmentName-page-edit {
+.departmentName-page-add, .departmentName-page-edit, .departmentLocation-page-add {
 
     background-color: #A3DEE6;
 
@@ -681,7 +681,7 @@ html, body {
         }
     }
 
-    &__back-to-services, &__back-to-employers, &__back-to-locations, &__back-to-posts, &__back-to-departmentNames {
+    &__back-to-services, &__back-to-employers, &__back-to-locations, &__back-to-posts, &__back-to-departmentNames, &__back-to-departmentsLocations {
 
         color: #403539;
         text-decoration: none;

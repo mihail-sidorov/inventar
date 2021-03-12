@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import ActsPage from './ActsPage/ActsPage';
+import DepartmentLocationPageAddContainer from './DepartmentLocationPageAdd/DepartmentLocationPageAddContainer';
 import DepartmentNamePageAddContainer from './DepartmentNamePageAdd/DepartmentNamePageAddContainer';
 import DepartmentNamePageEditContainer from './DepartmentNamePageEdit/DepartmentNamePageEditContainer';
 import DepartmentNamesPage from './DepartmentNamesPage/DepartmentNamesPage';
@@ -62,6 +63,7 @@ let App = () => {
                 <Route exact path="/departmentNames" render={() => <DepartmentNamesPage />} />
                 <Route exact path="/departmentNames/add" render={() => <DepartmentNamePageAddContainer />} />
                 <Route exact path="/departmentNames/:departmentNameId" render={() => <DepartmentNamePageEditContainer />} />
+                <Route exact path="/departmentsLocations/add" render={() => <DepartmentLocationPageAddContainer />} />
             </Switch>
         </div>
     );
