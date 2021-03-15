@@ -6,6 +6,7 @@ import DepartmentLocationPageEditContainer from './DepartmentLocationPageEdit/De
 import DepartmentNamePageAddContainer from './DepartmentNamePageAdd/DepartmentNamePageAddContainer';
 import DepartmentNamePageEditContainer from './DepartmentNamePageEdit/DepartmentNamePageEditContainer';
 import DepartmentNamesPage from './DepartmentNamesPage/DepartmentNamesPage';
+import DepartmentsLocationsPage from './DepartmentsLocationsPage/DepartmentsLocationsPage';
 import DevicePageCardContainer from './DevicePageCard/DevicePageCardContainer';
 import DeviceSavePage from './DeviceSavePage/DeviceSavePage';
 import DevicesPage from './DevicesPage/DevicesPage';
@@ -66,6 +67,7 @@ let App = () => {
                 <Route exact path="/departmentNames/:departmentNameId" render={() => <DepartmentNamePageEditContainer />} />
                 <Route exact path="/departmentsLocations/add" render={() => <DepartmentLocationPageAddContainer />} />
                 <Route exact path="/departmentsLocations/:departmentLocationId" render={() => <DepartmentLocationPageEditContainer />} />
+                <Route exact path="/departmentsLocations" render={() => <DepartmentsLocationsPage />} />
             </Switch>
         </div>
     );

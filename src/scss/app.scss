@@ -377,7 +377,7 @@ html, body {
     }
 }
 
-.devices, .services, .employers, .locations, .posts, .department-names {
+.devices, .services, .employers, .locations, .posts, .department-names, .departmentsLocations {
 
     table {
 
@@ -521,9 +521,32 @@ html, body {
     }
 }
 
-.services-page, .employers-page, .locations-page, .posts-page, .department-names-page {
+.services-page, .employers-page, .locations-page, .posts-page, .department-names-page, .departmentsLocations-page {
 
     background-color: #A3DEE6;
+
+    &__go-to-departmentsLocations, &__go-to-departmentNames {
+
+        color: #403539;
+        text-decoration: none;
+        font-weight: normal;
+        padding-left: 30px;
+        border-radius: 30px;
+        font-size: 10px;
+        background: url('../imgs/back-arrow.svg') no-repeat 5px center;
+        background-color: #C4C4C4;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+
+    &__add {
+
+        color: #403539;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 10px;
+        margin-left: 20px;
+    }
 
     &__wrapper {
 
