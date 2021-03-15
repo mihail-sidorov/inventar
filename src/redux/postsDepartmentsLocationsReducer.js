@@ -4,7 +4,7 @@ import arrayToObject from "../functions/arrayToObject";
 const POSTS_DEPARTMENTS_LOCATIONS_SET = 'POSTS_DEPARTMENTS_LOCATIONS_SET', POST_DEPARTMENT_LOCATION_ADD = 'POST_DEPARTMENT_LOCATION_ADD';
 
 let initialState = {
-    departmentsLocations: {},
+    postsDepartmentsLocations: {},
 };
 
 // Запросы к API
@@ -32,12 +32,12 @@ let postsDepartmentsLocationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case POSTS_DEPARTMENTS_LOCATIONS_SET:
             return {
-                departmentsLocations: arrayToObject(action.data),
+                postsDepartmentsLocations: arrayToObject(action.data),
             };
         case POST_DEPARTMENT_LOCATION_ADD:
             return {
-                departmentsLocations: {
-                    ...state.departmentsLocations,
+                postsDepartmentsLocations: {
+                    ...state.postsDepartmentsLocations,
                     [action.obj.id]: action.obj,
                 },
             };

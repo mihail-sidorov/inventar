@@ -30,7 +30,7 @@ let InnerPage = (props) => {
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'employers' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/employers">Работодатели</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'locations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/locations">Местонахождения</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'posts' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/posts">Должности</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'posts' || props.match.params.page === 'postsDepartmentsLocations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/posts">Должности</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'departmentNames' || props.match.params.page === 'departmentsLocations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/departmentNames">Отделы</NavLink>
                 </div>
             </div>
@@ -41,6 +41,4 @@ let InnerPage = (props) => {
     );
 }
 
-InnerPage = withRouter(InnerPage);
-
-export default InnerPage;
+export default withRouter(InnerPage);
