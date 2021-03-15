@@ -13,7 +13,7 @@ let DepartmentsLocationsPage = (props) => {
                 <Route exact path="/:page" render={() => (
                     <InnerPage>
                         <div className="departmentsLocations-page__controls">
-                            <NavLink className="departmentsLocations-page__go-to-departmentNames btn" to="/departmentNames">Вернуться к списку отделов</NavLink>
+                            <NavLink className="departmentsLocations-page__back-to-departmentNames btn" to="/departmentNames">Вернуться к списку отделов</NavLink>
                             <NavLink className="departmentsLocations-page__add btn" to="/departmentsLocations/add">+</NavLink>
                         </div>
                         <DepartmentsLocationsPageSearchContainer />
