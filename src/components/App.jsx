@@ -20,6 +20,7 @@ import LocationPageEditContainer from './LocationPageEdit/LocationPageEditContai
 import LocationsPage from './LocationsPage/LocationsPage';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
 import MainPage from './MainPage/MainPage';
+import PostDepartmentLocationPageAddContainer from './PostDepartmentLocationPageAdd/PostDepartmentLocationPageAddContainer';
 import PostPageAddContainer from './PostPageAdd/PostPageAddContainer';
 import PostPageEditContainer from './PostPageEdit/PostPageEditContainer';
 import PostsPage from './PostsPage/PostsPage';
@@ -68,6 +69,7 @@ let App = () => {
                 <Route exact path="/departmentsLocations/add" render={() => <DepartmentLocationPageAddContainer />} />
                 <Route exact path="/departmentsLocations/:departmentLocationId" render={() => <DepartmentLocationPageEditContainer />} />
                 <Route exact path="/departmentsLocations" render={() => <DepartmentsLocationsPage />} />
+                <Route exact path="/postsDepartmentsLocations/add" render={() => <PostDepartmentLocationPageAddContainer />} />
             </Switch>
         </div>
     );
