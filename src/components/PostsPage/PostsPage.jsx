@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
 import InnerPage from '../InnerPage/InnerPageContainer';
 import PostsPagePaginationContainer from './Pagination/PostsPagePaginationContainer';
@@ -12,6 +12,9 @@ let PostsPage = (props) => {
             <div className="posts-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
                     <InnerPage>
+                        <div className="posts-page__controls">
+                            <NavLink className="posts-page__go-to-postsDepartmentsLocations btn" to="/postsDepartmentsLocations">Перейти к списку должностей-отделов-местонахождений</NavLink>
+                        </div>
                         <PostsPageSearchContainer />
                         <PostsContainer />
                         <PostsPagePaginationContainer />

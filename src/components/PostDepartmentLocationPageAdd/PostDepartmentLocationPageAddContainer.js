@@ -3,6 +3,7 @@ import authHOC from '../../HOC/authHOC';
 import { departmentNamesGetActionCreator } from '../../redux/departmentNamesReducer';
 import { departmentsLocationsSetActionCreator } from '../../redux/departmentsLocationsReducer';
 import { locationsGetActionCreator } from '../../redux/locationsReducer';
+import { makeShortPostsDepartmentsLocationsActionCreator } from '../../redux/postsDepartmentsLocationsPageReducer';
 import { postDepartmentLocationAdd, postDepartmentLocationAddActionCreator, postsDepartmentsLocationsSetActionCreator } from '../../redux/postsDepartmentsLocationsReducer';
 import { postsGetActionCreator } from '../../redux/postsReducer';
 import PostDepartmentLocationPageAdd from './PostDepartmentLocationPageAdd';
@@ -35,6 +36,8 @@ let PostDepartmentLocationPageAddContainer = connect(
                 postDepartmentLocationAdd(values)
                     .then(res => {
                         dispatch(postDepartmentLocationAddActionCreator(res.data));
+                        dispatch(makeShortPostsDepartmentsLocationsActionCreator(true));
+                        props.history.push('/postsDepartmentsLocations');
                     })
                     .catch(err => console.log(err));
             }

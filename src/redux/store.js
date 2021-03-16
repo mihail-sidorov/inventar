@@ -34,6 +34,7 @@ import departmentNamesPageReducer from './departmentNamesPageReducer';
 import departmentsLocationsReducer from './departmentsLocationsReducer';
 import departmentsLocationsPageReducer from './departmentsLocationsPageReducer';
 import postsDepartmentsLocationsReducer from './postsDepartmentsLocationsReducer';
+import postsDepartmentsLocationsPageReducer from './postsDepartmentsLocationsPageReducer';
 
 const ValidateReducer = actionType => {
     return (state, action) => {
@@ -101,6 +102,7 @@ let reducers = combineReducers({
     departmentsLocationsState: departmentsLocationsReducer,
     departmentsLocationsPageState: departmentsLocationsPageReducer,
     postsDepartmentsLocationsState: postsDepartmentsLocationsReducer,
+    postsDepartmentsLocationsPageState: postsDepartmentsLocationsPageReducer,
 });
 
 let store = createStore(reducers);

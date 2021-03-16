@@ -377,7 +377,7 @@ html, body {
     }
 }
 
-.devices, .services, .employers, .locations, .posts, .department-names, .departmentsLocations {
+.devices, .services, .employers, .locations, .posts, .department-names, .departmentsLocations, .postsDepartmentsLocations {
 
     table {
 
@@ -521,11 +521,11 @@ html, body {
     }
 }
 
-.services-page, .employers-page, .locations-page, .posts-page, .department-names-page, .departmentsLocations-page {
+.services-page, .employers-page, .locations-page, .posts-page, .department-names-page, .departmentsLocations-page, .postsDepartmentsLocations-page {
 
     background-color: #A3DEE6;
 
-    &__go-to-departmentsLocations, &__back-to-departmentNames {
+    &__go-to-departmentsLocations, &__back-to-departmentNames, &__back-to-posts, &__go-to-postsDepartmentsLocations {
 
         color: #403539;
         text-decoration: none;
