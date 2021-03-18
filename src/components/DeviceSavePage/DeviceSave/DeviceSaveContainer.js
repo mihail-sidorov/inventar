@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { change, initialize } from 'redux-form';
+import { initialize } from 'redux-form';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
@@ -163,7 +163,7 @@ let DeviceSaveContainer = connect(
                 initialValues = {...state.devicesState.devices[deviceId]};
 
                 for (let prop in initialValues) {
-                    if (prop !== 'specifications' && initialValues[prop] !== null && initialValues[prop] !== undefined) {
+                    if (prop !== 'specifications' && initialValues[prop] !== null && initialValues[prop] !== undefined && !(initialValues[prop] instanceof Array)) {
                         initialValues[prop] = String(initialValues[prop]);
                     }
                     if (prop === 'date_purchase' || prop === 'date_warranty_end') {

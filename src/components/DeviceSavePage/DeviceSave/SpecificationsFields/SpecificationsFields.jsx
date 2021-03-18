@@ -11,21 +11,39 @@ let SpecificationsFields = (props) => {
     let formFields = [];
 
     for (let field in props.category.schema.properties) {
-        if (props.category.schema.properties[field].enum === undefined) {
-            formFields.push(
-                <Field name={`specifications_${field}`} desc={props.category.schema.properties[field].title} type="text" component={Input} validate={[required]} key={field} />
-            );
+        if (props.category.schema.properties[field].type === 'string' || props.category.schema.properties[field].type === 'number'
+        || props.category.schema.properties[field].type === 'integer') {
+            if (props.category.schema.properties[field].enum === undefined) {
+                formFields.push(
+                    <Field name={`specifications_${field}`} desc={props.category.schema.properties[field].title} type="text" component={Input} validate={[required]} key={field} />
+                );
+            }
+            else {
+                let options = [];
+    
+                props.category.schema.properties[field].enum.forEach((value, index) => {
+                    options.push(<option value={String(value)} key={index}>{value}</option>);
+                });
+    
+                formFields.push(
+                    <Field name={`specifications_${field}`} desc={props.category.schema.properties[field].title} component={Select} validate={[required]} key={field}>
+                        <option></option>
+                        {options}
+                    </Field>
+                );
+            }
         }
-        else {
+        if (props.category.schema.properties[field].type === 'array') {
             let options = [];
-
-            props.category.schema.properties[field].enum.forEach((value, index) => {
-                options.push(<option value={String(value)} key={index}>{value}</option>);
+            props.category.schema.properties[field].items.enum.forEach((value, index) => {
+                options.push(<option value={String(value)} key={index}>{String(value)}</option>);
             });
 
+            let defaultValue = (!isEmptyObject(props.device) && props.device[`specifications_${field}`] !== undefined
+            && props.device[`specifications_${field}`] !== null) ? props.device[`specifications_${field}`] : [];
+
             formFields.push(
-                <Field name={`specifications_${field}`} desc={props.category.schema.properties[field].title} component={Select} validate={[required]} key={field}>
-                    <option></option>
+                <Field name={`specifications_${field}`} multiple={true} value={[]} defaultValue={defaultValue} desc={props.category.schema.properties[field].title} component={Select} validate={[required]} key={field}>
                     {options}
                 </Field>
             );

@@ -4,16 +4,26 @@ let Select = ({
     input,
     desc,
     meta: {touched, error},
-    children
+    children,
+    multiple,
+    value,
+    defaultValue
 }) => {
     const hasError = touched && error;
     return(
-        <div className={`form__field${hasError ? ' form__field_error' : ''}`}>
+        <div className={`form__field${hasError ? ' form__field_error' : ''}${multiple ? ' form__field_multiple' : ''}`}>
             <label>
                 <span><span>{desc}</span></span>
-                <select {...input}>
-                    {children}
-                </select>
+                {
+                    multiple ?
+                    <select {...input} multiple={multiple} value={value} defaultValue={defaultValue}>
+                        {children}
+                    </select>
+                    :
+                    <select {...input}>
+                        {children}
+                    </select>
+                }
             </label>
             {
                 hasError &&

@@ -154,9 +154,15 @@ let Form = (props) => {
             <div className="device-save__form-fields form__fields">
                 {
                     props.match.params.device === 'add' &&
-                    <CategoriesBlockClassComponent {...props} />
+                    <>
+                        <CategoriesBlockClassComponent {...props} />
+                        <SpecificationsFieldsContainer device={props.device} />
+                    </>
                 }
-                <SpecificationsFieldsContainer />
+                {
+                    props.match.params.device !== 'add' && !isEmptyObject(props.device) &&
+                    <SpecificationsFieldsContainer device={props.device} />
+                }
                 <Field name="model" desc="Модель" type="text" component={Input} validate={[required]} />
                 <Field name="inv_number" desc="Инвентарный номер" type="text" component={Input} validate={[required]} />
                 <Field name="price" desc="Закупочная цена" type="text" component={Input} validate={[required]} />
