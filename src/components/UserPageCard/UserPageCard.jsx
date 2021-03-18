@@ -17,8 +17,8 @@ let UserPageCard = (props) => {
     if (props.users[props.match.params.userId] !== undefined) {
         user = props.users[props.match.params.userId];
         fio = user.full_name;
-        phone = user.contact.phone;
-        email = user.contact.email;
+        phone = user.contact ? user.contact.phone : '';
+        email = user.contact ? user.contact.email : '';
 
         let date = new Date(user.appointment_date);
         let month = Number(date.getUTCMonth()) + 1;

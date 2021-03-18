@@ -3,6 +3,7 @@ import authHOC from '../../HOC/authHOC';
 import { employersGetActionCreator } from '../../redux/employersReducer';
 import { locationsGetActionCreator } from '../../redux/locationsReducer';
 import { postDepLocsGetActionCreator } from '../../redux/postDepLocsReducer';
+import { wasAddUserActionCreator } from '../../redux/usersPageReducer';
 import { usersPost, usersPostActionCreator } from '../../redux/usersReducer';
 import UserPageAdd from './UserPageAdd';
 
@@ -38,6 +39,7 @@ let UserPageAddContainer = connect(
             usersPost(sendValues)
                 .then((response) => {
                     dispatch(usersPostActionCreator(response.data));
+                    dispatch(wasAddUserActionCreator());
                     props.history.push('/users');
                 })
                 .catch((error) => {

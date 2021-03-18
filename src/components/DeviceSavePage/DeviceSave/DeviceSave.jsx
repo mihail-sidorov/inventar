@@ -164,7 +164,6 @@ let Form = (props) => {
                     <SpecificationsFieldsContainer device={props.device} />
                 }
                 <Field name="model" desc="Модель" type="text" component={Input} validate={[required]} />
-                <Field name="inv_number" desc="Инвентарный номер" type="text" component={Input} validate={[required]} />
                 <Field name="price" desc="Закупочная цена" type="text" component={Input} validate={[required]} />
                 <Field name="date_purchase" desc="Дата покупки" type="date" component={Input} validate={[required]} />
                 <Field name="date_warranty_end" desc="Дата окончания гарантии" type="date" component={Input} validate={[required]} />

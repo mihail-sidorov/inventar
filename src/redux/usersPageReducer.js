@@ -1,6 +1,6 @@
 import isEmptyObject from "../functions/isEmptyObject";
 
-const MAKE_SHORT_USERS = 'MAKE_SHORT_USERS', CHANGE_USERS_SEARCH = 'CHANGE_USERS_SEARCH', CHANGE_USERS_PAGE = 'CHANGE_USERS_PAGE';
+const MAKE_SHORT_USERS = 'MAKE_SHORT_USERS', CHANGE_USERS_SEARCH = 'CHANGE_USERS_SEARCH', CHANGE_USERS_PAGE = 'CHANGE_USERS_PAGE', WAS_ADD_USER = 'WAS_ADD_USER';
 
 let makeShortUsers = (users, pagination, search, postDepLocs, isLastPage) => {
     let searchUsers = {}, shortUsers = {};
@@ -129,6 +129,10 @@ export let changeUsersPageActionCreator = (page) => {
     };
 }
 
+export let wasAddUserActionCreator = () => ({
+    type: WAS_ADD_USER,
+});
+
 let usersPageReducer = (state = initialState, action) => {
     switch (action.type) {
         case MAKE_SHORT_USERS:
@@ -160,6 +164,11 @@ let usersPageReducer = (state = initialState, action) => {
                     ...state.pagination,
                     currentPage: action.page,
                 },
+            };
+        case WAS_ADD_USER:
+            return {
+                ...state,
+                wasAdd: true,
             };
         default:
             return state;

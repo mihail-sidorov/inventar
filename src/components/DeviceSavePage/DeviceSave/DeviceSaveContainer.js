@@ -52,18 +52,6 @@ let DeviceSaveContainer = connect(
 
                 if (specificationsFields) {
                     let state = window.store.getState();
-                    let statuses = state.statusesState.statuses;
-                    let statusId = null;
-
-                    for (let prop in statuses) {
-                        if (statuses[prop].status === 'stock') {
-                            statusId = statuses[prop].id;
-                        }
-                    }
-
-                    if (deviceSaveData.status_id === undefined && statusId !== null) {
-                        deviceSaveData.status_id = String(statusId);
-                    }
 
                     if (props.match.params.device === 'add') {
                         saveDevice(deviceSaveData)
