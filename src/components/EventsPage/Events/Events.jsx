@@ -18,8 +18,10 @@ let Events = (props) => {
                 <thead>
                     <tr>
                         <th>Наименование</th>
-                        <th>Дата</th>
                         <th>Инициатор</th>
+                        <th>Дата</th>
+                        <th>Кому</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

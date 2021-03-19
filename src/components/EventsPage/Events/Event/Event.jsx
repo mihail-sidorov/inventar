@@ -46,10 +46,15 @@ let Event = (props) => {
     return (
         <tr>
             <td>{props.event.name_rus}</td>
+            <td>{actorName}</td>
             <td>{createDate}</td>
             <td>
+                {
+                    (props.event.name === 'givenDevice' || props.event.name === 'returnDevice') && props.event.additional[0].name
+                }
+            </td>
+            <td>
                 <div className="action-event-btns">
-                    {actorName}
                     {
                         showBtns &&
                         <>
