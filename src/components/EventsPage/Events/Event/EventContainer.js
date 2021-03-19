@@ -13,6 +13,9 @@ let EventContainer = (id) => {
             actionEvent: (id, type) => {
                 console.log(id, type);
             },
+            goToEventCard: props => {
+                props.history.push(`events/card/${props.id}`);
+            },
         })
     )(Event);
 }

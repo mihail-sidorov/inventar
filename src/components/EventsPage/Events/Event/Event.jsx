@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 let ActionEventBtn = (props) => {
     return (
@@ -44,7 +45,9 @@ let Event = (props) => {
     }
 
     return (
-        <tr>
+        <tr onClick={() => {
+            props.goToEventCard(props);
+        }}>
             <td>{props.event.name_rus}</td>
             <td>{actorName}</td>
             <td>{createDate}</td>
@@ -68,4 +71,4 @@ let Event = (props) => {
     );
 }
 
-export default Event;
+export default withRouter(Event);

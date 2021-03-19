@@ -613,7 +613,7 @@ html, body {
     }
 }
 
-.device-page-card, .user-page-card, .service-page-card {
+.device-page-card, .user-page-card, .service-page-card, .event-page-card {
 
     background-color: #A3DEE6;
 
@@ -1367,15 +1367,16 @@ html, body {
     }
 }
 
-.user-page-card, .service-page-card {
+.user-page-card, .service-page-card, .event-page-card {
 
-    &__title, &__user-devices-title, &__user-services-title, &__attached-departments-title, &__attached-users-title {
+    &__user-devices-title, &__user-services-title, &__attached-departments-title, &__attached-users-title, &__confirm-need-title, &__confirm-title
+    , &__confirm-reject-title {
 
-        font-size: 36px;
+        font-size: 28px;
         margin-bottom: 40px;
     }
 
-    &__back-to-users, &__back-to-services {
+    &__back-to-users, &__back-to-services, &__back-to-events {
 
         color: #403539;
         text-decoration: none;
@@ -1396,7 +1397,7 @@ html, body {
         margin-top: 40px;
     }
 
-    &__content, &__user-devices, &__user-services, &__attached-departments, &__attached-users {
+    &__content, &__user-devices, &__user-services, &__attached-departments, &__attached-users, &__confirm-need, &__confirm, &__confirm-reject {
 
         &-table {
 
@@ -1422,7 +1423,7 @@ html, body {
         }
     }
 
-    &__user-devices, &__user-services, &__attached-departments, &__attached-users {
+    &__user-devices, &__user-services, &__attached-departments, &__attached-users, &__confirm-need, &__confirm, &__confirm-reject {
 
         margin-top: 40px;
 

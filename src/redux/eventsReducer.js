@@ -1,5 +1,4 @@
 import Axios from "../config/axiosConfig";
-import arrayToObject from "../functions/arrayToObject";
 
 const EVENTS_GET = 'EVENTS_GET';
 

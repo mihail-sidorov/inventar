@@ -13,6 +13,7 @@ import DevicesPage from './DevicesPage/DevicesPage';
 import EmployerPageAddContainer from './EmployerPageAdd/EmployerPageAddContainer';
 import EmployerPageEditContainer from './EmployerPageEdit/EmployerPageEditContainer';
 import EmployersPage from './EmployersPage/EmployersPage';
+import EventPageCardContainer from './EventPageCard/EventPageCardContainer';
 import EventsPage from './EventsPage/EventsPage';
 import HeaderContainer from './Header/HeaderContainer';
 import LocationPageAddContainer from './LocationPageAdd/LocationPageAddContainer';
@@ -55,6 +56,7 @@ let App = () => {
                 <Route exact path="/devices/card/:deviceId" render={() => <DevicePageCardContainer />} />
                 <Route exact path="/users/card/:userId" render={() => <UserPageCardContainer />} />
                 <Route exact path="/events" render={() => <EventsPage />} />
+                <Route exact path="/events/card/:eventId" render={() => <EventPageCardContainer />} />
                 <Route exact path="/services/card/:serviceId" render={() => <ServicePageCardContainer />} />
                 <Route exact path="/employers/add" render={() => <EmployerPageAddContainer />} />
                 <Route exact path="/employers/:employerId" render={() => <EmployerPageEditContainer />} />
