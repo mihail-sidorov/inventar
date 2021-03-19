@@ -37,7 +37,7 @@ let Event = (props) => {
 
     let showBtns = false;
     for (let i = 0; i < props.event.confirm_need.length; i++) {
-        if (props.event.confirm_need[i].users[props.userId]) {
+        if (props.event.confirm_need[i].user_id[props.userId]) {
             showBtns = true;
             break;
         }
