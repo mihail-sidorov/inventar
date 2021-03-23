@@ -24,9 +24,7 @@ let Events = (props) => {
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    {eventsArr}
-                </tbody>
+                {eventsArr}
             </table>
         </div>
     );

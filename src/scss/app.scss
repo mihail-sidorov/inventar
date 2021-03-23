@@ -965,6 +965,41 @@ html, body {
     }
 }
 
+.events {
+
+    &__group {
+
+        tr {
+
+            &:nth-child(1) {
+
+                td {
+
+                    text-align: center;
+                    background-color: rgba(251, 186, 181, 0.2);
+                    font-weight: bold;
+                }
+            }
+
+            &:nth-child(n+2) {
+
+                display: none;
+            }
+        }
+
+        &_show {
+
+            tr {
+
+                &:nth-child(n+2) {
+
+                    display: table-row;
+                }
+            }
+        }
+    }
+}
+
 .user-page-add {
 
     &__back-to-users {

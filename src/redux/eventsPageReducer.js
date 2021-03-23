@@ -65,26 +65,34 @@ let makeShortEvents = (events, pagination, search, users, isLastPage, filter, us
         }
     }
 
+    let eventGroups = {};
+    for (let id in searchEvents) {
+        let group = searchEvents[id].actor_id + searchEvents[id].name + JSON.stringify(searchEvents[id].additional);
+        if (eventGroups[group] === undefined) {
+            eventGroups[group] = {
+                events: {},
+            };
+        }
+        eventGroups[group].name = searchEvents[id].name_rus;
+        eventGroups[group].events[[searchEvents[id].history_id, searchEvents[id].event_confirm_preset_id]] = searchEvents[id];
+    }
+
     let paginationCount = pagination.count;
     let currentPage = pagination.currentPage;
-    
-    let pages = Math.floor(Object.keys(searchEvents).length / paginationCount);
-    if (Object.keys(searchEvents).length % paginationCount > 0) {
+    let pages = Math.floor(Object.keys(eventGroups).length / paginationCount);
+    if (Object.keys(eventGroups).length % paginationCount > 0) {
         pages++;
     }
     if (currentPage > pages || isLastPage) {
         currentPage = pages;
     }
-
     if (currentPage === 0) currentPage = 1;
-
     let left = (currentPage - 1) * paginationCount + 1;
     let right = left + paginationCount - 1;
     let i = 1;
-
-    for (let id in searchEvents) {
+    for (let id in eventGroups) {
         if (i >= left && i <= right) {
-            shortEvents[id] = searchEvents[id];
+            shortEvents[id] = eventGroups[id];
         }
         i++;
     }

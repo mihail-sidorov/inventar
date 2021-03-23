@@ -7,14 +7,16 @@ let EventContainer = (id) => {
             event: state.eventsPageState.shortEvents[id],
             users: state.usersState.users,
             userId: state.authState.userId,
-            id: id,
         }),
         dispatch => ({
             actionEvent: (id, type) => {
                 console.log(id, type);
             },
-            goToEventCard: props => {
-                props.history.push(`events/card/${props.id}`);
+            actionGroup: (ids, type) => {
+                console.log(ids, type);
+            },
+            goToEventCard: (id, history) => {
+                history.push(`events/card/${id}`);
             },
         })
     )(Event);
