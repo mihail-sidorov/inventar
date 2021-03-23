@@ -42,7 +42,6 @@ let Form = (props) => {
             <option value={id} key={id}>{props.posts[props.postsDepartmentsLocations[id]?.post_id]?.post}</option>
         );
     }
-    console.log(optionsPostsDepsLocs);
 
     return (
         <form className="user-page-add__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
