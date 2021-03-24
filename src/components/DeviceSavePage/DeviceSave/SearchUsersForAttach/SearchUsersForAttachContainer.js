@@ -8,45 +8,43 @@ let SearchUsersForAttachContainer = connect(
     state => {
         let search = state.deviceSavePageState.searchUsersInput, users = state.usersState.users, device = state.deviceSavePageState.device, searchUsers = {};
 
-        if (device.user_id !== undefined && search !== '') {
+        if (device.status === 'stock' && search !== '') {
             for (let id in users) {
-                if (id != device.user_id) {
-                    let searchWords = search.split(' ');
-                    let userAccord = true;
+                let searchWords = search.split(' ');
+                let userAccord = true;
 
-                    for (let i = 0; i < searchWords.length; i++) {
-                        let wordAccord = false;
-                        let pattern = new RegExp(searchWords[i].toLowerCase());
-                        let propertiesArr = [];
+                for (let i = 0; i < searchWords.length; i++) {
+                    let wordAccord = false;
+                    let pattern = new RegExp(searchWords[i].toLowerCase());
+                    let propertiesArr = [];
 
-                        for (let property in users[id]) {
-                            switch (property) {
-                                case 'full_name':
-                                    if (users[id][property] !== undefined && users[id][property] !== null && users[id][property] !== '') {
-                                        propertiesArr.push(String(users[id][property]));
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-
-                        for (let i = 0; i < propertiesArr.length; i++) {
-                            if (propertiesArr[i].toLowerCase().match(pattern)) {
-                                wordAccord = true;
+                    for (let property in users[id]) {
+                        switch (property) {
+                            case 'full_name':
+                                if (users[id][property] !== undefined && users[id][property] !== null && users[id][property] !== '') {
+                                    propertiesArr.push(String(users[id][property]));
+                                }
                                 break;
-                            }
+                            default:
+                                break;
                         }
+                    }
 
-                        if (!wordAccord) {
-                            userAccord = false;
+                    for (let i = 0; i < propertiesArr.length; i++) {
+                        if (propertiesArr[i].toLowerCase().match(pattern)) {
+                            wordAccord = true;
                             break;
                         }
                     }
 
-                    if (userAccord) {
-                        searchUsers[id] = users[id];
+                    if (!wordAccord) {
+                        userAccord = false;
+                        break;
                     }
+                }
+
+                if (userAccord) {
+                    searchUsers[id] = users[id];
                 }
             }
         }

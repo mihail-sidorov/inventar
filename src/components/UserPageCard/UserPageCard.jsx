@@ -227,9 +227,9 @@ let UserPageCardClassComponent = class extends React.Component {
                         if (value.config.url === 'account_types') this.props.onAccountTypesGet(value.data);
                         if (value.config.url === 'users') {
                             this.props.onUsersGet(value.data);
-                            this.props.onUsersServicesSet(window.store.getState().usersState.users);
                         }
                     });
+                    this.props.onUsersServicesSet(window.store.getState().usersState.users);
                 })
                 .catch((error) => {
                     console.log(error);

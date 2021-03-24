@@ -10,11 +10,11 @@ let initialState = {
 // Запросы к API
 
 export let attachDeviceToUser = (userId, deviceId) => {
-    return Axios.patch('devices?action=bind', {user_id: userId, id: deviceId});
+    return Axios.post('deviceAction?action=bind', {user_id: userId, id: deviceId});
 }
 
 export let unAttachDeviceFromUser = (userId, deviceId) => {
-    return Axios.patch('devices?action=remove', {user_id: userId, id: deviceId});
+    return Axios.post('deviceAction?action=remove', {user_id: userId, id: deviceId});
 }
 
 // Создание Action Creators

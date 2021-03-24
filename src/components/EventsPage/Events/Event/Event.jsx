@@ -61,7 +61,7 @@ let Event = (props) => {
                 <td>{createDate}</td>
                 <td>
                     {
-                        (props.event.events[id].name === 'givenDevice' || props.event.events[id].name === 'returnDevice') && props.event.events[id].additional[0].name
+                        (props.event.events[id].name === 'givenDevice' || props.event.events[id].name === 'returnDevice') && props.users[props.event.events[id].additional[0].value[0]]?.full_name
                     }
                 </td>
                 <td>

@@ -1,3 +1,4 @@
+import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
 
 const MAKE_SHORT_SERVICES = 'MAKE_SHORT_SERVICES', CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION = 'CHANGE_PAGE_ON_SERVICES_PAGE_PAGINATION', CHANGE_SERVICES_PAGE_SEARCH = 'CHANGE_SERVICES_PAGE_SEARCH', SET_ATTACHED_FOR_SERVICES = 'SET_ATTACHED_FOR_SERVICES';
@@ -103,7 +104,7 @@ let makeShortServices = (services, pagination, search, accountTypes, isLastPage,
 let initialState = {
     shortServices: {},
     pagination: {
-        count: 5,
+        count: countPages,
         currentPage: 1,
         pages: 0,
     },

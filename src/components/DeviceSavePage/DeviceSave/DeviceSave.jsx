@@ -163,6 +163,8 @@ let Form = (props) => {
                     props.match.params.device !== 'add' && !isEmptyObject(props.device) &&
                     <SpecificationsFieldsContainer device={props.device} />
                 }
+                <Field name="SN" desc="Серийный номер" type="text" component={Input} />
+                <Field name="order_number" desc="Номер заказа" type="text" component={Input} />
                 <Field name="model" desc="Модель" type="text" component={Input} validate={[required]} />
                 <Field name="price" desc="Закупочная цена" type="text" component={Input} validate={[required]} />
                 <Field name="date_purchase" desc="Дата покупки" type="date" component={Input} validate={[required]} />

@@ -10,7 +10,7 @@ let UserDevicesSearchContainer = connect(
 
         if (search !== '' && userId !== null) {
             for (let id in devices) {
-                if (devices[id].status === 'stock' || (devices[id].status === 'return' && devices[id].user_id == userId)) {
+                if (devices[id].status === 'stock') {
                     let searchWords = search.split(' ');
                     let deviceAccord = true;
 

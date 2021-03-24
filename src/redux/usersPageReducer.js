@@ -1,3 +1,4 @@
+import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
 
 const MAKE_SHORT_USERS = 'MAKE_SHORT_USERS', CHANGE_USERS_SEARCH = 'CHANGE_USERS_SEARCH', CHANGE_USERS_PAGE = 'CHANGE_USERS_PAGE', WAS_ADD_USER = 'WAS_ADD_USER';
@@ -91,7 +92,7 @@ let makeShortUsers = (users, pagination, search, postDepLocs, isLastPage) => {
 let initialState = {
     search: '',
     pagination: {
-        count: 5,
+        count: countPages,
         currentPage: 1,
         pages: 0,
     },

@@ -1,3 +1,4 @@
+import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
 
 const CHANGE_DEVICES_SEARCH = 'CHANGE_DEVICES_SEARCH', MAKE_SHORT_DEVICES = 'MAKE_SHORT_DEVICES', CHANGE_DEVICES_PAGE = 'CHANGE_DEVICES_PAGE', CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE = 'CHANGE_WAS_ADD_IN_DEVICES_PAGE_STATE';
@@ -119,7 +120,7 @@ let makeShortDevices = (devices, pagination, search, users, brands, categories, 
 let initialState = {
     search: '',
     pagination: {
-        count: 5,
+        count: countPages,
         currentPage: 1,
         pages: 0,
     },

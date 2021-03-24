@@ -50,7 +50,7 @@ let EventPageCard = (props) => {
                                                 </tr>
                                                 <tr>
                                                     <td>Кому</td>
-                                                    <td>{(props.events[props.match.params.eventId]?.name === 'givenDevice' || props.events[props.match.params.eventId]?.name === 'returnDevice') && props.events[props.match.params.eventId]?.additional[0].name}</td>
+                                                    <td>{(props.events[props.match.params.eventId]?.name === 'givenDevice' || props.events[props.match.params.eventId]?.name === 'returnDevice') && props.users[props.events[props.match.params.eventId]?.additional[0].value[0]]?.full_name}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

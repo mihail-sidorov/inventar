@@ -12,7 +12,7 @@ import { usersGet } from '../../redux/usersReducer';
 import InnerPage from '../InnerPage/InnerPage';
 
 let DevicePageCard = (props) => {
-    let device, categoryObj, category, specificationsFields, model, invNumber, price, datePurchase, dateWarrantyEnd, responsible, brand, supplier, location, subDevicesArr, status, user;
+    let device, categoryObj, category, specificationsFields, model, invNumber, price, datePurchase, dateWarrantyEnd, responsible, brand, supplier, location, subDevicesArr, status, user, SN, order_number;
 
     if (props.devices[props.match.params.deviceId] !== undefined) {
         device = props.devices[props.match.params.deviceId];
@@ -32,6 +32,8 @@ let DevicePageCard = (props) => {
             }
         }
 
+        SN = device.SN;
+        order_number = device.order_number;
         model = device.model;
         invNumber = device.inv_number;
         price = device.price;
@@ -119,6 +121,14 @@ let DevicePageCard = (props) => {
                                                 <td>{category}</td>
                                             </tr>
                                             {specificationsFields}
+                                            <tr>
+                                                <td>Серийный номер</td>
+                                                <td>{SN}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Номер заказа</td>
+                                                <td>{order_number}</td>
+                                            </tr>
                                             <tr>
                                                 <td>Модель</td>
                                                 <td>{model}</td>
