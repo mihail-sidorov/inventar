@@ -975,25 +975,19 @@ html, body {
 
                 td {
 
-                    text-align: center;
                     background-color: rgba(251, 186, 181, 0.2);
                     font-weight: bold;
                 }
             }
-
-            &:nth-child(n+2) {
-
-                display: none;
-            }
         }
 
-        &_show {
+        &_hide {
 
             tr {
 
                 &:nth-child(n+2) {
 
-                    display: table-row;
+                    display: none;
                 }
             }
         }

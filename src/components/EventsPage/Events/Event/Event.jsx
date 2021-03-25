@@ -56,16 +56,24 @@ let Event = (props) => {
                     props.goToEventCard(id, props.history);
                 }
             }}>
-                <td>{props.event.events[id].name_rus}</td>
-                <td>{actorName}</td>
+                <td>
+                    {
+                        //props.event.events[id].name_rus
+                    }
+                    {props.brands[props.devices[props.event.events[id].table_id]?.brand_id]?.brand} {props.devices[props.event.events[id].table_id]?.model}
+                </td>
+                <td>
+                    {
+                        //actorName
+                    }
+                </td>
                 <td>{createDate}</td>
                 <td>
                     {
-                        (props.event.events[id].name === 'givenDevice' || props.event.events[id].name === 'returnDevice') && props.users[props.event.events[id].additional[0].value[0]]?.full_name
+                        //(props.event.events[id].name === 'givenDevice' || props.event.events[id].name === 'returnDevice') && props.users[props.event.events[id].additional[0].value[0]]?.full_name
                     }
                 </td>
                 <td>
-                    
                     {
                         showBtns &&
                         <div className="action-event-btns">
@@ -82,11 +90,18 @@ let Event = (props) => {
         <tbody className="events__group">
             <tr onClick={(e) => {
                 if (e.target.nodeName !== 'BUTTON') {
-                    $(e.currentTarget).parent().toggleClass('events__group_show');
+                    $(e.currentTarget).parent().toggleClass('events__group_hide');
                 }
             }}>
-                <td colSpan="4">
-                    Группа: {props.event.name}
+                <td>
+                    {props.event.name}
+                </td>
+                <td>
+                    {props.event.actor}
+                </td>
+                <td></td>
+                <td>
+                    {props.event.whom}
                 </td>
                 <td>
                     {

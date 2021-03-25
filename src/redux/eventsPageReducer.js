@@ -1,3 +1,4 @@
+import Axios from "../config/axiosConfig";
 import isEmptyObject from "../functions/isEmptyObject";
 
 const MAKE_SHORT_EVENTS = 'MAKE_SHORT_EVENTS', CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_VENTS_PAGE_PAGINATION', CHANGE_EVENTS_PAGE_SEARCH = 'CHANGE_EVENTS_PAGE_SEARCH', CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE = 'CHANGE_STATUS_IN_FILTER_ON_EVENTS_PAGE', CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE = 'CHANGE_PERSON_IN_FILTER_ON_EVENTS_PAGE';
@@ -74,6 +75,8 @@ let makeShortEvents = (events, pagination, search, users, isLastPage, filter, us
             };
         }
         eventGroups[group].name = searchEvents[id].name_rus;
+        eventGroups[group].actor = users[searchEvents[id].actor_id].full_name;
+        eventGroups[group].whom = searchEvents[id].name === 'givenDevice' || searchEvents[id].name === 'returnDevice' ? users[searchEvents[id].additional[0].value[0]].full_name : null;
         eventGroups[group].events[[searchEvents[id].history_id, searchEvents[id].event_confirm_preset_id]] = searchEvents[id];
     }
 
@@ -117,6 +120,10 @@ let initialState = {
         person: false,
     },
 };
+
+// Запросы к API
+export let eventAccept = id => Axios.post('eventAction?action=simpleAccept', {id: id});
+export let eventReject = id => Axios.post('eventAction?action=reject', {id: id});
 
 // Создание Action Creators
 export let makeShortEventsActionCreator = (isLastPage = false) => {

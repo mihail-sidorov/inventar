@@ -185,6 +185,7 @@ let Form = (props) => {
                     <option></option>
                     {optionsLocations}
                 </Field>
+                <Field name="comments" desc="Комментарии" type="text" component={Input} />
             </div>
             <div className="device-save__form-btns">
                 <button className="device-save__form-submit-btn btn">Сохранить</button>
