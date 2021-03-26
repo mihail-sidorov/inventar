@@ -46,6 +46,8 @@ let Form = (props) => {
     return (
         <form className="user-page-add__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
             <div className="user-page-add__form-fields form__fields">
+                <Field name="login" desc="Логин" type="text" component={Input} validate={[required]} />
+                <Field name="password" desc="Пароль" type="password" component={Input} validate={[required]} />
                 <Field name="full_name" desc="ФИО" type="text" component={Input} validate={[required]} />
                 <Field name="phone" desc="Телефон" type="text" component={Input} />
                 <Field name="email" desc="EMail" type="text" component={Input} />

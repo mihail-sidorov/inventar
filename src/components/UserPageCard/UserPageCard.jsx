@@ -12,13 +12,14 @@ import { usersGet } from '../../redux/usersReducer';
 import InnerPage from '../InnerPage/InnerPage';
 
 let UserPageCard = (props) => {
-    let user, fio, phone, email, appointmentDate, employer, location, postName, postDepartment, postLocation, userDevices = [], userServicesArr = [];
+    let user, fio, phone, email, login, appointmentDate, employer, location, postName, postDepartment, postLocation, userDevices = [], userServicesArr = [];
 
     if (props.users[props.match.params.userId] !== undefined) {
         user = props.users[props.match.params.userId];
         fio = user.full_name;
         phone = user.contact ? user.contact.phone : '';
         email = user.contact ? user.contact.email : '';
+        login = user.login;
 
         let date = new Date(user.appointment_date);
         let month = Number(date.getUTCMonth()) + 1;
@@ -96,6 +97,10 @@ let UserPageCard = (props) => {
                                 <div className="user-page-card__content-table">
                                     <table>
                                         <tbody>
+                                        <tr>
+                                                <td>Логин</td>
+                                                <td>{login}</td>
+                                            </tr>
                                             <tr>
                                                 <td>ФИО</td>
                                                 <td>{fio}</td>
