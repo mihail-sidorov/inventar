@@ -8,7 +8,7 @@ let initialState = {
 
 // Запросы к API
 export let eventsGet = () => {
-    return Axios.get('events?all=true');
+    return Axios.get('events');
 }
 
 // Создание Action Creators

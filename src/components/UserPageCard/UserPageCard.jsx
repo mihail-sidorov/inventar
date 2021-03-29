@@ -9,7 +9,7 @@ import { employersGet } from '../../redux/employersReducer';
 import { locationsGet } from '../../redux/locationsReducer';
 import { postDepLocsGet } from '../../redux/postDepLocsReducer';
 import { usersGet } from '../../redux/usersReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let UserPageCard = (props) => {
     let user, fio, phone, email, login, appointmentDate, employer, location, postName, postDepartment, postLocation, userDevices = [], userServicesArr = [];
@@ -89,7 +89,7 @@ let UserPageCard = (props) => {
         <div className="user-page-card">
             <div className="user-page-card__wrapper section-2">
                 <Route exact path="/:page/card/:userId" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="user-page-card__back-to-users btn" to="/users">Вернуться к списку сотрудников</NavLink>
                         <div className="user-page-card__border">
                             <div className="user-page-card__title">Карточка сотрудника</div>
@@ -167,7 +167,7 @@ let UserPageCard = (props) => {
                                 }}>Редактировать</button>
                             </div>
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

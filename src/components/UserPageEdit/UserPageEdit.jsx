@@ -3,9 +3,7 @@ import { NavLink, Route, withRouter } from 'react-router-dom';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { employersGet } from '../../redux/employersReducer';
 import { locationsGet } from '../../redux/locationsReducer';
-import { postDepLocsGet } from '../../redux/postDepLocsReducer';
 import { usersGet } from '../../redux/usersReducer';
-import InnerPage from '../InnerPage/InnerPage';
 import { Field, reduxForm } from 'redux-form';
 import UserDevicesContainer from './UserDevices/UserDevicesContainer';
 import Input from '../common/FormControls/Input';
@@ -15,6 +13,7 @@ import { departmentNamesGet } from '../../redux/departmentNamesReducer';
 import { postsGet } from '../../redux/postsReducer';
 import { departmentsLocationsGet } from '../../redux/departmentsLocationsReducer';
 import { postsDepartmentsLocationsGet } from '../../redux/postsDepartmentsLocationsReducer';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     let optionsEmployers = [];
@@ -94,13 +93,13 @@ let UserPageEdit = (props) => {
         <div className="user-page-edit">
             <div className="user-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="user-page-edit__back-to-users btn" to={`/users/card/${props.match.params.userId}`}>Вернуться в карточку сотрудника</NavLink>
                         <div className="user-page-edit__form-container">
                             <Form {...props} />
                         </div>
                         <Route path="/users/:userId" render={() => <UserDevicesContainer /> } />
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

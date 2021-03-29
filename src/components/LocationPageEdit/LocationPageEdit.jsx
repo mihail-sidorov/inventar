@@ -4,14 +4,14 @@ import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { locationsGet } from '../../redux/locationsReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     return (
         <form className="location-page-edit__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
             <div className="location-page-edit__form-fields form__fields">
                 <div className="location-page-edit__form-field form__field">
-                    <label><span><span>Имя работодателя</span></span><Field name="location" component="input" type="text" /></label>
+                    <label><span><span>Имя местонахождения</span></span><Field name="location" component="input" type="text" /></label>
                 </div>
             </div>
             <div className="location-page-edit__form-btns">
@@ -32,13 +32,13 @@ let LocationPageEdit = (props) => {
         <div className="location-page-edit">
             <div className="location-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="location-page-edit__back-to-locations btn" to="/locations">Вернуться к списку местонахождений</NavLink>
                         <div className="location-page-edit__form-container">
                             <div className="location-page-edit__title">Редактирование местонахождения</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

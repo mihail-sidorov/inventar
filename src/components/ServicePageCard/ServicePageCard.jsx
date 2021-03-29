@@ -1,5 +1,4 @@
 import React from 'react';
-import InnerPage from '../InnerPage/InnerPage';
 import { NavLink, Route, withRouter } from 'react-router-dom';
 import { accountsGet } from '../../redux/accountsReducer';
 import isEmptyObject from '../../functions/isEmptyObject';
@@ -7,6 +6,7 @@ import { accountTypesGet } from '../../redux/accountTypesReducer';
 import { departmentsGet } from '../../redux/departmentsReducer';
 import { usersGet } from '../../redux/usersReducer';
 import { getAttached } from '../../redux/servicePageEditReducer';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let ServicePageCard = (props) => {
     let serviceId, type, login, password, url, comments, attachedDepartmentsArr, attachedUsersArr;
@@ -40,7 +40,7 @@ let ServicePageCard = (props) => {
         <div className="service-page-card">
             <div className="service-page-card__wrapper section-2">
                 <Route path="/:page/card" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="service-page-card__back-to-services btn" to="/services">Вернуться к списку сервисов</NavLink>
                         <div className="service-page-card__border">
                             <div className="service-page-card__title">Карточка сервиса</div>
@@ -106,7 +106,7 @@ let ServicePageCard = (props) => {
                                 }}>Редактировать</button>
                             </div>
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

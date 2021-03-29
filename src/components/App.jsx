@@ -20,7 +20,7 @@ import LocationPageAddContainer from './LocationPageAdd/LocationPageAddContainer
 import LocationPageEditContainer from './LocationPageEdit/LocationPageEditContainer';
 import LocationsPage from './LocationsPage/LocationsPage';
 import LoginPageContainer from './LoginPage/LoginPageContainer';
-import MainPage from './MainPage/MainPage';
+import MainPageContainer from './MainPage/MainPageContainer';
 import PostDepartmentLocationPageAddContainer from './PostDepartmentLocationPageAdd/PostDepartmentLocationPageAddContainer';
 import PostDepartmentLocationPageEditContainer from './PostDepartmentLocationPageEdit/PostDepartmentLocationPageEditContainer';
 import PostPageAddContainer from './PostPageAdd/PostPageAddContainer';
@@ -43,7 +43,7 @@ let App = () => {
             <Switch>
                 <Redirect exact from="/" to="/login" />
                 <Route path="/login" render={() => <LoginPageContainer />} />
-                <Route path="/main" render={() => <MainPage />} />
+                <Route path="/main" render={() => <MainPageContainer />} />
                 <Route exact path="/devices" render={() => <DevicesPage />} />
                 <Route exact path="/users" render={() => <UsersPage />} />
                 <Route exact path="/services" render={() => <ServicesPage />} />

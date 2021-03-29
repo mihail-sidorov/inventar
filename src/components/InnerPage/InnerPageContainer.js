@@ -3,7 +3,7 @@ import InnerPage from './InnerPage';
 
 let InnerPageContainer = connect(
     state => ({
-
+        role: state.authState.role,
     }),
     dispatch => ({
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 
-let InnerPage = (props) => {
+let InnerPageAdmin = (props) => {
     return (
         <div className="inner-page">
             <div className="inner-page__sidebar-menu">
@@ -24,9 +24,9 @@ let InnerPage = (props) => {
                     </div>
                 </div>
                 <div className="inner-page__sidebar-menu-items">
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование компании</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'users' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/users">Сотрудники компании</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы компании</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'users' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/users">Сотрудники</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'employers' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/employers">Работодатели</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'locations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/locations">Местонахождения</NavLink>
@@ -39,6 +39,31 @@ let InnerPage = (props) => {
             </div>
         </div>
     );
+}
+
+let InnerPageUser = (props) => {
+    return (
+        <div className="inner-page">
+            <div className="inner-page__sidebar-menu">
+                <div className="inner-page__sidebar-menu-header">
+                    <NavLink className="inner-page__to-main" to="/main">На главную</NavLink>
+                </div>
+                <div className="inner-page__sidebar-menu-items">
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
+                </div>
+            </div>
+            <div className="inner-page__content">
+                {props.children}
+            </div>
+        </div>
+    );
+}
+
+let InnerPage = (props) => {
+    if (props.role === 'admin') return <InnerPageAdmin {...props} />
+    if (props.role === 'user') return <InnerPageUser {...props} />
 }
 
 export default withRouter(InnerPage);

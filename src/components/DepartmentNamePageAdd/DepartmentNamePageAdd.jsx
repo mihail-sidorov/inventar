@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { departmentNamesGet } from '../../redux/departmentNamesReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     return (
@@ -32,13 +32,13 @@ let DepartmentNamePageAdd = (props) => {
         <div className="departmentName-page-add">
             <div className="departmentName-page-add__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="departmentName-page-add__back-to-departmentNames btn" to="/departmentNames">Вернуться к списку отделов</NavLink>
                         <div className="departmentName-page-add__form-container">
                             <div className="departmentName-page-add__title">Добавление отдела</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

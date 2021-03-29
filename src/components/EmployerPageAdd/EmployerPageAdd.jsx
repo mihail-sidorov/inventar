@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { employersGet } from '../../redux/employersReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     return (
@@ -32,13 +32,13 @@ let EmployerPageAdd = (props) => {
         <div className="employer-page-add">
             <div className="employer-page-add__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="employer-page-add__back-to-employers btn" to="/employers">Вернуться к списку работодателей</NavLink>
                         <div className="employer-page-add__form-container">
                             <div className="employer-page-add__title">Добавление работодателя</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

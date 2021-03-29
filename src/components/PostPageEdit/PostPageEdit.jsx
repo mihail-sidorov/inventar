@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { postsGet } from '../../redux/postsReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     return (
@@ -32,13 +32,13 @@ let PostPageEdit = (props) => {
         <div className="post-page-edit">
             <div className="post-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="post-page-edit__back-to-posts btn" to="/posts">Вернуться к списку должностей</NavLink>
                         <div className="post-page-edit__form-container">
                             <div className="post-page-edit__title">Редактирование должности</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

@@ -6,7 +6,7 @@ import isEmptyObject from '../../functions/isEmptyObject';
 import { departmentNamesGet } from '../../redux/departmentNamesReducer';
 import { departmentsLocationsGet } from '../../redux/departmentsLocationsReducer';
 import { locationsGet } from '../../redux/locationsReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     let departmentsArr = [];
@@ -63,13 +63,13 @@ let DepartmentLocationPageAdd = (props) => {
         <div className="departmentLocation-page-add">
             <div className="departmentLocation-page-add__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="departmentLocation-page-add__back-to-departmentsLocations btn" to="/departmentsLocations">Вернуться к списку отделов-местонахождений</NavLink>
                         <div className="departmentLocation-page-add__form-container">
                             <div className="departmentLocation-page-add__title">Добавление отдела-местонахождения</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

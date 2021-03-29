@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { locationsGet } from '../../redux/locationsReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     return (
@@ -32,13 +32,13 @@ let LocationPageAdd = (props) => {
         <div className="location-page-add">
             <div className="location-page-add__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="location-page-add__back-to-locations btn" to="/locations">Вернуться к списку местонахождений</NavLink>
                         <div className="location-page-add__form-container">
                             <div className="location-page-add__title">Добавление местонахождения</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

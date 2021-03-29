@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
-import InnerPage from '../InnerPage/InnerPageContainer';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import EmployersContainer from './Employers/EmployersContainer';
 import EmployersPagePaginationContainer from './Pagination/EmployersPagePaginationContainer';
 import EmployersPageSearchContainer from './Search/EmployersPageSearchContainer';
@@ -11,11 +11,11 @@ let EmployersPage = (props) => {
         <div className="employers-page">
             <div className="employers-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <EmployersPageSearchContainer />
                         <EmployersContainer />
                         <EmployersPagePaginationContainer />
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

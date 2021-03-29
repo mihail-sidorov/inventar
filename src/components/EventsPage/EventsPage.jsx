@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
-import InnerPage from '../InnerPage/InnerPageContainer';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import EventsContainer from './Events/EventsContainer';
 import EventsPageFilterContainer from './Filter/EventsPageFilterContainer';
 import EventsPaginationContainer from './Pagination/EventsPaginationContainer';
@@ -12,12 +12,12 @@ let EventsPage = (props) => {
         <div className="events-page">
             <div className="events-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <EventsSearchContainer />
                         <EventsPageFilterContainer />
                         <EventsContainer />
                         <EventsPaginationContainer />
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

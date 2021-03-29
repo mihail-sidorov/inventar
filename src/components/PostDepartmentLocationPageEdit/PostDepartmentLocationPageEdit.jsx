@@ -8,7 +8,7 @@ import { departmentsLocationsGet } from '../../redux/departmentsLocationsReducer
 import { locationsGet } from '../../redux/locationsReducer';
 import { postsDepartmentsLocationsGet } from '../../redux/postsDepartmentsLocationsReducer';
 import { postsGet } from '../../redux/postsReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     let postsArr = [];
@@ -65,13 +65,13 @@ let PostDepartmentLocationPageEdit = (props) => {
         <div className="postDepartmentLocation-page-edit">
             <div className="postDepartmentLocation-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="postDepartmentLocation-page-edit__back-to-postsDepartmentsLocations btn" to="/postsDepartmentsLocations">Вернуться к списку должностей-отделов-местонахождений</NavLink>
                         <div className="postDepartmentLocation-page-edit__form-container">
                             <div className="postDepartmentLocation-page-edit__title">Редактирование должности-отдела-местонахождения</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

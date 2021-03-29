@@ -11,7 +11,7 @@ import { postsGet } from '../../redux/postsReducer';
 import { required } from '../../validators/validators';
 import Input from '../common/FormControls/Input';
 import Select from '../common/FormControls/Select';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     let optionsEmployers = [];
@@ -91,13 +91,13 @@ let UserPageAdd = (props) => {
         <div className="user-page-add">
             <div className="user-page-add__wrapper section-2">
                 <Route path="/:page" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="user-page-add__back-to-users btn" to="/users">Вернуться к списку сотрудников</NavLink>
                         <div className="user-page-add__form-container">
                             <div className="user-page-add__title">Добавление сотрудника</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 )}/>
             </div>
         </div>

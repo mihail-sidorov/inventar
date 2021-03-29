@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import authHOC from '../../HOC/authHOC';
-import InnerPage from '../InnerPage/InnerPageContainer';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import DepartmentsLocationsContainer from './DepartmentsLocations/DepartmentsLocationsContainer';
 import DepartmentsLocationsPagePaginationContainer from './Pagination/DepartmentsLocationsPagePaginationContainer';
 import DepartmentsLocationsPageSearchContainer from './Search/DepartmentsLocationsPageSearchContainer';
@@ -11,7 +11,7 @@ let DepartmentsLocationsPage = (props) => {
         <div className="departmentsLocations-page">
             <div className="departmentsLocations-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <div className="departmentsLocations-page__controls">
                             <NavLink className="departmentsLocations-page__back-to-departmentNames btn" to="/departmentNames">Вернуться к списку отделов</NavLink>
                             <NavLink className="departmentsLocations-page__add btn" to="/departmentsLocations/add">+</NavLink>
@@ -19,7 +19,7 @@ let DepartmentsLocationsPage = (props) => {
                         <DepartmentsLocationsPageSearchContainer />
                         <DepartmentsLocationsContainer />
                         <DepartmentsLocationsPagePaginationContainer />
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

@@ -56,7 +56,7 @@ let EventsClassComponent = class extends React.Component {
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
-                        if (value.config.url === 'events?all=true') this.props.onEventsGet(value.data);
+                        if (value.config.url === 'events') this.props.onEventsGet(value.data);
                         if (value.config.url === 'users') this.props.onUsersGet(value.data);
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);

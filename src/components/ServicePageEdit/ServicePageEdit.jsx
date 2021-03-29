@@ -4,7 +4,7 @@ import { reduxForm, Field } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { accountsGet } from '../../redux/accountsReducer';
 import { accountTypesGet } from '../../redux/accountTypesReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import ServiceEntitiesContainer from './ServiceEntities/ServiceEntitiesContainer';
 
 let Form = (props) => {
@@ -59,14 +59,14 @@ let ServicePageEdit = (props) => {
         <div className="service-page-edit">
             <div className="service-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="service-page-edit__back-to-services btn" to={`/services/card/${props.match.params.serviceId}`}>Вернуться в карточку сервиса</NavLink>
                         <div className="service-page-edit__form-container">
                             <div className="service-page-edit__title">Редактирование сервиса</div>
                             <Form {...props} />
                         </div>
                         <ServiceEntitiesContainer serviceId={props.match.params.serviceId} />
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>

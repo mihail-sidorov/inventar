@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Route, withRouter } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import { accountTypesGet } from '../../redux/accountTypesReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     let optionsAccountTypes = [];
@@ -56,13 +56,13 @@ let ServicePageAdd = (props) => {
         <div className="service-page-add">
             <div className="service-page-add__wrapper section-2">
                 <Route path="/:page" render={() => 
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="service-page-add__back-to-services btn" to="/services">Вернуться к списку сервисов</NavLink>
                         <div className="service-page-add__form-container">
                             <div className="service-page-add__title">Добавление сервиса</div>
                             <Form {...props} />
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 } />
             </div>
         </div>
