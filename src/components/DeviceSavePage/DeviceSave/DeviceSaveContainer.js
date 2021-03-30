@@ -18,6 +18,10 @@ let DeviceSaveContainer = connect(
     state => {
         return {
             users: state.usersState.users,
+            responsibles: state.responsiblesState.responsibles,
+            brands: state.brandsState.brands,
+            suppliers: state.suppliersState.suppliers,
+            locations: state.locationsState.locations,
             device: state.deviceSavePageState.device,
             categories: state.categoriesState.categories,
             statuses: state.statusesState.statuses,

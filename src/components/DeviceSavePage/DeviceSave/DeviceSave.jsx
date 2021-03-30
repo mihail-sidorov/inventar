@@ -141,7 +141,7 @@ let Form = (props) => {
                     props.match.params.device !== 'add' && !isEmptyObject(props.device) &&
                     <SpecificationsFieldsContainer device={props.device} />
                 }
-                <CommonFieldsContainer />
+                <CommonFieldsContainer {...props} />
             </div>
             <div className="device-save__form-btns">
                 <button className="device-save__form-submit-btn btn">Сохранить</button>

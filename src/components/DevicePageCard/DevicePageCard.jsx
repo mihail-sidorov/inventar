@@ -122,45 +122,50 @@ let DevicePageCard = (props) => {
                                                 <td>{category}</td>
                                             </tr>
                                             {specificationsFields}
-                                            <tr>
-                                                <td>Серийный номер</td>
-                                                <td>{SN}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Номер заказа</td>
-                                                <td>{order_number}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Модель</td>
-                                                <td>{model}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Инвентарный номер</td>
-                                                <td>{invNumber}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Закупочная цена</td>
-                                                <td>{price}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Дата покупки</td>
-                                                <td>{datePurchase}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Дата окончания гарантии</td>
-                                                <td>{dateWarrantyEnd}</td>
-                                            </tr>
+                                            {
+                                                category && category.sub_devices === null &&
+                                                <>
+                                                    <tr>
+                                                        <td>Серийный номер</td>
+                                                        <td>{SN}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Номер заказа</td>
+                                                        <td>{order_number}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Модель</td>
+                                                        <td>{model}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Инвентарный номер</td>
+                                                        <td>{invNumber}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Закупочная цена</td>
+                                                        <td>{price}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Дата покупки</td>
+                                                        <td>{datePurchase}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Дата окончания гарантии</td>
+                                                        <td>{dateWarrantyEnd}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Марка</td>
+                                                        <td>{brand}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Поставщик</td>
+                                                        <td>{supplier}</td>
+                                                    </tr>
+                                                </>
+                                            }
                                             <tr>
                                                 <td>Ответственный</td>
                                                 <td>{responsible}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Марка</td>
-                                                <td>{brand}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Поставщик</td>
-                                                <td>{supplier}</td>
                                             </tr>
                                             <tr>
                                                 <td>Местонахождение</td>
