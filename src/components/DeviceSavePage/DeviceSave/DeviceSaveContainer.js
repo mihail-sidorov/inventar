@@ -151,25 +151,27 @@ let DeviceSaveContainer = connect(
                         initialValues[prop] = String(initialValues[prop]);
                     }
                     if (prop === 'date_purchase' || prop === 'date_warranty_end') {
-                        let date = new Date(initialValues[prop]);
+                        if (initialValues[prop]) {
+                            let date = new Date(initialValues[prop]);
 
-                        let month = Number(date.getUTCMonth()) + 1;
-                        if (month < 10) {
-                            month = '0' + String(month);
-                        }
-                        else {
-                            month = String(month);
-                        }
+                            let month = Number(date.getUTCMonth()) + 1;
+                            if (month < 10) {
+                                month = '0' + String(month);
+                            }
+                            else {
+                                month = String(month);
+                            }
 
-                        let day = Number(date.getUTCDate());
-                        if (day < 10) {
-                            day = '0' + String(day);
-                        }
-                        else {
-                            day = String(day);
-                        }
+                            let day = Number(date.getUTCDate());
+                            if (day < 10) {
+                                day = '0' + String(day);
+                            }
+                            else {
+                                day = String(day);
+                            }
 
-                        initialValues[prop] = date.getUTCFullYear() + '-' + month + '-' + day;
+                            initialValues[prop] = date.getUTCFullYear() + '-' + month + '-' + day;
+                        }
                     }
                 }
             }
