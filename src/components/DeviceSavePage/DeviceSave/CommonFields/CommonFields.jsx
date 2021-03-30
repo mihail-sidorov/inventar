@@ -30,7 +30,19 @@ let CommonFields = (props) => {
     return(
         <>
             {
-                !isEmptyObject(props.category) && props.category.sub_devices === null &&
+                !isEmptyObject(props.category) && props.category.sub_devices !== null ?
+                <>
+                    <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
+                        <option></option>
+                        {optionsResponsibles}
+                    </Field>
+                    <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
+                        <option></option>
+                        {optionsLocations}
+                    </Field>
+                    <Field name="comments" desc="Комментарии" type="text" component={Input} />
+                </>
+                :
                 <>
                     <Field name="SN" desc="Серийный номер" type="text" component={Input} />
                     <Field name="order_number" desc="Номер заказа" type="text" component={Input} />
@@ -46,17 +58,18 @@ let CommonFields = (props) => {
                         <option></option>
                         {optionsSuppliers}
                     </Field>
+                    <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
+                        <option></option>
+                        {optionsResponsibles}
+                    </Field>
+                    <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
+                        <option></option>
+                        {optionsLocations}
+                    </Field>
+                    <Field name="comments" desc="Комментарии" type="text" component={Input} />
                 </>
             }
-            <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
-                <option></option>
-                {optionsResponsibles}
-            </Field>
-            <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
-                <option></option>
-                {optionsLocations}
-            </Field>
-            <Field name="comments" desc="Комментарии" type="text" component={Input} />
+            
         </>
     );
 }
