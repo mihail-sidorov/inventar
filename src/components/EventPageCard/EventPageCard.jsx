@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { eventsGet } from '../../redux/eventsReducer';
 import { usersGet } from '../../redux/usersReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let EventPageCard = (props) => {
     function confirms(nameConfirmField) {
@@ -34,7 +34,7 @@ let EventPageCard = (props) => {
         <div className="event-page-card">
             <div className="event-page-card__wrapper section-2">
                 <Route path="/:page/card" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="event-page-card__back-to-events btn" to="/events">Вернуться к списку событий</NavLink>
                         <div className="event-page-card__border">
                             <div className="event-page-card__title">Карточка события</div>
@@ -118,7 +118,7 @@ let EventPageCard = (props) => {
                                 }
                             </div>
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

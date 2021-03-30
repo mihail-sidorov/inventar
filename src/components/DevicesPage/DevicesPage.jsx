@@ -22,4 +22,4 @@ let DevicesPage = (props) => {
     );
 }
 
-export default authHOC(DevicesPage);
+export default DevicesPage;

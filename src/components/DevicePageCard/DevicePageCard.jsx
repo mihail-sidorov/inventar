@@ -9,7 +9,7 @@ import { responsiblesGet } from '../../redux/responsiblesReducer';
 import { statusesGet } from '../../redux/statusesReducer';
 import { suppliersGet } from '../../redux/suppliersReducer';
 import { usersGet } from '../../redux/usersReducer';
-import InnerPage from '../InnerPage/InnerPage';
+import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let DevicePageCard = (props) => {
     let device, categoryObj, category, specificationsFields, model, invNumber, price, datePurchase, dateWarrantyEnd, responsible, brand, supplier, location, subDevicesArr, status, user, SN, order_number, comments;
@@ -109,7 +109,7 @@ let DevicePageCard = (props) => {
         <div className="device-page-card">
             <div className="device-page-card__wrapper section-2">
                 <Route exact path="/:page/card/:deviceId" render={() => (
-                    <InnerPage>
+                    <InnerPageContainer>
                         <NavLink className="device-page-card__back-to-devices btn" to="/devices">Вернуться к списку оборудования</NavLink>
                         <div className="device-page-card__border">
                             <div className="device-page-card__title">Карточка оборудования</div>
@@ -204,7 +204,7 @@ let DevicePageCard = (props) => {
                                 Ответственный: {user}
                             </div>
                         </div>
-                    </InnerPage>
+                    </InnerPageContainer>
                 )} />
             </div>
         </div>

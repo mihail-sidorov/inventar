@@ -9,7 +9,7 @@ let authHOC = (Component) => {
         }
 
         return (
-            <Component />
+            <Component {...props} />
         );
     }
 
