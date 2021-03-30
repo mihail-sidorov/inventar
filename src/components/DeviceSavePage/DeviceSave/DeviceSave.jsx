@@ -12,13 +12,12 @@ import { statusesGet } from '../../../redux/statusesReducer';
 import { suppliersGet } from '../../../redux/suppliersReducer';
 import { usersGet } from '../../../redux/usersReducer';
 import { required } from '../../../validators/validators';
-import Input from '../../common/FormControls/Input';
 import Radio from '../../common/FormControls/Radio';
-import Select from '../../common/FormControls/Select';
 import SearchUsersForAttachContainer from './SearchUsersForAttach/SearchUsersForAttachContainer';
 import SpecificationsFieldsContainer from './SpecificationsFields/SpecificationsFieldsContainer';
 import SubDevicesContainer from './SubDevices/SubDevicesContainer';
 import $ from 'jquery';
+import CommonFieldsContainer from './CommonFields/CommonFieldsContainer';
 
 let CategoriesField = (categories, props) => {
     let tree = [];
@@ -128,27 +127,6 @@ let CategoriesBlockClassComponent = class extends React.Component {
 }
 
 let Form = (props) => {
-    let optionsResponsibles = [];
-    let optionsBrands = [];
-    let optionsSuppliers = [];
-    let optionsLocations = [];
-
-    for (let id in props.responsibles) {
-        optionsResponsibles.push(<option value={id} key={id}>{props.users[id].full_name}</option>);
-    }
-
-    for (let id in props.brands) {
-        optionsBrands.push(<option value={id} key={id}>{props.brands[id].brand}</option>);
-    }
-
-    for (let id in props.suppliers) {
-        optionsSuppliers.push(<option value={id} key={id}>{props.suppliers[id].supplier}</option>);
-    }
-
-    for (let id in props.locations) {
-        optionsLocations.push(<option value={id} key={id}>{props.locations[id].location}</option>);
-    }
-
     return (
         <form action="" className="device-save__form form" onSubmit={props.handleSubmit(values => {props.onSubmit(values, props)})}>
             <div className="device-save__form-fields form__fields">
@@ -163,29 +141,7 @@ let Form = (props) => {
                     props.match.params.device !== 'add' && !isEmptyObject(props.device) &&
                     <SpecificationsFieldsContainer device={props.device} />
                 }
-                <Field name="SN" desc="Серийный номер" type="text" component={Input} />
-                <Field name="order_number" desc="Номер заказа" type="text" component={Input} />
-                <Field name="model" desc="Модель" type="text" component={Input} validate={[required]} />
-                <Field name="price" desc="Закупочная цена" type="text" component={Input} validate={[required]} />
-                <Field name="date_purchase" desc="Дата покупки" type="date" component={Input} validate={[required]} />
-                <Field name="date_warranty_end" desc="Дата окончания гарантии" type="date" component={Input} validate={[required]} />
-                <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
-                    <option></option>
-                    {optionsResponsibles}
-                </Field>
-                <Field name="brand_id" desc="Марка" component={Select} validate={[required]}>
-                    <option></option>
-                    {optionsBrands}
-                </Field>
-                <Field name="supplier_id" desc="Поставщик" component={Select} validate={[required]}>
-                    <option></option>
-                    {optionsSuppliers}
-                </Field>
-                <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
-                    <option></option>
-                    {optionsLocations}
-                </Field>
-                <Field name="comments" desc="Комментарии" type="text" component={Input} />
+                <CommonFieldsContainer />
             </div>
             <div className="device-save__form-btns">
                 <button className="device-save__form-submit-btn btn">Сохранить</button>

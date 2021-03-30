@@ -17,13 +17,9 @@ import DeviceSave from './DeviceSave';
 let DeviceSaveContainer = connect(
     state => {
         return {
-            responsibles: state.responsiblesState.responsibles,
             users: state.usersState.users,
             device: state.deviceSavePageState.device,
-            brands: state.brandsState.brands,
             categories: state.categoriesState.categories,
-            suppliers: state.suppliersState.suppliers,
-            locations: state.locationsState.locations,
             statuses: state.statusesState.statuses,
             wasAdd: state.devicesPageState.wasAdd,
         };
