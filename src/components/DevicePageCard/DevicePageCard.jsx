@@ -26,7 +26,11 @@ let DevicePageCard = (props) => {
                 specificationsFields.push(
                     <tr key={property}>
                         <td>{categoryObj.schema.properties[property].title}</td>
-                        <td>{device.specifications[property]}</td>
+                        <td>
+                            {
+                                (device.specifications[property] instanceof Array) ? device.specifications[property].join(', ') : device.specifications[property]
+                            }
+                        </td>
                     </tr>
                 );
             }
@@ -123,7 +127,7 @@ let DevicePageCard = (props) => {
                                             </tr>
                                             {specificationsFields}
                                             {
-                                                category && category.sub_devices === null &&
+                                                categoryObj && categoryObj.sub_devices === null &&
                                                 <>
                                                     <tr>
                                                         <td>Серийный номер</td>
