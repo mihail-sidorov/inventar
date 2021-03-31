@@ -98,8 +98,8 @@ let DevicePageCard = (props) => {
             if (props.devices[prop].parent_id == device.id) {
                 subDevicesArr.push(
                     <tr key={props.devices[prop].id}>
-                        <td>{props.brands[device.brand_id]?.brand} {device.model}</td>
-                        <td>{device.inv_number}</td>
+                        <td>{props.brands[props.devices[prop].brand_id]?.brand} {props.devices[prop].model}</td>
+                        <td>{props.devices[prop].inv_number}</td>
                     </tr>
                 );
             }

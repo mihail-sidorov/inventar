@@ -23,7 +23,7 @@ let UserDevicesSearchContainer = connect(
                             switch (property) {
                                 case 'brand_id':
                                     if (!isEmptyObject(brands)) {
-                                        let brand = brands[devices[id][property]].brand;
+                                        let brand = brands[devices[id][property]]?.brand;
                                         if (brand !== undefined && brand !== null && brand !== '') {
                                             propertiesArr.push(String(brand));
                                         }

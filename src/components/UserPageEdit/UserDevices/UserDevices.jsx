@@ -11,7 +11,7 @@ let UserDevices = (props) => {
     for (let prop in props.userDevices) {
         userDevices.push(
             <tr key={prop}>
-                <td>{`${props.brands[props.userDevices[prop].brand_id].brand} ${props.userDevices[prop].model}`}</td>
+                <td>{props.brands[props.userDevices[prop].brand_id]?.brand} {props.userDevices[prop].model}</td>
                 <td>{props.userDevices[prop].inv_number}</td>
                 <td>
                     {
