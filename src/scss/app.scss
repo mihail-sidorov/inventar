@@ -1628,6 +1628,48 @@ html, body {
     }
 }
 
+.services-page-user {
+
+    &__title {
+
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    &__border {
+
+        padding: 20px;
+        border: 1px solid #B1B1AF;
+        border-radius: 5px;
+    }
+
+    &__content {
+
+        &-table {
+
+            margin-top: 40px;
+            margin-left: -5px;
+            margin-right: -5px;
+
+            table {
+
+                width: 100%;
+                border: 0;
+                border-spacing: 5px;
+    
+                td {
+    
+                    height: 50px;
+                    vertical-align: middle;
+                    text-align: left;
+                    background-color: #C4C4C4;
+                    padding: 0 20px;
+                }
+            }
+        }
+    }
+}
+
 .events-page-filter {
 
     display: flex;
