@@ -37,6 +37,14 @@ function makeSubDevicesSearch(device, devices, categories, brands, search) {
                                         }
                                     }
                                     break;
+                                case 'category_id':
+                                    if (!isEmptyObject(categories)) {
+                                        let category = categories[devices[id][property]]?.category;
+                                        if (category !== undefined && category !== null && category !== '') {
+                                            propertyValue = String(category);
+                                        }
+                                    }
+                                    break;
                                 case 'specifications':
                                     propertyValue = '';
                                     for (let specificationsProperty in devices[id][property]) {
@@ -46,7 +54,7 @@ function makeSubDevicesSearch(device, devices, categories, brands, search) {
                                     }
                                     break;
                                 default:
-                                    if (property === 'model') {
+                                    if (property === 'model' || property === 'inv_number') {
                                         if (devices[id][property] !== undefined && devices[id][property] !== null && devices[id][property] !== '') {
                                             propertyValue = String(devices[id][property]);
                                         }
