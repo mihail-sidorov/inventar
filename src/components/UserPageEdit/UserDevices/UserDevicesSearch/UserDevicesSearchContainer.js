@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import isEmptyObject from '../../../../functions/isEmptyObject';
 import { attachDeviceToUserActionCreator } from '../../../../redux/devicesReducer';
+import { eventsGet, eventsGetActionCreator } from '../../../../redux/eventsReducer';
 import { attachDeviceToUser, userDevicesChangeSearchActionCreator } from '../../../../redux/userDevicesReducer';
 import UserDevicesSearch from './UserDevicesSearch';
 
@@ -81,6 +82,10 @@ let UserDevicesSearchContainer = connect(
             attachDeviceToUser(userId, deviceId)
                 .then((response) => {
                     dispatch(attachDeviceToUserActionCreator(response.data));
+                    return eventsGet();
+                })
+                .then(res => {
+                    dispatch(eventsGetActionCreator(res.data));
                 })
                 .catch((error) => {
                     console.log(error);

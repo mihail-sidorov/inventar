@@ -49,6 +49,9 @@ let DevicePageCardContainer = connect(
         editDevice: (props) => {
             props.history.push(`/devices/${props.match.params.deviceId}`);
         },
+        goToSubDeviceCard: (id, history) => {
+            history.push(`/devices/card/${id}`);
+        },
     })
 )(DevicePageCard);
 

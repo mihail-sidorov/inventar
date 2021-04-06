@@ -6,6 +6,7 @@ import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
 import { resetDeviceActionCreator, saveDevice, editDevice, setDeviceInDeviceSavePageActionCreator, specificationsSetActionCreator } from '../../../redux/deviceSavePageReducer';
 import { changeWasAddInDevicesPageStateActionCreator } from '../../../redux/devicesPageReducer';
 import { saveDeviceActionCreator, devicesGet, devicesGetActionCreator, attachDeviceToUserActionCreator } from '../../../redux/devicesReducer';
+import { eventsGet, eventsGetActionCreator } from '../../../redux/eventsReducer';
 import { locationsGetActionCreator } from '../../../redux/locationsReducer';
 import { responsiblesGetActionCreator } from '../../../redux/responsiblesReducer';
 import { statusesGetActionCreator } from '../../../redux/statusesReducer';
@@ -214,11 +215,15 @@ let DeviceSaveContainer = connect(
 
             props.initialize(initialValues);
         },
-        onUnAttachUserFromDevice: (userId, deviceId) => {
-            unAttachDeviceFromUser(userId, deviceId)
+        onUnAttachUserFromDevice: (deviceId) => {
+            unAttachDeviceFromUser(deviceId)
                 .then((response) => {
                     dispatch(attachDeviceToUserActionCreator(response.data));
                     dispatch(setDeviceInDeviceSavePageActionCreator(deviceId));
+                    return eventsGet();
+                })
+                .then(res => {
+                    dispatch(eventsGetActionCreator(res.data));
                 })
                 .catch((error) => {
                     console.log(error);

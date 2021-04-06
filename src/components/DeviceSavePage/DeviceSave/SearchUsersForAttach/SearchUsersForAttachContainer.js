@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { searchUsersInputChangeActionCreator, setDeviceInDeviceSavePageActionCreator } from '../../../../redux/deviceSavePageReducer';
 import { attachDeviceToUserActionCreator } from '../../../../redux/devicesReducer';
+import { eventsGet, eventsGetActionCreator } from '../../../../redux/eventsReducer';
 import { attachDeviceToUser } from '../../../../redux/userDevicesReducer';
 import SearchUsersForAttach from './SearchUsersForAttach';
 
@@ -64,6 +65,10 @@ let SearchUsersForAttachContainer = connect(
                 .then((response) => {
                     dispatch(attachDeviceToUserActionCreator(response.data));
                     dispatch(setDeviceInDeviceSavePageActionCreator(deviceId));
+                    return eventsGet();
+                })
+                .then(res => {
+                    dispatch(eventsGetActionCreator(res.data));
                 })
                 .catch((error) => {
                     console.log(error);

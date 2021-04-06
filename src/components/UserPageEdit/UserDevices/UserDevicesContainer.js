@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
 import { attachDeviceToUserActionCreator, devicesGetActionCreator } from '../../../redux/devicesReducer';
+import { eventsGet, eventsGetActionCreator } from '../../../redux/eventsReducer';
 import { unAttachDeviceFromUser, userDevicesUserIdSetActionCreator } from '../../../redux/userDevicesReducer';
 import UserDevices from './UserDevices';
 
@@ -32,10 +33,14 @@ let UserDevicesContainer = connect(
         onBrandsGet: (data) => {
             dispatch(brandsGetActionCreator(data));
         },
-        onUnAttachDeviceFromUser: (userId, deviceId) => {
-            unAttachDeviceFromUser(userId, deviceId)
+        onUnAttachDeviceFromUser: (deviceId) => {
+            unAttachDeviceFromUser(deviceId)
                 .then((response) => {
                     dispatch(attachDeviceToUserActionCreator(response.data));
+                    return eventsGet();
+                })
+                .then(res => {
+                    dispatch(eventsGetActionCreator(res.data));
                 })
                 .catch((error) => {
                     console.log(error);

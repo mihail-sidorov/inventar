@@ -97,7 +97,9 @@ let DevicePageCard = (props) => {
         for (let prop in props.devices) {
             if (props.devices[prop].parent_id == device.id) {
                 subDevicesArr.push(
-                    <tr key={props.devices[prop].id}>
+                    <tr key={props.devices[prop].id} onClick={() => {
+                        props.goToSubDeviceCard(prop, props.history);
+                    }}>
                         <td>{props.brands[props.devices[prop].brand_id]?.brand} {props.devices[prop].model}</td>
                         <td>{props.devices[prop].inv_number}</td>
                     </tr>

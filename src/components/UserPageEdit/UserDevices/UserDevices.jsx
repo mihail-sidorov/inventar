@@ -17,7 +17,7 @@ let UserDevices = (props) => {
                     {
                         props.userDevices[prop].status !== 'return' &&
                         <button className="user-devices__unattach-btn" onClick={() => {
-                            props.onUnAttachDeviceFromUser(props.userId, prop);
+                            props.onUnAttachDeviceFromUser(prop);
                         }}>Открепить</button>
                     }
                 </td>
