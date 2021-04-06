@@ -879,6 +879,30 @@ html, body {
     }
 }
 
+.postDepartmentLocation-page-add, .postDepartmentLocation-page-edit {
+    &__form-field {
+
+        label {
+
+            flex-wrap: wrap;
+            height: auto !important;
+
+            select {
+
+                width: auto !important;
+                flex-grow: 1;
+                height: 50px;
+            }
+        }
+    }
+
+    &__search {
+
+        flex-basis: 100%;
+        flex-shrink: 0;
+    }
+}
+
 .pagination {
 
     height: 24px;
