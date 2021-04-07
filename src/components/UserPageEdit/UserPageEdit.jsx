@@ -27,22 +27,31 @@ let Form = (props) => {
         );
     }
 
+    let patternLoc = props.locationSearch ? new RegExp(props.locationSearch.toLowerCase()) : '';
     for (let id in props.locations) {
-        optionsLocations.push(
-            <option value={id} key={id}>{props.locations[id].location}</option>
-        );
+        if (props.locations[id].location.toLowerCase().match(patternLoc)) {
+            optionsLocations.push(
+                <option value={id} key={id}>{props.locations[id].location}</option>
+            );
+        }
     }
 
+    let patternDepLoc = props.depLocSearch ? new RegExp(props.depLocSearch.toLowerCase()) : '';
     for (let id in props.departmentsLocations) {
-        optionsDepsLocs.push(
-            <option value={id} key={id}>{props.departmentNames[props.departmentsLocations[id]?.department_id]?.department}</option>
-        );
+        if (props.departmentNames[props.departmentsLocations[id].department_id]?.department.toLowerCase().match(patternDepLoc)) {
+            optionsDepsLocs.push(
+                <option value={id} key={id}>{props.departmentNames[props.departmentsLocations[id]?.department_id]?.department}</option>
+            );
+        }
     }
 
+    let patternPostDepLoc = props.postDepLocSearch ? new RegExp(props.postDepLocSearch.toLowerCase()) : '';
     for (let id in props.postsDepartmentsLocations) {
-        optionsPostsDepsLocs.push(
-            <option value={id} key={id}>{props.posts[props.postsDepartmentsLocations[id]?.post_id]?.post}</option>
-        );
+        if (props.posts[props.postsDepartmentsLocations[id].post_id]?.post.toLowerCase().match(patternPostDepLoc)) {
+            optionsPostsDepsLocs.push(
+                <option value={id} key={id}>{props.posts[props.postsDepartmentsLocations[id]?.post_id]?.post}</option>
+            );
+        }
     }
 
     return (
@@ -64,16 +73,28 @@ let Form = (props) => {
                     <option></option>
                     {optionsLocations}
                 </Field>
+                <Field name="location_search" desc="Поиск по местонахождению" component={Input} onChange={() => {
+                    props.locationClear();
+                    props.changeLocation('');
+                    props.changeDepartment('');
+                }} />
                 <Field name="dep_loc_id" desc="Отдел" component={Select} validate={[required]} onChange={(e) => {
                     props.changeDepartment(e.currentTarget.value);
                 }}>
                     <option></option>
                     {optionsDepsLocs}
                 </Field>
+                <Field name="dep_loc_search" desc="Поиск по отделу" component={Input} onChange={() => {
+                    props.depLocClear();
+                    props.changeDepartment('');
+                }} />
                 <Field name="post_dep_loc_id" desc="Должность" component={Select} validate={[required]}>
                     <option></option>
                     {optionsPostsDepsLocs}
                 </Field>
+                <Field name="post_dep_loc_search" desc="Поиск по должности" component={Input} onChange={() => {
+                    props.postDepLocClear();
+                }} />
             </div>
             <div className="user-page-edit__form-btns">
                 <button className="user-page-edit__form-submit-btn btn">Сохранить</button>

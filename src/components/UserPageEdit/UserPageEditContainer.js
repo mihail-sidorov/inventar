@@ -20,6 +20,9 @@ let UserPageEditContainer = connect(
         posts: state.postsState.posts,
         departmentsLocations: state.userPageEditState.filterDepartmentsLocations,
         postsDepartmentsLocations: state.userPageEditState.filterPostsDepartmentsLocations,
+        locationSearch: state.form?.userEditForm?.values?.location_search,
+        depLocSearch: state.form?.userEditForm?.values?.dep_loc_search,
+        postDepLocSearch: state.form?.userEditForm?.values?.post_dep_loc_search,
     }),
     dispatch => ({
         onEmployersGet: (data) => {
@@ -50,6 +53,15 @@ let UserPageEditContainer = connect(
         },
         changeDepartment: departmentId => {
             dispatch(changeDepartmentOnUserPageEditActionCreator(departmentId));
+            dispatch(change('userEditForm', 'post_dep_loc_id', ''));
+        },
+        locationClear: () => {
+            dispatch(change('userEditForm', 'location_id', ''));
+        },
+        depLocClear: () => {
+            dispatch(change('userEditForm', 'dep_loc_id', ''));
+        },
+        postDepLocClear: () => {
             dispatch(change('userEditForm', 'post_dep_loc_id', ''));
         },
         onInitialValuesSet: (userId) => {

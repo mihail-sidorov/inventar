@@ -20,6 +20,9 @@ let UserPageAddContainer = connect(
         posts: state.postsState.posts,
         departmentsLocations: state.userPageAddState.filterDepartmentsLocations,
         postsDepartmentsLocations: state.userPageAddState.filterPostsDepartmentsLocations,
+        locationSearch: state.form?.userAddForm?.values?.location_search,
+        depLocSearch: state.form?.userAddForm?.values?.dep_loc_search,
+        postDepLocSearch: state.form?.userAddForm?.values?.post_dep_loc_search,
     }),
     dispatch => ({
         onEmployersGet: (data) => {
@@ -47,6 +50,15 @@ let UserPageAddContainer = connect(
         },
         changeDepartment: departmentId => {
             dispatch(changeDepartmentOnUserPageAddActionCreator(departmentId));
+            dispatch(change('userAddForm', 'post_dep_loc_id', ''));
+        },
+        locationClear: () => {
+            dispatch(change('userAddForm', 'location_id', ''));
+        },
+        depLocClear: () => {
+            dispatch(change('userAddForm', 'dep_loc_id', ''));
+        },
+        postDepLocClear: () => {
             dispatch(change('userAddForm', 'post_dep_loc_id', ''));
         },
         onSubmit: (values, props) => {
