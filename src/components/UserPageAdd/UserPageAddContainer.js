@@ -65,11 +65,11 @@ let UserPageAddContainer = connect(
             let sendValues = {...values};
 
             sendValues.contact = {};
-            if (sendValues.phone !== undefined) {
+            if (sendValues.phone) {
                 sendValues.contact.phone = sendValues.phone;
                 delete sendValues.phone;
             }
-            if (sendValues.email !== undefined) {
+            if (sendValues.email) {
                 sendValues.contact.email = sendValues.email;
                 delete sendValues.email;
             }

@@ -7,7 +7,7 @@ import UserDevicesSearch from './UserDevicesSearch';
 
 let UserDevicesSearchContainer = connect(
     state => {
-        let devices = state.devicesState.devices, brands = state.brandsState.brands, search = state.userDevicesState.search, userId = state.userDevicesState.userId, searchDevices = {};
+        let devices = state.devicesState.devices, brands = state.brandsState.brands, categories = state.categoriesState.categories, search = state.userDevicesState.search, userId = state.userDevicesState.userId, searchDevices = {};
 
         if (search !== '' && userId !== null) {
             for (let id in devices) {
@@ -30,6 +30,15 @@ let UserDevicesSearchContainer = connect(
                                         }
                                     }
                                     break;
+                                case 'category_id':
+                                    if (!isEmptyObject(categories)) {
+                                        let category = categories[devices[id][property]]?.category;
+                                        console.log(category);
+                                        if (category !== undefined && category !== null && category !== '') {
+                                            propertiesArr.push(String(category));
+                                        }
+                                    }
+                                    break;
                                 case 'specifications':
                                     for (let specificationsProperty in devices[id][property]) {
                                         if (devices[id][property][specificationsProperty] !== undefined && devices[id][property][specificationsProperty] !== null && devices[id][property][specificationsProperty] !== '') {
@@ -38,7 +47,7 @@ let UserDevicesSearchContainer = connect(
                                     }
                                     break;
                                 default:
-                                    if (property === 'model') {
+                                    if (property === 'model' || property === 'inv_number') {
                                         if (devices[id][property] !== undefined && devices[id][property] !== null && devices[id][property] !== '') {
                                             propertiesArr.push(String(devices[id][property]));
                                         }

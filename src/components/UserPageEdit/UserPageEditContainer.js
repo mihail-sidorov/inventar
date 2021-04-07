@@ -75,9 +75,13 @@ let UserPageEditContainer = connect(
             let initialValues = {...state.usersState.users[userId]};
             initialValues['dep_loc_id'] = departmentId;
             initialValues['location_id'] = locationId;
-            for (let prop in initialValues.contact) {
-                initialValues[prop] = initialValues.contact[prop];
+
+            if (initialValues.contact !== null) {
+                for (let prop in initialValues.contact) {
+                    initialValues[prop] = initialValues.contact[prop];
+                }
             }
+
             for (let prop in initialValues) {
                 if (initialValues[prop] !== null && initialValues[prop] !== undefined) {
                     if (prop === 'appointment_date') {
@@ -115,11 +119,11 @@ let UserPageEditContainer = connect(
             let sendValues = {...values};
 
             sendValues.contact = {};
-            if (sendValues.phone !== undefined) {
+            if (sendValues.phone) {
                 sendValues.contact.phone = sendValues.phone;
                 delete sendValues.phone;
             }
-            if (sendValues.email !== undefined) {
+            if (sendValues.email) {
                 sendValues.contact.email = sendValues.email;
                 delete sendValues.email;
             }

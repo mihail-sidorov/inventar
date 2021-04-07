@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import isEmptyObject from '../../../functions/isEmptyObject';
 import { brandsGet } from '../../../redux/brandsReducer';
+import { categoriesGet } from '../../../redux/categoriesReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
 import UserDevicesSearchContainer from './UserDevicesSearch/UserDevicesSearchContainer';
 
@@ -50,15 +51,18 @@ let UserDevicesClassComponent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)) {
+        if (isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)
+        || isEmptyObject(state.categoriesState.categories)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.devicesState.devices)) {
                 promiseArr.push(devicesGet());
             }
-
             if (isEmptyObject(state.brandsState.brands)) {
                 promiseArr.push(brandsGet());
+            }
+            if (isEmptyObject(state.categoriesState.categories)) {
+                promiseArr.push(categoriesGet());
             }
 
             Promise.all(promiseArr)
@@ -66,6 +70,7 @@ let UserDevicesClassComponent = class extends React.Component {
                     response.forEach((value) => {
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
+                        if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                     });
 
                     this.props.onUserIdSet(this.props.match.params.userId);
