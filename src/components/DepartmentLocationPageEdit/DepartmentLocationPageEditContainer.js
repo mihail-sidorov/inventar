@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { initialize } from 'redux-form';
+import { change, initialize } from 'redux-form';
 import authHOC from '../../HOC/authHOC';
 import { departmentNamesGetActionCreator } from '../../redux/departmentNamesReducer';
 import { departmentLocationEdit, departmentLocationAddActionCreator, departmentsLocationsSetActionCreator } from '../../redux/departmentsLocationsReducer';
@@ -11,6 +11,8 @@ let DepartmentLocationPageEditContainer = connect(
         departmentsLocations: state.departmentsLocationsState.departmentsLocations,
         departments: state.departmentNamesState.departmentNames,
         locations: state.locationsState.locations,
+        departmentSearch: state.form?.departmentLocationEditForm?.values?.department_search,
+        locationSearch: state.form?.departmentLocationEditForm?.values?.location_search,
     }),
     dispatch => ({
         departmentNamesSet: data => {
@@ -21,6 +23,12 @@ let DepartmentLocationPageEditContainer = connect(
         },
         departmentsLocationsSet: data => {
             dispatch(departmentsLocationsSetActionCreator(data));
+        },
+        departmentClear: () => {
+            dispatch(change('departmentLocationEditForm', 'department_id', ''));
+        },
+        locationClear: () => {
+            dispatch(change('departmentLocationEditForm', 'location_id', ''));
         },
         setInitialValues: props => {
             let state = window.store.getState();

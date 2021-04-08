@@ -10,17 +10,23 @@ import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let Form = (props) => {
     let departmentsArr = [];
+    let patternDep = props.departmentSearch ? new RegExp(props.departmentSearch.toLowerCase()) : '';
     for (let id in props.departments) {
-        departmentsArr.push(
-            <option value={id} key={id}>{props.departments[id].department}</option>
-        );
+        if (props.departments[id].department.toLowerCase().match(patternDep)) {
+            departmentsArr.push(
+                <option value={id} key={id}>{props.departments[id].department}</option>
+            );
+        }
     }
 
     let locationsArr = [];
+    let patternLoc = props.locationSearch ? new RegExp(props.locationSearch.toLowerCase()) : '';
     for (let id in props.locations) {
-        locationsArr.push(
-            <option value={id} key={id}>{props.locations[id].location}</option>
-        );
+        if (props.locations[id].location.toLowerCase().match(patternLoc)) {
+            locationsArr.push(
+                <option value={id} key={id}>{props.locations[id].location}</option>
+            );
+        }
     }
 
     return (
@@ -33,6 +39,9 @@ let Form = (props) => {
                             <option></option>
                             {departmentsArr}
                         </Field>
+                        <Field className="departmentLocation-page-edit__search" name="department_search" component="input" placeholder="Поиск по отделу" onChange={() => {
+                            props.departmentClear();
+                        }} />
                     </label>
                 </div>
                 <div className="departmentLocation-page-edit__form-field form__field">
@@ -42,6 +51,9 @@ let Form = (props) => {
                             <option></option>
                             {locationsArr}
                         </Field>
+                        <Field className="departmentLocation-page-edit__search" name="location_search" component="input" placeholder="Поиск по местонахождению" onChange={() => {
+                            props.locationClear();
+                        }} />
                     </label>
                 </div>
             </div>
