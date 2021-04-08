@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { brandsGetActionCreator } from '../../../redux/brandsReducer';
+import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
 import { devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { makeShortEventsActionCreator } from '../../../redux/eventsPageReducer';
 import { eventsGetActionCreator } from '../../../redux/eventsReducer';
@@ -22,6 +23,9 @@ let EventsContainer = connect(
         },
         onBrandsGet: (data) => {
             dispatch(brandsGetActionCreator(data));
+        },
+        onCategoriesGet: (data) => {
+            dispatch(categoriesGetActionCreator(data));
         },
         onMakeShortEvents: () => {
             dispatch(makeShortEventsActionCreator());

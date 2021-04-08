@@ -102,6 +102,8 @@ let DevicePageCard = (props) => {
                     }}>
                         <td>{props.brands[props.devices[prop].brand_id]?.brand} {props.devices[prop].model}</td>
                         <td>{props.devices[prop].inv_number}</td>
+                        <td>{props.categories[props.devices[prop].category_id]?.category}</td>
+                        <td>{props.devices[prop].inv_number}</td>
                     </tr>
                 );
             }

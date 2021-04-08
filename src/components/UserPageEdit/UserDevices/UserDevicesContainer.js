@@ -21,6 +21,7 @@ let UserDevicesContainer = connect(
         return {
             userDevices: userDevices,
             brands: state.brandsState.brands,
+            categories: state.categoriesState.categories,
             userId: state.userDevicesState.userId,
         };
     },

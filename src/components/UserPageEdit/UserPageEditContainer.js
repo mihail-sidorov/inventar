@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { change, initialize } from 'redux-form';
 import authHOC from '../../HOC/authHOC';
+import { categoriesGetActionCreator } from '../../redux/categoriesReducer';
 import { departmentNamesGetActionCreator } from '../../redux/departmentNamesReducer';
 import { departmentsLocationsSetActionCreator } from '../../redux/departmentsLocationsReducer';
 import { employersGetActionCreator } from '../../redux/employersReducer';
@@ -45,6 +46,9 @@ let UserPageEditContainer = connect(
         },
         onUsersGet: (data) => {
             dispatch(usersGetActionCreator(data));
+        },
+        onCategoriesGet: (data) => {
+            dispatch(categoriesGetActionCreator(data));
         },
         changeLocation: locationId => {
             dispatch(changeLocationOnUserPageEditActionCreator(locationId));

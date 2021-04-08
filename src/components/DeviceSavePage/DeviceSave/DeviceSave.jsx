@@ -190,7 +190,7 @@ let DeviceSave = (props) => {
                         !isEmptyObject(props.device) &&
                         props.categories[props.device.category_id] &&
                         props.categories[props.device.category_id].sub_devices &&
-                        <SubDevicesContainer deviceId={props.match.params.device} />
+                        <SubDevicesContainer deviceId={props.match.params.device} categories={props.categories} />
                     }
                     <div className="device-save__status-container">
                         <div className="device-save__status-container-title">

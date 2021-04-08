@@ -3,6 +3,7 @@ import authHOC from '../../HOC/authHOC';
 import { accountsSetActionCreator } from '../../redux/accountsReducer';
 import { accountTypesSetActionCreator } from '../../redux/accountTypesReducer';
 import { brandsGetActionCreator } from '../../redux/brandsReducer';
+import { categoriesGetActionCreator } from '../../redux/categoriesReducer';
 import { devicesGetActionCreator } from '../../redux/devicesReducer';
 import { employersGetActionCreator } from '../../redux/employersReducer';
 import { locationsGetActionCreator } from '../../redux/locationsReducer';
@@ -22,6 +23,7 @@ let UserPageCardContainer = connect(
         usersServices: state.usersState.usersServices,
         services: state.accountsState.accounts,
         serviceTypes: state.accountTypesState.accountTypes,
+        categories: state.categoriesState.categories,
     }),
     dispatch => ({
         editUser: (props) => {
@@ -50,6 +52,9 @@ let UserPageCardContainer = connect(
         },
         onAccountTypesGet: (data) => {
             dispatch(accountTypesSetActionCreator(data));
+        },
+        onCtaegoriesGet: (data) => {
+            dispatch(categoriesGetActionCreator(data));
         },
         deviceCardShow: (deviceId, history) => {
             history.push(`/devices/card/${deviceId}`);

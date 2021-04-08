@@ -13,7 +13,7 @@ let SubDevices = (props) => {
         subDevicesSearchArr.push(
             <div className="sub-devices__search-item" key={id}>
                 <span className="sub-devices__search-item-part-inform">{brand} {props.subDevicesSearch[id].model}</span>
-                <span className="sub-devices__search-item-part-inform">{props.subDevicesSearch[id].inv_number}</span>
+                <span className="sub-devices__search-item-part-inform">{props.categories[props.subDevicesSearch[id].category_id]?.category} {props.subDevicesSearch[id].inv_number}</span>
                 <button className="sub-devices__search-item-attach-btn" onClick={() => {
                     props.attachDeviceToDevice(props.deviceId, id);
                 }}>Прикрепить</button>
@@ -28,6 +28,7 @@ let SubDevices = (props) => {
         subDevicesArr.push(
             <tr key={id}>
                 <td>{brand} {props.subDevices[id].model}</td>
+                <td>{props.categories[props.subDevices[id].category_id]?.category}</td>
                 <td>{props.subDevices[id].inv_number}</td>
                 <td><button className="ub-devices__table-unattach-btn" onClick={() => {
                     props.unAttachDeviceFromDevice(id);

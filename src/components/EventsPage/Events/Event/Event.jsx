@@ -60,7 +60,7 @@ let Event = (props) => {
                     {
                         //props.event.events[id].name_rus
                     }
-                    {props.brands[props.devices[props.event.events[id].table_id]?.brand_id]?.brand} {props.devices[props.event.events[id].table_id]?.model}
+                    {props.brands[props.devices[props.event.events[id].table_id]?.brand_id]?.brand} {props.devices[props.event.events[id].table_id]?.model} {props.categories[props.devices[props.event.events[id].table_id]?.category_id]?.category} {props.devices[props.event.events[id].table_id]?.inv_number}
                 </td>
                 <td>
                     {

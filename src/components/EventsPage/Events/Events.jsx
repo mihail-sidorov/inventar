@@ -5,6 +5,7 @@ import { usersGet } from '../../../redux/usersReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
 import { brandsGet } from '../../../redux/brandsReducer';
 import EventContainer from './Event/EventContainer';
+import { categoriesGet } from '../../../redux/categoriesReducer';
 
 let Events = (props) => {
     let eventsArr = [];
@@ -37,7 +38,8 @@ let EventsClassComponent = class extends React.Component {
         let state = window.store.getState();
 
         if (isEmptyObject(state.eventsState.events) || isEmptyObject(state.usersState.users)
-        || isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)) {
+        || isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)
+        || isEmptyObject(state.categoriesState.categories)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.eventsState.events)) {
@@ -52,6 +54,9 @@ let EventsClassComponent = class extends React.Component {
             if (isEmptyObject(state.brandsState.brands)) {
                 promiseArr.push(brandsGet());
             }
+            if (isEmptyObject(state.categoriesState.categories)) {
+                promiseArr.push(categoriesGet());
+            }
 
             Promise.all(promiseArr)
                 .then((response) => {
@@ -60,6 +65,7 @@ let EventsClassComponent = class extends React.Component {
                         if (value.config.url === 'users') this.props.onUsersGet(value.data);
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
+                        if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                     });
 
                     this.props.onMakeShortEvents();

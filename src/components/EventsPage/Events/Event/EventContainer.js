@@ -10,6 +10,7 @@ let EventContainer = (id) => {
             users: state.usersState.users,
             devices: state.devicesState.devices,
             brands: state.brandsState.brands,
+            categories: state.categoriesState.categories,
             userId: state.authState.userId,
         }),
         dispatch => ({

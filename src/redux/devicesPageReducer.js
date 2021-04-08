@@ -20,7 +20,7 @@ let makeShortDevices = (devices, pagination, search, users, brands, categories, 
                     switch (property) {
                         case 'user_id':
                             if (!isEmptyObject(users)) {
-                                let fio = users[devices[id][property]].full_name;
+                                let fio = users[devices[id][property]]?.full_name;
                                 if (fio !== undefined && fio !== null && fio !== '') {
                                     propertiesArr.push(String(fio));
                                 }
@@ -28,7 +28,7 @@ let makeShortDevices = (devices, pagination, search, users, brands, categories, 
                             break;
                         case 'brand_id':
                             if (!isEmptyObject(brands)) {
-                                let brand = brands[devices[id][property]].brand;
+                                let brand = brands[devices[id][property]]?.brand;
                                 if (brand !== undefined && brand !== null && brand !== '') {
                                     propertiesArr.push(String(brand));
                                 }
@@ -36,7 +36,7 @@ let makeShortDevices = (devices, pagination, search, users, brands, categories, 
                             break;
                         case 'category_id':
                             if (!isEmptyObject(categories)) {
-                                let category = categories[devices[id][property]].category;
+                                let category = categories[devices[id][property]]?.category;
                                 if (category !== undefined && category !== null && category !== '') {
                                     propertiesArr.push(String(category));
                                 }

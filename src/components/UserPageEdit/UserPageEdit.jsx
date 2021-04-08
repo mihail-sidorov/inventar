@@ -14,6 +14,7 @@ import { postsGet } from '../../redux/postsReducer';
 import { departmentsLocationsGet } from '../../redux/departmentsLocationsReducer';
 import { postsDepartmentsLocationsGet } from '../../redux/postsDepartmentsLocationsReducer';
 import InnerPageContainer from '../InnerPage/InnerPageContainer';
+import { categoriesGet } from '../../redux/categoriesReducer';
 
 let Form = (props) => {
     let optionsEmployers = [];
@@ -140,7 +141,7 @@ let UserPageEditClassComponent = class extends React.Component {
         if (isEmptyObject(state.employersState.employers) || isEmptyObject(state.locationsState.locations)
         || isEmptyObject(state.departmentNamesState.departmentNames) || isEmptyObject(state.postsState.posts)
         || isEmptyObject(state.departmentsLocationsState.departmentsLocations) || isEmptyObject(state.postsDepartmentsLocationsState.postsDepartmentsLocations)
-        || isEmptyObject(state.usersState.users)) {
+        || isEmptyObject(state.usersState.users) || isEmptyObject(state.categoriesState.categories)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.employersState.employers)) {
@@ -163,9 +164,11 @@ let UserPageEditClassComponent = class extends React.Component {
             if (isEmptyObject(state.postsDepartmentsLocationsState.postsDepartmentsLocations)) {
                 promiseArr.push(postsDepartmentsLocationsGet());
             }
-
             if (isEmptyObject(state.usersState.users)) {
                 promiseArr.push(usersGet());
+            }
+            if (isEmptyObject(state.categoriesState.categories)) {
+                promiseArr.push(categoriesGet());
             }
 
             Promise.all(promiseArr)
@@ -178,6 +181,7 @@ let UserPageEditClassComponent = class extends React.Component {
                         if (value.config.url === 'dep_loc') this.props.onDepartmentsLocationsGet(value.data);
                         if (value.config.url === 'post_dep_loc') this.props.onPostsDepartmentsLocationsGet(value.data);
                         if (value.config.url === 'users') this.props.onUsersGet(value.data);
+                        if (value.config.url === 'categories') this.props.oncategoriesGet(value.data);
                     });
 
                     this.props.onInitialValuesSet(this.props.match.params.userId);

@@ -13,6 +13,7 @@ let UserDevices = (props) => {
         userDevices.push(
             <tr key={prop}>
                 <td>{props.brands[props.userDevices[prop].brand_id]?.brand} {props.userDevices[prop].model}</td>
+                <td>{props.categories[props.userDevices[prop].category_id]?.category}</td>
                 <td>{props.userDevices[prop].inv_number}</td>
                 <td>
                     {

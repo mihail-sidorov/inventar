@@ -4,6 +4,7 @@ import isEmptyObject from '../../functions/isEmptyObject';
 import { accountsGet } from '../../redux/accountsReducer';
 import { accountTypesGet } from '../../redux/accountTypesReducer';
 import { brandsGet } from '../../redux/brandsReducer';
+import { categoriesGet } from '../../redux/categoriesReducer';
 import { devicesGet } from '../../redux/devicesReducer';
 import { employersGet } from '../../redux/employersReducer';
 import { locationsGet } from '../../redux/locationsReducer';
@@ -63,6 +64,7 @@ let UserPageCard = (props) => {
                         props.deviceCardShow(id, props.history);
                     }}>
                         <td>{brand} {props.devices[id].model}</td>
+                        <td>{props.categories[props.devices[id].category_id]?.category}</td>
                         <td>{props.devices[id].inv_number}</td>
                     </tr>
                 );
@@ -185,39 +187,36 @@ let UserPageCardClassComponent = class extends React.Component {
         if (isEmptyObject(state.employersState.employers) || isEmptyObject(state.locationsState.locations)
             || isEmptyObject(state.postDepLocsState.postDepLocs) || isEmptyObject(state.usersState.users)
             || isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)
-            || isEmptyObject(state.accountsState.accounts) || isEmptyObject(state.accountTypesState.accountTypes)) {
+            || isEmptyObject(state.accountsState.accounts) || isEmptyObject(state.accountTypesState.accountTypes)
+            || isEmptyObject(state.categoriesState.categories)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.employersState.employers)) {
                 promiseArr.push(employersGet());
             }
-
             if (isEmptyObject(state.locationsState.locations)) {
                 promiseArr.push(locationsGet());
             }
-
             if (isEmptyObject(state.postDepLocsState.postDepLocs)) {
                 promiseArr.push(postDepLocsGet());
             }
-
             if (isEmptyObject(state.devicesState.devices)) {
                 promiseArr.push(devicesGet());
             }
-
             if (isEmptyObject(state.brandsState.brands)) {
                 promiseArr.push(brandsGet());
             }
-
             if (isEmptyObject(state.usersState.users)) {
                 promiseArr.push(usersGet());
             }
-
             if (isEmptyObject(state.accountsState.accounts)) {
                 promiseArr.push(accountsGet());
             }
-
             if (isEmptyObject(state.accountTypesState.accountTypes)) {
                 promiseArr.push(accountTypesGet());
+            }
+            if (isEmptyObject(state.categoriesState.categories)) {
+                promiseArr.push(categoriesGet());
             }
 
             Promise.all(promiseArr)
@@ -230,6 +229,7 @@ let UserPageCardClassComponent = class extends React.Component {
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
                         if (value.config.url === 'accounts') this.props.onAccountsGet(value.data);
                         if (value.config.url === 'account_types') this.props.onAccountTypesGet(value.data);
+                        if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                         if (value.config.url === 'users') {
                             this.props.onUsersGet(value.data);
                         }

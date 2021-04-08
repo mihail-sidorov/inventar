@@ -81,6 +81,7 @@ let UserDevicesSearchContainer = connect(
             searchDevices: searchDevices,
             userId: userId,
             brands: state.brandsState.brands,
+            categories: state.categoriesState.categories,
         };
     },
     dispatch => ({
