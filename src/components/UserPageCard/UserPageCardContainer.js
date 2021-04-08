@@ -53,7 +53,7 @@ let UserPageCardContainer = connect(
         onAccountTypesGet: (data) => {
             dispatch(accountTypesSetActionCreator(data));
         },
-        onCtaegoriesGet: (data) => {
+        onCategoriesGet: (data) => {
             dispatch(categoriesGetActionCreator(data));
         },
         deviceCardShow: (deviceId, history) => {
