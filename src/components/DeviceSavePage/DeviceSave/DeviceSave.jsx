@@ -132,15 +132,9 @@ let Form = (props) => {
             <div className="device-save__form-fields form__fields">
                 {
                     props.match.params.device === 'add' &&
-                    <>
-                        <CategoriesBlockClassComponent {...props} />
-                        <SpecificationsFieldsContainer device={props.device} />
-                    </>
+                    <CategoriesBlockClassComponent {...props} />
                 }
-                {
-                    props.match.params.device !== 'add' && !isEmptyObject(props.device) &&
-                    <SpecificationsFieldsContainer device={props.device} />
-                }
+                <SpecificationsFieldsContainer />
                 <CommonFieldsContainer {...props} />
             </div>
             <div className="device-save__form-btns">

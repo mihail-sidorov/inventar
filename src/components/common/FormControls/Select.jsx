@@ -6,8 +6,6 @@ let Select = ({
     meta: {touched, error},
     children,
     multiple,
-    value,
-    defaultValue
 }) => {
     const hasError = touched && error;
     return(
@@ -16,11 +14,11 @@ let Select = ({
                 <span><span>{desc}</span></span>
                 {
                     multiple ?
-                    <select {...input} multiple={multiple} value={value} defaultValue={defaultValue}>
+                    <select name={input.name} value={(typeof input.value) === 'object' ? input.value : []} multiple={multiple} onChange={input.onChange} onBlur={input.onBlur}>
                         {children}
                     </select>
                     :
-                    <select {...input}>
+                    <select name={input.name} value={input.value} onChange={input.onChange} onBlur={input.onBlur}>
                         {children}
                     </select>
                 }

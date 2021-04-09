@@ -39,11 +39,8 @@ let SpecificationsFields = (props) => {
                 options.push(<option value={String(value)} key={index}>{String(value)}</option>);
             });
 
-            let defaultValue = (!isEmptyObject(props.device) && props.device[`specifications_${field}`] !== undefined
-            && props.device[`specifications_${field}`] !== null) ? props.device[`specifications_${field}`] : [];
-
             formFields.push(
-                <Field name={`specifications_${field}`} multiple={true} value={[]} defaultValue={defaultValue} desc={props.category.schema.properties[field].title} component={Select} validate={[required]} key={field}>
+                <Field name={`specifications_${field}`} multiple={true} desc={props.category.schema.properties[field].title} component={Select} validate={[required]} key={field}>
                     {options}
                 </Field>
             );
