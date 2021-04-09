@@ -14,7 +14,7 @@ let ActionEventBtn = (props) => {
     );
 }
 
-let Event = (props) => {
+let GivenReturnDeviceEvent = (props) => {
     let eventsArr = [];
     let eventIds = [];
     for (let id in props.event.events) {
@@ -94,7 +94,7 @@ let Event = (props) => {
                 }
             }}>
                 <td>
-                    {props.event.name}
+                    {props.event.name_rus}
                 </td>
                 <td>
                     {props.event.actor}
@@ -118,4 +118,4 @@ let Event = (props) => {
     );
 }
 
-export default withRouter(Event);
+export default withRouter(GivenReturnDeviceEvent);

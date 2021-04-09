@@ -1578,7 +1578,7 @@ html, body {
     }
 }
 
-.user-page-card, .service-page-card, .event-page-card {
+.user-page-card, .service-page-card {
 
     &__user-devices-title, &__user-services-title, &__attached-departments-title, &__attached-users-title, &__confirm-need-title, &__confirm-title
     , &__confirm-reject-title {
@@ -1654,6 +1654,69 @@ html, body {
 
         margin-top: 75px;
         text-align: center;
+    }
+}
+
+.event-page-card-given-return-device {
+
+    &__title {
+
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    &__confirm-need-title, &__confirm-title, &__confirm-reject-title {
+
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    &__back-to-events {
+
+        color: #403539;
+        text-decoration: none;
+        font-weight: normal;
+        padding-left: 30px;
+        border-radius: 30px;
+        font-size: 10px;
+        background: url('../imgs/back-arrow.svg') no-repeat 5px center;
+        background-color: #C4C4C4;
+        margin-top: 20px;
+    }
+
+    &__border {
+
+        padding: 20px;
+        border: 1px solid #B1B1AF;
+        border-radius: 5px;
+        margin-top: 40px;
+    }
+
+    &__confirm-need, &__confirm, &__confirm-reject {
+
+        margin-top: 40px;
+
+        &-table {
+
+            margin-left: -5px;
+            margin-right: -5px;
+
+            table {
+
+                width: 100%;
+                border: 0;
+                border-spacing: 5px;
+    
+                td {
+    
+                    height: 50px;
+                    vertical-align: middle;
+                    text-align: left;
+                    background-color: #C4C4C4;
+                    padding: 0 20px;
+                }
+            }
+        }
     }
 }
 

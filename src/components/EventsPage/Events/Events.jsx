@@ -4,14 +4,24 @@ import { eventsGet } from '../../../redux/eventsReducer';
 import { usersGet } from '../../../redux/usersReducer';
 import { devicesGet } from '../../../redux/devicesReducer';
 import { brandsGet } from '../../../redux/brandsReducer';
-import EventContainer from './Event/EventContainer';
 import { categoriesGet } from '../../../redux/categoriesReducer';
+import GivenReturnDeviceEventContainer from './Event/GivenReturnDeviceEvent/GivenReturnDeviceEventContainer';
 
 let Events = (props) => {
     let eventsArr = [];
 
     for (let id in props.events) {
-        let Event = EventContainer(id);
+        let Event;
+        switch (props.events[id].name) {
+            case 'givenDevice':
+                Event = GivenReturnDeviceEventContainer(id);
+                break;
+            case 'returnDevice':
+                Event = GivenReturnDeviceEventContainer(id);
+                break;
+            default:
+                break;
+        }
         eventsArr.push(<Event key={id} />);
     }
 

@@ -33,7 +33,6 @@ let UserDevicesSearchContainer = connect(
                                 case 'category_id':
                                     if (!isEmptyObject(categories)) {
                                         let category = categories[devices[id][property]]?.category;
-                                        console.log(category);
                                         if (category !== undefined && category !== null && category !== '') {
                                             propertiesArr.push(String(category));
                                         }

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { eventAccept, eventReject, makeShortEventsActionCreator } from '../../../../redux/eventsPageReducer';
-import { updateEventsAfterAcceptOrRejectActionCreator } from '../../../../redux/eventsReducer';
-import Event from './Event';
+import { eventAccept, eventReject, makeShortEventsActionCreator } from '../../../../../redux/eventsPageReducer';
+import { updateEventsAfterAcceptOrRejectActionCreator } from '../../../../../redux/eventsReducer';
+import GivenReturnDeviceEvent from './GivenReturnDeviceEvent';
 
-let EventContainer = (id) => {
+let GivenReturnDeviceEventContainer = (id) => {
     return connect(
         state => ({
             event: state.eventsPageState.shortEvents[id],
@@ -44,7 +44,7 @@ let EventContainer = (id) => {
                 history.push(`events/card/${id}`);
             },
         })
-    )(Event);
+    )(GivenReturnDeviceEvent);
 }
 
-export default EventContainer;
+export default GivenReturnDeviceEventContainer;

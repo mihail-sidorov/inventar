@@ -181,7 +181,7 @@ let UserPageEditClassComponent = class extends React.Component {
                         if (value.config.url === 'dep_loc') this.props.onDepartmentsLocationsGet(value.data);
                         if (value.config.url === 'post_dep_loc') this.props.onPostsDepartmentsLocationsGet(value.data);
                         if (value.config.url === 'users') this.props.onUsersGet(value.data);
-                        if (value.config.url === 'categories') this.props.oncategoriesGet(value.data);
+                        if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
                     });
 
                     this.props.onInitialValuesSet(this.props.match.params.userId);

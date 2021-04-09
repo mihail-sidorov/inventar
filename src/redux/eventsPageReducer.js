@@ -74,7 +74,8 @@ let makeShortEvents = (events, pagination, search, users, isLastPage, filter, us
                 events: {},
             };
         }
-        eventGroups[group].name = searchEvents[id].name_rus;
+        eventGroups[group].name = searchEvents[id].name;
+        eventGroups[group].name_rus = searchEvents[id].name_rus;
         eventGroups[group].actor = users[searchEvents[id].actor_id].full_name;
         eventGroups[group].whom = searchEvents[id].name === 'givenDevice' || searchEvents[id].name === 'returnDevice' ? users[searchEvents[id].additional[0].value[0]].full_name : null;
         eventGroups[group].events[[searchEvents[id].history_id, searchEvents[id].event_confirm_preset_id]] = searchEvents[id];
