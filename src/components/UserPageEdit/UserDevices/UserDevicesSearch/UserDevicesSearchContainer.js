@@ -11,7 +11,7 @@ let UserDevicesSearchContainer = connect(
 
         if (search !== '' && userId !== null) {
             for (let id in devices) {
-                if (devices[id].status === 'stock') {
+                if (devices[id].status === 'stock' && categories[devices[id].category_id]?.is_attached == 1) {
                     let searchWords = search.split(' ');
                     let deviceAccord = true;
 

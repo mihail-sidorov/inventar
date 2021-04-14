@@ -18,6 +18,8 @@ export let editDevice = (data) => {
     return Axios.patch('devices', data);
 }
 
+export let subDevices = (id, ids) => Axios.post('subDevices', {id, ids});
+
 // Создание Action Creators
 export let setDeviceInDeviceSavePageActionCreator = (deviceId) => {
     let state = window.store.getState(), device = {};

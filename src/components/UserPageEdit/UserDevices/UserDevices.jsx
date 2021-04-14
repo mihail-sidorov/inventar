@@ -17,7 +17,7 @@ let UserDevices = (props) => {
                 <td>{props.userDevices[prop].inv_number}</td>
                 <td>
                     {
-                        props.userDevices[prop].status !== 'return' &&
+                        props.userDevices[prop].status === 'given' && props.categories[props.userDevices[prop].category_id]?.is_attached == 1 &&
                         <button className="user-devices__unattach-btn" onClick={() => {
                             props.onUnAttachDeviceFromUser(prop);
                         }}>Открепить</button>

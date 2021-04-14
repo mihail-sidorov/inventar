@@ -27,16 +27,15 @@ export let saveDeviceActionCreator = (device) => {
     };
 }
 
-export let attachDeviceToUserActionCreator = (device) => {
+export let attachDeviceToUserActionCreator = (devices) => {
     return {
         type: ATTACH_DEVICE_TO_USER,
-        device: device,
+        devices,
     };
 }
 
 let devicesReducer = (state = initialState, action) => {
-    let devices;
-
+    let newState = {...state};
     switch (action.type) {
         case DEVICES_GET:
             return {
@@ -44,17 +43,18 @@ let devicesReducer = (state = initialState, action) => {
                 devices: arrayToObject(action.data),
             };
         case SAVE_DEVICE:
-            devices = {...state.devices};
-
-            devices[action.device.id] = action.device;
-
             return {
                 ...state,
-                devices: devices,
+                devices: {
+                    ...state.devices,
+                    [action.device.id]: action.device,
+                },
             };
         case ATTACH_DEVICE_TO_USER:
-            let newState = {...state};
-            newState.devices[action.device.id] = action.device;
+            newState.devices = {...newState.devices};
+            for (let device of action.devices) {
+                newState.devices[device.id] = device;
+            }
             return newState;
         default:
             return state;

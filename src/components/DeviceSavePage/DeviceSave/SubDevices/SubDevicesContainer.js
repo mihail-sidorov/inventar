@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import { editDevice } from '../../../../redux/deviceSavePageReducer';
-import { devicesGetActionCreator, saveDeviceActionCreator } from '../../../../redux/devicesReducer';
+import { editDevice, subDevices } from '../../../../redux/deviceSavePageReducer';
+import { saveDeviceActionCreator } from '../../../../redux/devicesReducer';
+import { eventsGet, eventsGetActionCreator } from '../../../../redux/eventsReducer';
 import { changeSubDevicesSearchActionCreator, makeSubDevicesActionCreator, makeSubDevicesSearchActionCreator } from '../../../../redux/subDevicesReducer';
 import SubDevices from './SubDevices';
 
@@ -23,22 +24,30 @@ let SubDevicesContainer = connect(
             dispatch(makeSubDevicesActionCreator());
         },
         attachDeviceToDevice: (id, subId) => {
-            editDevice({id: subId, parent_id: id})
+            subDevices(Number(id), [Number(subId)])
                 .then((response) => {
-                    dispatch(saveDeviceActionCreator(response.data));
+                    dispatch(saveDeviceActionCreator(response.data[0]));
                     dispatch(makeSubDevicesSearchActionCreator());
                     dispatch(makeSubDevicesActionCreator());
+                    return eventsGet();
+                })
+                .then(res => {
+                    dispatch(eventsGetActionCreator(res.data));
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         },
         unAttachDeviceFromDevice: subId => {
-            editDevice({id: subId, parent_id: null})
+            subDevices(null, [Number(subId)])
                 .then((response) => {
-                    dispatch(saveDeviceActionCreator(response.data));
+                    dispatch(saveDeviceActionCreator(response.data[0]));
                     dispatch(makeSubDevicesSearchActionCreator());
                     dispatch(makeSubDevicesActionCreator());
+                    return eventsGet();
+                })
+                .then(res => {
+                    dispatch(eventsGetActionCreator(res.data));
                 })
                 .catch((error) => {
                     console.log(error);

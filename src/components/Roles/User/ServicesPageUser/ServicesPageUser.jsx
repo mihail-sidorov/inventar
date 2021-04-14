@@ -26,13 +26,15 @@ let ServicesPageUser = (props) => {
             <div className="services-page-user__wrapper section-2">
                 <Route path="/:page" render={() => 
                     <InnerPageContainer>
+                        <div className="services-page-user__title">Сервисы сотрудника</div>
                         <div className="services-page-user__border">
-                            <div className="services-page-user__title">Сервисы сотрудника</div>
                             <div className="services-page-user__content">
                                 <div className="services-page-user__content-table">
                                     <table>
                                         <tbody>
-                                            {accountsArr}
+                                            {
+                                                accountsArr.length ? accountsArr : <tr><td>Список данных пуст</td></tr>
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

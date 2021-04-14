@@ -193,10 +193,10 @@ let DeviceSave = (props) => {
                         <div className="device-save__status-container-inform">
                             Статус: {status}
                             <br/>
-                            Ответственный: {user} {userId !== undefined && deviceId !== undefined && statusFlag !== undefined && (statusFlag === 'given' || statusFlag === 'givenIncomplete') && <button onClick={() => {props.onUnAttachUserFromDevice(deviceId)}}>Открепить</button>}
+                            Ответственный: {user} {userId !== undefined && deviceId !== undefined && statusFlag !== undefined && statusFlag === 'given' && props.categories[props.device.category_id]?.is_attached == 1 && <button onClick={() => {props.onUnAttachUserFromDevice(deviceId)}}>Открепить</button>}
                         </div>
                         {
-                            statusFlag === 'stock' &&
+                            statusFlag === 'stock' && props.categories[props.device.category_id]?.is_attached == 1 &&
                             <SearchUsersForAttachContainer />
                         }
                     </div>

@@ -11,12 +11,20 @@ let CommonFields = (props) => {
     let optionsSuppliers = [];
     let optionsLocations = [];
 
+    function sortObjectAsc(obj) {
+        return Object.entries(obj).sort((a, b) => {
+            if (Number(a[0]) > Number(b[0])) return -1;
+            if (Number(a[0]) === Number(b[0])) return 0;
+            if (Number(a[0]) < Number(b[0])) return 1;
+        });
+    }
+
     for (let id in props.responsibles) {
         optionsResponsibles.push(<option value={id} key={id}>{props.users[id].full_name}</option>);
     }
 
-    for (let id in props.brands) {
-        optionsBrands.push(<option value={id} key={id}>{props.brands[id].brand}</option>);
+    for (let item of sortObjectAsc(props.brands)) {
+        optionsBrands.push(<option value={item[0]} key={item[0]}>{item[1].brand}</option>);
     }
 
     for (let id in props.suppliers) {

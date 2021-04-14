@@ -67,7 +67,7 @@ const ValidateReducer = actionType => {
     }
 }
 
-let reducers = combineReducers({
+const appReducer = combineReducers({
     mainPageState: mainPageReducer,
     authState: authReducer,
     devicesState: devicesReducer,
@@ -115,7 +115,15 @@ let reducers = combineReducers({
     postDepartmentLocationPageEditState: postDepartmentLocationPageEditReducer,
 });
 
-let store = createStore(reducers);
+const rootReducer = (state, action) => {
+    if (action.type === 'SET_AUTH_DATA') {
+      state = undefined
+    }
+  
+    return appReducer(state, action)
+}
+
+let store = createStore(rootReducer);
 
 window.store = store;
 

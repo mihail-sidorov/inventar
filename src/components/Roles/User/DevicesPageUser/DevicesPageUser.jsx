@@ -40,7 +40,9 @@ let DevicesPageUser = (props) => {
                         <div className="devices-page-user__title">Оборудование сотрудника</div>
                         <div className="devices-page-user__border">
                             <div className="devices-page-user__content">
-                                {makeDevicesGroup(props.userDevices, 'null')}
+                                {
+                                    Object.keys(props.userDevices).length ? makeDevicesGroup(props.userDevices, 'null') : 'Список данных пуст'
+                                }
                             </div>
                         </div>
                     </InnerPageContainer>
