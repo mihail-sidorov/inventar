@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink, Route } from 'react-router-dom';
-import authHOC from '../../HOC/authHOC';
 import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import PostsDepartmentsLocationsPagePaginationContainer from './Pagination/PostsDepartmentsLocationsPagePaginationContainer';
 import PostsDepartmentsLocationsContainer from './PostsDepartmentsLocations/PostsDepartmentsLocationsContainer';
@@ -16,8 +15,8 @@ let PostsDepartmentsLocationsPage = (props) => {
                             <NavLink className="postsDepartmentsLocations-page__back-to-posts btn" to="/posts">Вернуться к списку должностей</NavLink>
                             <NavLink className="postsDepartmentsLocations-page__add btn" to="/postsDepartmentsLocations/add">+</NavLink>
                         </div>
-                        <PostsDepartmentsLocationsPageSearchContainer />
-                        <PostsDepartmentsLocationsContainer />
+                        <PostsDepartmentsLocationsPageSearchContainer searchSwitch={props.searchSwitch} />
+                        <PostsDepartmentsLocationsContainer searchOn={props.searchOn} />
                         <PostsDepartmentsLocationsPagePaginationContainer />
                     </InnerPageContainer>
                 )} />
@@ -26,4 +25,21 @@ let PostsDepartmentsLocationsPage = (props) => {
     );
 }
 
-export default authHOC(PostsDepartmentsLocationsPage);
+let PostsDepartmentsLocationsPageClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
+
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
+    render() {
+        return (
+            <PostsDepartmentsLocationsPage {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
+        );
+    }
+}
+
+export default PostsDepartmentsLocationsPageClassComponent;

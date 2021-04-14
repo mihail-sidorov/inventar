@@ -59,15 +59,20 @@ let ServiceEntities = (props) => {
             <div className="service-entities__title">Отделы и сотрудники</div>
             <div className="service-entities__search search">
                 <input type="text" value={props.search} onChange={(e) => {
+                    props.searchSwitch(e.currentTarget.value);
                     props.changeSearch(e.currentTarget.value);
                 }} />
             </div>
             <div className="service-entities__free">
                 <div className="service-entities__free-departments">
-                    {freeDepartmentsArray}
+                    {
+                        freeDepartmentsArray.length ? freeDepartmentsArray : props.searchOn ? 'По запросу поиска отделов не найдено' : ''
+                    }
                 </div>
                 <div className="service-entities__free-users">
-                    {freeUsersArray}
+                    {
+                        freeUsersArray.length ? freeUsersArray : props.searchOn ? 'По запросу поиска сотрудников не найдено' : ''
+                    }
                 </div>
             </div>
             <div className="service-entities__attached">
@@ -91,8 +96,17 @@ let ServiceEntities = (props) => {
 }
 
 let ServiceEntitiesClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
+
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
     render() {
-        return <ServiceEntities {...this.props} />
+        return <ServiceEntities {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
     }
 
     componentDidMount() {

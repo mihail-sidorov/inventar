@@ -19,14 +19,34 @@ let UserDevicesSearch = (props) => {
         <div className="user-devices-search">
             <div className="user-devices-search__input search">
                 <input type="text" value={props.search} onChange={(e) => {
+                    props.searchSwitch(e.currentTarget.value);
                     props.onUserDevicesChangeSearch(e.currentTarget.value);
                 }} />
             </div>
             <div className="user-devices-search__items">
-                {searchDevicesArr}
+                {
+                    searchDevicesArr.length ? searchDevicesArr : props.searchOn ? 'По запросу поиска ничего не найдено' : ''
+                }
             </div>
         </div>
     );
 }
 
-export default UserDevicesSearch;
+let UserDevicesSearchClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
+
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
+    render() {
+        return (
+            <UserDevicesSearch {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
+        );
+    }
+}
+
+export default UserDevicesSearchClassComponent;

@@ -27,7 +27,14 @@ let Services = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {servicesArr}
+                    {
+                        servicesArr.length ? servicesArr :
+                        <tr>
+                            <td colSpan="4">
+                                {props.searchOn ? 'По запросу поиска ничего не найдено' : 'Список данных пуст'}
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

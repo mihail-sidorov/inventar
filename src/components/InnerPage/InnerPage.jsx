@@ -16,8 +16,8 @@ let InnerPageAdmin = (props) => {
                                     <NavLink className="inner-page__add-menu-item" to="/services/add">Добавить сервис</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/employers/add">Добавить работодателя</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/locations/add">Добавить местонахождение</NavLink>
-                                    <NavLink className="inner-page__add-menu-item" to="/posts/add">Добавить должность</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/departmentNames/add">Добавить отдел</NavLink>
+                                    <NavLink className="inner-page__add-menu-item" to="/posts/add">Добавить должность</NavLink>
                                 </div>                                
                             </div>
                         </div>
@@ -30,8 +30,8 @@ let InnerPageAdmin = (props) => {
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'employers' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/employers">Работодатели</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'locations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/locations">Местонахождения</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'posts' || props.match.params.page === 'postsDepartmentsLocations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/posts">Должности</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'departmentNames' || props.match.params.page === 'departmentsLocations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/departmentNames">Отделы</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'posts' || props.match.params.page === 'postsDepartmentsLocations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/posts">Должности</NavLink>
                 </div>
             </div>
             <div className="inner-page__content">

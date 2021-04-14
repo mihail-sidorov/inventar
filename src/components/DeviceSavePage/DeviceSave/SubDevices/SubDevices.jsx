@@ -42,10 +42,13 @@ let SubDevices = (props) => {
             <div className="sub-devices__title">Составное оборудование</div>
             <div className="sub-devices__search">
                 <div className="sub-devices__search-input search"><input type="text" value={props.search} onChange={(e) => {
+                    props.searchSwitch(e.currentTarget.value);
                     props.changeSubDevicesSearch(e.currentTarget.value);
                 }} /></div>
                 <div className="sub-devices__search-items">
-                    {subDevicesSearchArr}
+                    {
+                        subDevicesSearchArr.length ? subDevicesSearchArr : props.searchOn ? 'По запросу поиска ничего не найдено' : ''
+                    }
                 </div>
             </div>
             <div className="sub-devices__table">
@@ -60,9 +63,18 @@ let SubDevices = (props) => {
 };
 
 let SubDevicesClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
+
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
     render() {
         return (
-            <SubDevices {...this.props} />
+            <SubDevices {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
         );
     }
 

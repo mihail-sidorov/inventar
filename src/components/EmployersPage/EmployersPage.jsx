@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import authHOC from '../../HOC/authHOC';
 import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import EmployersContainer from './Employers/EmployersContainer';
 import EmployersPagePaginationContainer from './Pagination/EmployersPagePaginationContainer';
@@ -12,8 +11,8 @@ let EmployersPage = (props) => {
             <div className="employers-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
                     <InnerPageContainer>
-                        <EmployersPageSearchContainer />
-                        <EmployersContainer />
+                        <EmployersPageSearchContainer searchSwitch={props.searchSwitch} />
+                        <EmployersContainer searchOn={props.searchOn} />
                         <EmployersPagePaginationContainer />
                     </InnerPageContainer>
                 )} />
@@ -22,4 +21,21 @@ let EmployersPage = (props) => {
     );
 }
 
-export default authHOC(EmployersPage);
+let EmployersPageClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
+
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
+    render() {
+        return (
+            <EmployersPage {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
+        );
+    }
+}
+
+export default EmployersPageClassComponent;

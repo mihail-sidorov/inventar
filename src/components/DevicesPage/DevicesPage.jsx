@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import authHOC from '../../HOC/authHOC';
 import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import DevicesContainer from './Devices/DevicesContainer';
 import DevicesPaginationContainer from './Pagination/DevicesPaginationContainer';
@@ -12,8 +11,8 @@ let DevicesPage = (props) => {
             <div className="devices-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
                     <InnerPageContainer>
-                        <DevicesSearchContainer />
-                        <DevicesContainer />
+                        <DevicesSearchContainer searchSwitch={props.searchSwitch} />
+                        <DevicesContainer searchOn={props.searchOn} />
                         <DevicesPaginationContainer />
                     </InnerPageContainer>
                 )} />
@@ -22,4 +21,21 @@ let DevicesPage = (props) => {
     );
 }
 
-export default DevicesPage;
+let DevicesPageClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
+
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
+    render() {
+        return (
+            <DevicesPage {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
+        );
+    }
+}
+
+export default DevicesPageClassComponent;

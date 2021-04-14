@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import authHOC from '../../HOC/authHOC';
 import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import UsersPaginationContainer from './Pagination/UsersPaginationContainer';
 import UsersSearchContainer from './Search/UsersSearchContainer';
@@ -12,8 +11,8 @@ let UsersPage = (props) => {
             <div className="users-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
                     <InnerPageContainer>
-                        <UsersSearchContainer />
-                        <UsersContainer />
+                        <UsersSearchContainer searchSwitch={props.searchSwitch} />
+                        <UsersContainer searchOn={props.searchOn} />
                         <UsersPaginationContainer />
                     </InnerPageContainer>
                 )} />
@@ -22,6 +21,21 @@ let UsersPage = (props) => {
     );
 }
 
-UsersPage = authHOC(UsersPage);
+let UsersPageClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
 
-export default UsersPage;
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
+    render() {
+        return (
+            <UsersPage {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
+        );
+    }
+}
+
+export default UsersPageClassComponent;

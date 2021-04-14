@@ -20,14 +20,34 @@ let SearchUsersForAttach = (props) => {
         <div className="search-users-for-attach">
             <div className="search-users-for-attach__input search">
                 <input type="text" value={props.searchUsersInput} onChange={(e) => {
+                    props.searchSwitch(e.currentTarget.value);
                     props.searchUsersInputChange(e.currentTarget.value);
                 }} />
             </div>
             <div className="search-users-for-attach__items">
-                {searchUsersArray}
+                {
+                    searchUsersArray.length ? searchUsersArray : props.searchOn ? 'По запросу поиска ничего не найдено' : ''
+                }
             </div>
         </div>
     );
 }
 
-export default SearchUsersForAttach;
+let SearchUsersForAttachClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
+
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
+    render() {
+        return (
+            <SearchUsersForAttach {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
+        );
+    }
+}
+
+export default SearchUsersForAttachClassComponent;

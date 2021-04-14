@@ -13,9 +13,9 @@ let EventsPage = (props) => {
             <div className="events-page__wrapper section-2">
                 <Route exact path="/:page" render={() => (
                     <InnerPageContainer>
-                        <EventsSearchContainer />
+                        <EventsSearchContainer searchSwitch={props.searchSwitch} />
                         <EventsPageFilterContainer />
-                        <EventsContainer />
+                        <EventsContainer searchOn={props.searchOn} />
                         <EventsPaginationContainer />
                     </InnerPageContainer>
                 )} />
@@ -24,6 +24,21 @@ let EventsPage = (props) => {
     );
 }
 
-EventsPage = authHOC(EventsPage);
+let EventsPageClassComponent = class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {searchOn: false};
+    }
 
-export default authHOC(EventsPage);
+    searchSwitch(search) {
+        this.setState({searchOn: search ? true : false});
+    }
+
+    render() {
+        return (
+            <EventsPage {...this.props} searchSwitch={this.searchSwitch.bind(this)} searchOn={this.state.searchOn} />
+        );
+    }
+}
+
+export default authHOC(EventsPageClassComponent);
