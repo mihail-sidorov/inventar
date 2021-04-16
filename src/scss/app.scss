@@ -1209,7 +1209,7 @@ html, body {
     }
 }
 
-.software-page-add {
+.software-page-add, .software-page-edit {
 
     background-color: #A3DEE6;
 
@@ -1225,7 +1225,7 @@ html, body {
         }
     }
 
-    &__back-to-softwares {
+    &__back-to-softwares, &__back-to-software-card {
 
         color: #403539;
         text-decoration: none;
