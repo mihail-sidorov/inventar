@@ -1209,6 +1209,59 @@ html, body {
     }
 }
 
+.software-page-add {
+
+    background-color: #A3DEE6;
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+
+    &__back-to-softwares {
+
+        color: #403539;
+        text-decoration: none;
+        font-weight: normal;
+        padding-left: 30px;
+        border-radius: 30px;
+        font-size: 10px;
+        background: url('../imgs/back-arrow.svg') no-repeat 5px center;
+        background-color: #C4C4C4;
+        margin-top: 20px;
+    }
+
+    &__title {
+
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    &__form-container {
+
+        padding: 20px;
+        border: 1px solid #B1B1AF;
+        border-radius: 5px;
+        margin-top: 40px;
+    }
+
+    &__form {
+
+        &-btns {
+
+            margin-top: 75px;
+            text-align: center;
+        }
+    }
+}
+
 .user-page-edit {
 
     &__back-to-users {

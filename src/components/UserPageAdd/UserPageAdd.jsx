@@ -127,7 +127,7 @@ let UserPageAdd = (props) => {
 
 UserPageAdd = withRouter(UserPageAdd);
 
-export let UserPageAddClassCompopnent = class extends React.Component {
+let UserPageAddClassCompopnent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
 

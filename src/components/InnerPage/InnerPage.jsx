@@ -14,6 +14,7 @@ let InnerPageAdmin = (props) => {
                                     <NavLink className="inner-page__add-menu-item" to="/devices/add">Добавить оборудование</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/users/add">Добавить сотрудника</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/services/add">Добавить сервис</NavLink>
+                                    <NavLink className="inner-page__add-menu-item" to="/softwares/add">Добавить ПО</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/employers/add">Добавить работодателя</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/locations/add">Добавить местонахождение</NavLink>
                                     <NavLink className="inner-page__add-menu-item" to="/departmentNames/add">Добавить отдел</NavLink>
@@ -27,6 +28,7 @@ let InnerPageAdmin = (props) => {
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'users' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/users">Сотрудники</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'softwares' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/softwares">ПО</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'employers' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/employers">Работодатели</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'locations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/locations">Местонахождения</NavLink>
