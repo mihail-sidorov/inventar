@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { initialize } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import { softwareCategoriesGetActionCreator } from '../../redux/softwareCategoriesReducer';
-import { softwaresPost, softwaresPostActionCreator } from '../../redux/softwaresReducer';
+import { makeShortSoftwaresActionCreator, shortSoftwaresIsLastPageSetActionCreator } from '../../redux/softwaresPageReducer';
+import { softwaresGetActionCreator, softwaresPost, softwaresPostActionCreator } from '../../redux/softwaresReducer';
 import SoftwarePageAdd from './SoftwarePageAdd';
 
 let SoftwarePageAddContainer = connect(
@@ -17,7 +18,7 @@ let SoftwarePageAddContainer = connect(
                 if (!isEmptyObject(category)) {
                     let softwareData = {...values};
                     let specificationsFields = true;
-                    softwareData.spec = {};
+                    softwareData.specifications = {};
 
                     for (let prop in category.schema.properties) {
                         if (!softwareData[`specifications_${prop}`]) {
@@ -25,7 +26,7 @@ let SoftwarePageAddContainer = connect(
                             break;
                         }
                         else {
-                            softwareData.spec[prop] = softwareData[`specifications_${prop}`];
+                            softwareData.specifications[prop] = softwareData[`specifications_${prop}`];
                         }
                     }
 
@@ -33,13 +34,19 @@ let SoftwarePageAddContainer = connect(
                         softwaresPost(softwareData)
                             .then(res => {
                                 dispatch(softwaresPostActionCreator(res.data));
+                                dispatch(shortSoftwaresIsLastPageSetActionCreator());
+                                dispatch(makeShortSoftwaresActionCreator());
+                                props.history.push('/softwares');
                             })
                             .catch(console.log);
                     }
                 }
             }
         },
-        softwareCategoriesGet: data => {
+        softwaresSet: data => {
+            dispatch(softwaresGetActionCreator(data));
+        },
+        softwareCategoriesSet: data => {
             dispatch(softwareCategoriesGetActionCreator(data));
         },
         resetForm: () => {

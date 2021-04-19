@@ -36,6 +36,7 @@ import ServicePageEditContainer from './ServicePageEdit/ServicePageEditContainer
 import ServicesPage from './ServicesPage/ServicesPage';
 import SoftwarePageAddContainer from './SoftwarePageAdd/SoftwarePageAddContainer';
 import SoftwarePageEditContainer from './SoftwarePageEdit/SoftwarePageEditContainer';
+import SoftwaresPage from './SoftwaresPage/SoftwaresPage';
 import UserPageAddContainer from './UserPageAdd/UserPageAddContainer';
 import UserPageCardContainer from './UserPageCard/UserPageCardContainer';
 import UserPageEditContainer from './UserPageEdit/UserPageEditContainer';
@@ -145,6 +146,9 @@ let App = () => {
                             ]} /> } />
                 <Route exact path="/softwares/:softwareId" render={() => <SwitchRolesContainer roles={[
                                 {role: 'admin', component: <SoftwarePageEditContainer />},
+                            ]} /> } />
+                <Route exact path="/softwares" render={() => <SwitchRolesContainer roles={[
+                                {role: 'admin', component: <SoftwaresPage />},
                             ]} /> } />
                 <Page404 />
             </Switch>

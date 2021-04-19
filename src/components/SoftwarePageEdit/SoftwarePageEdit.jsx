@@ -45,7 +45,7 @@ let SoftwarePageEdit = (props) => {
             <div className="software-page-edit__wrapper section-2">
                 <Route path="/:page" render={() => (
                     <InnerPageContainer>
-                        <NavLink className="software-page-edit__back-to-software-card btn" to={`/softwares/4`}>Вернуться к карточке ПО</NavLink>
+                        <NavLink className="software-page-edit__back-to-software-card btn" to={`/softwares/card/${props.match.params.softwareId}`}>Вернуться к карточке ПО</NavLink>
                         <div className="software-page-edit__form-container">
                             <div className="software-page-edit__title">Редактирование ПО</div>
                             <Form {...props} />
@@ -93,12 +93,15 @@ let SoftwarePageEditClassCompopnent = class extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        this.initialForm();
+        let state = window.store.getState();
+        if (!isEmptyObject(state.softwareCategoriesState.softwareCategories) && !isEmptyObject(state.softwaresState.softwares)) {
+            this.initialForm();
+        }
     }
 
     render() {
         return (
-            <SoftwarePageEdit {...this.props} category={this.state.category} categorySet={id => this.categorySet(id)} />
+            <SoftwarePageEdit {...this.props} category={this.state.category} />
         );
     }
 
@@ -114,11 +117,14 @@ let SoftwarePageEditClassCompopnent = class extends React.PureComponent {
             this.categorySet(software.software_category_id);
 
             let initialValues = {...software};
-            Object.entries(initialValues.spec).forEach(el => {
+            Object.entries(initialValues.specifications).forEach(el => {
                 initialValues['specifications_' + el[0]] = el[1];
             });
             
             this.props.initialValuesSet(initialValues);
+        }
+        else {
+            this.props.history.push('/softwares');
         }
     }
 }

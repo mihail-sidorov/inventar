@@ -42,6 +42,7 @@ import postDepartmentLocationPageAddReducer from './postDepartmentLocationPageAd
 import postDepartmentLocationPageEditReducer from './postDepartmentLocationPageEditReducer';
 import softwareCategoriesReducer from './softwareCategoriesReducer';
 import softwaresReducer from './softwaresReducer';
+import softwaresPageReducer from './softwaresPageReducer';
 
 const ValidateReducer = actionType => {
     return (state, action) => {
@@ -117,6 +118,7 @@ const appReducer = combineReducers({
     postDepartmentLocationPageEditState: postDepartmentLocationPageEditReducer,
     softwareCategoriesState: softwareCategoriesReducer,
     softwaresState: softwaresReducer,
+    softwaresPageState: softwaresPageReducer,
 });
 
 const rootReducer = (state, action) => {

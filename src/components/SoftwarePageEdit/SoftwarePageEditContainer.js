@@ -17,7 +17,7 @@ let SoftwarePageEditContainer = connect(
             if (!isEmptyObject(category)) {
                 let softwareData = {...values};
                 let specificationsFields = true;
-                softwareData.spec = {};
+                softwareData.specifications = {};
 
                 for (let prop in category.schema.properties) {
                     if (!softwareData[`specifications_${prop}`]) {
@@ -25,7 +25,7 @@ let SoftwarePageEditContainer = connect(
                         break;
                     }
                     else {
-                        softwareData.spec[prop] = softwareData[`specifications_${prop}`];
+                        softwareData.specifications[prop] = softwareData[`specifications_${prop}`];
                     }
                 }
 

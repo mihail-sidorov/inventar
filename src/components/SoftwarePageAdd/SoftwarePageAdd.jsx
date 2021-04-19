@@ -1,10 +1,11 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import isEmptyObject from '../../functions/isEmptyObject';
 import zeroField from '../../functions/zeroField';
 import { softwareCategoriesGet } from '../../redux/softwareCategoriesReducer';
+import { softwaresGet } from '../../redux/softwaresReducer';
 import { required } from '../../validators/validators';
 import Select from '../common/FormControls/Select';
 import SpecificationsFields from '../DeviceSavePage/DeviceSave/SpecificationsFields/SpecificationsFields';
@@ -47,7 +48,7 @@ Form = reduxForm({
     keepDirtyOnReinitialize: true,
 })(Form);
 
-let SoftwarePageAdd = (props) => {
+let SoftwarePageAdd = withRouter((props) => {
     return (
         <div className="software-page-add">
             <div className="software-page-add__wrapper section-2">
@@ -63,7 +64,7 @@ let SoftwarePageAdd = (props) => {
             </div>
         </div>
     );
-}
+});
 
 let SoftwarePageAddClassCompopnent = class extends React.Component {
     constructor(props) {
@@ -76,9 +77,12 @@ let SoftwarePageAddClassCompopnent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.softwareCategoriesState.softwareCategories)) {
+        if (isEmptyObject(state.softwaresState.softwares) || isEmptyObject(state.softwareCategoriesState.softwareCategories)) {
             let promiseArr = [];
 
+            if (isEmptyObject(state.softwaresState.softwares)) {
+                promiseArr.push(softwaresGet());
+            }
             if (isEmptyObject(state.softwareCategoriesState.softwareCategories)) {
                 promiseArr.push(softwareCategoriesGet());
             }
@@ -86,10 +90,13 @@ let SoftwarePageAddClassCompopnent = class extends React.Component {
             Promise.all(promiseArr)
                 .then((response) => {
                     response.forEach((value) => {
-                        if (value.config.url === 'softwareCategory') this.props.softwareCategoriesGet(value.data);
+                        if (value.config.url === 'softwares') this.props.softwaresSet(value.data);
+                        if (value.config.url === 'softwareCategory') this.props.softwareCategoriesSet(value.data);
                     });
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => {
+                    console.log(error);
+                });
         }
     }
 
