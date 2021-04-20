@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { editDevice, subDevices } from '../../../../redux/deviceSavePageReducer';
+import { subDevices } from '../../../../redux/deviceSavePageReducer';
 import { saveDeviceActionCreator } from '../../../../redux/devicesReducer';
 import { eventsGet, eventsGetActionCreator } from '../../../../redux/eventsReducer';
 import { changeSubDevicesSearchActionCreator, makeSubDevicesActionCreator, makeSubDevicesSearchActionCreator } from '../../../../redux/subDevicesReducer';

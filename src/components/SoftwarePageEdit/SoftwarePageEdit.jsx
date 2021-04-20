@@ -84,17 +84,11 @@ let SoftwarePageEditClassCompopnent = class extends React.PureComponent {
                         if (value.config.url === 'softwareCategory') this.props.softwareCategoriesGet(value.data);
                         if (value.config.url === 'softwares') this.props.softwaresGet(value.data);
                     });
+                    this.initialForm();
                 })
                 .catch((error) => console.log(error));
         }
         else {
-            this.initialForm();
-        }
-    }
-
-    componentDidUpdate() {
-        let state = window.store.getState();
-        if (!isEmptyObject(state.softwareCategoriesState.softwareCategories) && !isEmptyObject(state.softwaresState.softwares)) {
             this.initialForm();
         }
     }

@@ -12,6 +12,7 @@ let MainPageAdmin = (props) => {
                                 <NavLink className="main-page__add-menu-item" to="/devices/add">Добавить оборудование</NavLink>
                                 <NavLink className="main-page__add-menu-item" to="/users/add">Добавить сотрудника</NavLink>
                                 <NavLink className="main-page__add-menu-item" to="/services/add">Добавить сервис</NavLink>
+                                <NavLink className="main-page__add-menu-item" to="/softwares/add">Добавить ПО</NavLink>
                                 <NavLink className="main-page__add-menu-item" to="/employers/add">Добавить работодателя</NavLink>
                                 <NavLink className="main-page__add-menu-item" to="/locations/add">Добавить местонахождение</NavLink>
                                 <NavLink className="main-page__add-menu-item" to="/departmentNames/add">Добавить отдел</NavLink>
@@ -24,6 +25,7 @@ let MainPageAdmin = (props) => {
                     <NavLink className="main-page__item" to="/devices">Оборудование</NavLink>
                     <NavLink className="main-page__item" to="/users">Сотрудники</NavLink>
                     <NavLink className="main-page__item" to="/services">Сервисы</NavLink>
+                    <NavLink className="main-page__item" to="/softwares">ПО</NavLink>
                     <NavLink className="main-page__item" to="/events">События</NavLink>
                     <NavLink className="main-page__item" to="/employers">Работодатели</NavLink>
                     <NavLink className="main-page__item" to="/locations">Местонахождения</NavLink>

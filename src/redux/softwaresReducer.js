@@ -1,7 +1,7 @@
 import Axios from "../config/axiosConfig";
 import arrayToObject from "../functions/arrayToObject";
 
-const SOFTWARES_GET = 'SOFTWARES_GET', SOFTWARES_POST = 'SOFTWARES_POST';
+const SOFTWARES_GET = 'SOFTWARES_GET', SOFTWARES_POST = 'SOFTWARES_POST', UPDATE_SOFTWARE = 'UPDATE_SOFTWARE';
 
 let initialState = {
     softwares: {},
@@ -35,6 +35,11 @@ export let softwaresPostActionCreator = (softwareObj) => {
     };
 }
 
+export let updateSoftwareActionCreator = obj => ({
+    type: UPDATE_SOFTWARE,
+    obj,
+});
+
 let softwaresReducer = (state = initialState, action) => {
     switch (action.type) {
         case SOFTWARES_GET:
@@ -50,6 +55,14 @@ let softwaresReducer = (state = initialState, action) => {
                 softwares: {
                     ...state.softwares,
                     [action.softwareObj.id]: action.softwareObj,
+                },
+            };
+        case UPDATE_SOFTWARE:
+            return {
+                ...state,
+                softwares: {
+                    ...state.softwares,
+                    [action.obj.id]: action.obj,
                 },
             };
         default:

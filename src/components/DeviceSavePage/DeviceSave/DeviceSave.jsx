@@ -18,6 +18,7 @@ import SpecificationsFieldsContainer from './SpecificationsFields/Specifications
 import SubDevicesContainer from './SubDevices/SubDevicesContainer';
 import $ from 'jquery';
 import CommonFieldsContainer from './CommonFields/CommonFieldsContainer';
+import SubSoftwaresContainer from './SubSoftwares/SubSoftwaresContainer';
 
 let CategoriesField = (categories, props) => {
     let tree = [];
@@ -185,6 +186,11 @@ let DeviceSave = (props) => {
                         props.categories[props.device.category_id] &&
                         props.categories[props.device.category_id].sub_devices &&
                         <SubDevicesContainer deviceId={props.match.params.device} categories={props.categories} />
+                    }
+                    {
+                        !isEmptyObject(props.device) &&
+                        props.categories[props.device.category_id]?.inv_prefix === 'PC' &&
+                        <SubSoftwaresContainer />
                     }
                     <div className="device-save__status-container">
                         <div className="device-save__status-container-title">

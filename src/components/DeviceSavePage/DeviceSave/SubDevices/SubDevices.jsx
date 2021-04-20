@@ -1,6 +1,4 @@
 import React from 'react';
-import isEmptyObject from '../../../../functions/isEmptyObject';
-import { devicesGet } from '../../../../redux/devicesReducer';
 
 let SubDevices = (props) => {
     let subDevicesSearchArr = [];

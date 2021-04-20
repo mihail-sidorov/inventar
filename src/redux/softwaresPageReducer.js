@@ -1,5 +1,4 @@
 import { countPages } from "../config/globals";
-import isEmptyObject from "../functions/isEmptyObject";
 
 const MAKE_SHORT_SOFTWARES = 'MAKE_SHORT_SOFTWARES', CHANGE_PAGE_ON_SOFTWARES_PAGE_PAGINATION = 'CHANGE_PAGE_ON_SOFTWARES_PAGE_PAGINATION', CHANGE_SOFTWARES_PAGE_SEARCH = 'CHANGE_SOFTWARES_PAGE_SEARCH', SHORT_SOFTWARES_IS_LAST_PAGE_SET = 'SHORT_SOFTWARES_IS_LAST_PAGE_SET';
 
@@ -85,7 +84,7 @@ let makeShortSoftwares = (softwares, pagination, search, categories, isLastPage)
 let initialState = {
     shortSoftwares: {},
     pagination: {
-        count: 2,
+        count: countPages,
         currentPage: 1,
         pages: 0,
     },
