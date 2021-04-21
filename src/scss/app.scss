@@ -847,7 +847,7 @@ html, body {
     }
 }
 
-.device-page-card, .user-page-card, .service-page-card, .event-page-card {
+.device-page-card, .user-page-card, .service-page-card, .event-page-card, .software-page-card {
 
     background-color: #A3DEE6;
 
@@ -1651,9 +1651,9 @@ html, body {
     }
 }
 
-.device-page-card {
+.device-page-card, .software-page-card {
 
-    &__back-to-devices {
+    &__back-to-devices, &__back-to-softwares {
 
         color: #403539;
         text-decoration: none;

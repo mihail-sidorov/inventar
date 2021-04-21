@@ -35,7 +35,12 @@ let SoftwarePageEditContainer = connect(
                             dispatch(softwaresPostActionCreator(res.data));
                             alert('ПО отредактировано!');
                         })
-                        .catch(console.log);
+                        .catch((error) => {
+                            dispatch({
+                                type: 'SOFTWARE_EDIT_FORM_VALIDATE',
+                                errors: error.response.data.message,
+                            });
+                        });
                 }
             }
         },

@@ -38,7 +38,12 @@ let SoftwarePageAddContainer = connect(
                                 dispatch(makeShortSoftwaresActionCreator());
                                 props.history.push('/softwares');
                             })
-                            .catch(console.log);
+                            .catch((error) => {
+                                dispatch({
+                                    type: 'SOFTWARE_ADD_FORM_VALIDATE',
+                                    errors: error.response.data.message,
+                                });
+                            });
                     }
                 }
             }

@@ -6,13 +6,16 @@ import { categoriesGet } from '../../redux/categoriesReducer';
 import { devicesGet } from '../../redux/devicesReducer';
 import { locationsGet } from '../../redux/locationsReducer';
 import { responsiblesGet } from '../../redux/responsiblesReducer';
+import { softwareCategoriesGet } from '../../redux/softwareCategoriesReducer';
+import { softwaresGet } from '../../redux/softwaresReducer';
 import { statusesGet } from '../../redux/statusesReducer';
+import { subSoftwaresGet } from '../../redux/subSoftwaresReducer';
 import { suppliersGet } from '../../redux/suppliersReducer';
 import { usersGet } from '../../redux/usersReducer';
 import InnerPageContainer from '../InnerPage/InnerPageContainer';
 
 let DevicePageCard = (props) => {
-    let device, categoryObj, category, specificationsFields, model, invNumber, price, datePurchase, dateWarrantyEnd, responsible, brand, supplier, location, subDevicesArr, status, user, SN, order_number, comments;
+    let device, categoryObj, category, specificationsFields, model, invNumber, price, datePurchase, dateWarrantyEnd, responsible, brand, supplier, location, subDevicesArr, status, user, SN, order_number, comments, deviceSoftwaresArr = [];
 
     if (props.devices[props.match.params.deviceId] !== undefined) {
         device = props.devices[props.match.params.deviceId];
@@ -100,9 +103,9 @@ let DevicePageCard = (props) => {
                     <tr key={props.devices[prop].id} onClick={() => {
                         props.goToSubDeviceCard(prop, props.history);
                     }}>
-                        <td>{props.brands[props.devices[prop].brand_id]?.brand} {props.devices[prop].model}</td>
-                        <td>{props.devices[prop].inv_number}</td>
                         <td>{props.categories[props.devices[prop].category_id]?.category}</td>
+                        <td>{props.brands[props.devices[prop].brand_id]?.brand}</td>
+                        <td>{props.devices[prop].model}</td>
                         <td>{props.devices[prop].inv_number}</td>
                     </tr>
                 );
@@ -111,6 +114,16 @@ let DevicePageCard = (props) => {
 
         status = props.statuses[device.status_id]?.status_rus;
         user = props.users[device.user_id]?.full_name;
+
+        for (let id in props.deviceSoftwares) {
+            deviceSoftwaresArr.push(
+                <tr key={id} onClick={() => {
+                    props.history.push(`/softwares/card/${id}`);
+                }}>
+                    <td>{props.softwareCategories[props.deviceSoftwares[id].software_category_id]?.name}</td>
+                </tr>
+            );
+        }
     }
 
     return(
@@ -209,6 +222,21 @@ let DevicePageCard = (props) => {
                             </div>
                             : null
                         }
+                        {
+                            props.categories[props.devices[props.match.params.deviceId]?.category_id]?.inv_prefix === 'PC' && deviceSoftwaresArr.length > 0 &&
+                            <div className="device-page-card__border">
+                                <div className="device-page-card__title">Прикрепленное ПО</div>
+                                <div className="device-page-card__content">
+                                    <div className="device-page-card__content-table">
+                                        <table>
+                                            <tbody>
+                                                {deviceSoftwaresArr}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                         <div className="device-page-card__border">
                             <div className="device-page-card__title">Статус оборудования</div>
                             <div className="device-save__status-container-inform">
@@ -232,7 +260,8 @@ let DevicePageCardClassComponent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
 
-        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.suppliersState.suppliers) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.locationsState.locations) || isEmptyObject(state.devicesState.devices)) {
+        if (isEmptyObject(state.usersState.users) || isEmptyObject(state.responsiblesState.responsibles) || isEmptyObject(state.brandsState.brands) || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.suppliersState.suppliers) || isEmptyObject(state.statusesState.statuses) || isEmptyObject(state.locationsState.locations) || isEmptyObject(state.devicesState.devices)
+        || isEmptyObject(state.softwaresState.softwares) || isEmptyObject(state.softwareCategoriesState.softwareCategories)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.usersState.users)) {
@@ -259,6 +288,12 @@ let DevicePageCardClassComponent = class extends React.Component {
             if (isEmptyObject(state.devicesState.devices)) {
                 promiseArr.push(devicesGet());
             }
+            if (isEmptyObject(state.softwaresState.softwares)) {
+                promiseArr.push(softwaresGet());
+            }
+            if (isEmptyObject(state.softwareCategoriesState.softwareCategories)) {
+                promiseArr.push(softwareCategoriesGet());
+            }
 
             Promise.all(promiseArr)
                 .then((response) => {
@@ -271,12 +306,26 @@ let DevicePageCardClassComponent = class extends React.Component {
                         if (value.config.url === 'statuses') this.props.onStatusesGet(value.data);
                         if (value.config.url === 'locations') this.props.onLocationsGet(value.data);
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data, this.props);
+                        if (value.config.url === 'softwares') this.props.onSoftwaresGet(value.data, this.props);
+                        if (value.config.url === 'softwareCategory') this.props.onSoftwareCategoriesGet(value.data, this.props);
                     });
+                    this.deviceSoftwaresSet(this.props.match.params.deviceId);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
+        else {
+            this.deviceSoftwaresSet(this.props.match.params.deviceId);
+        }
+    }
+
+    deviceSoftwaresSet(deviceId) {
+        subSoftwaresGet(deviceId)
+            .then(res => {
+                this.props.deviceSoftwaresSet(res.data);
+            })
+            .catch(console.log);
     }
 }
 

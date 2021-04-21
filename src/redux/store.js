@@ -98,6 +98,8 @@ const appReducer = combineReducers({
         deviceSaveForm: ValidateReducer('DEVICE_SAVE_FORM_VALIDATE'),
         userAddForm: ValidateReducer('USER_ADD_FORM_VALIDATE'),
         userEditForm: ValidateReducer('USER_EDIT_FORM_VALIDATE'),
+        softwareAddForm: ValidateReducer('SOFTWARE_ADD_FORM_VALIDATE'),
+        softwareEditForm: ValidateReducer('SOFTWARE_EDIT_FORM_VALIDATE'),
     }),
     eventsState: eventsReducer,
     eventsPageState: eventsPageReducer,
