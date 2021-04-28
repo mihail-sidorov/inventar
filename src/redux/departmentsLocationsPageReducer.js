@@ -1,3 +1,5 @@
+import { countPages } from "../config/globals";
+
 const MAKE_SHORT_DEPARTMENTS_LOCATIONS = 'MAKE_SHORT_DEPARTMENTS_LOCATIONS', CHANGE_PAGE_ON_DEPARTMENTS_LOCATIONS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_DEPARTMENTS_LOCATIONS_PAGE_PAGINATION', CHANGE_DEPARTMENTS_LOCATIONS_PAGE_SEARCH = 'CHANGE_DEPARTMENTS_LOCATIONS_PAGE_SEARCH';
 
 let makeShortDepartmentsLocations = (departmentsLocations, departments, locations, pagination, search, isLastPage) => {
@@ -88,7 +90,7 @@ let makeShortDepartmentsLocations = (departmentsLocations, departments, location
 let initialState = {
     shortDepartmentsLocations: {},
     pagination: {
-        count: 5,
+        count: countPages,
         currentPage: 1,
         pages: 0,
     },

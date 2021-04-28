@@ -1,3 +1,5 @@
+import { countPages } from "../config/globals";
+
 const MAKE_SHORT_LOCATIONS = 'MAKE_SHORT_LOCATIONS', CHANGE_PAGE_ON_LOCATIONS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_LOCATIONS_PAGE_PAGINATION', CHANGE_LOCATIONS_PAGE_SEARCH = 'CHANGE_LOCATIONS_PAGE_SEARCH';
 
 let makeShortLocations = (locations, pagination, search, isLastPage) => {
@@ -81,7 +83,7 @@ let makeShortLocations = (locations, pagination, search, isLastPage) => {
 let initialState = {
     shortLocations: {},
     pagination: {
-        count: 5,
+        count: countPages,
         currentPage: 1,
         pages: 0,
     },

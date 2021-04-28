@@ -1,3 +1,5 @@
+import { countPages } from "../config/globals";
+
 const MAKE_SHORT_POSTS = 'MAKE_SHORT_POSTS', CHANGE_PAGE_ON_POSTS_PAGE_PAGINATION = 'CHANGE_PAGE_ON_POSTS_PAGE_PAGINATION', CHANGE_POSTS_PAGE_SEARCH = 'CHANGE_POSTS_PAGE_SEARCH';
 
 let makeShortPosts = (posts, pagination, search, isLastPage) => {
@@ -81,7 +83,7 @@ let makeShortPosts = (posts, pagination, search, isLastPage) => {
 let initialState = {
     shortPosts: {},
     pagination: {
-        count: 5,
+        count: countPages,
         currentPage: 1,
         pages: 0,
     },
