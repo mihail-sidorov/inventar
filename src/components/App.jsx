@@ -17,6 +17,8 @@ import EmployersPage from './EmployersPage/EmployersPage';
 import EventPageCardContainer from './EventPageCard/EventPageCardContainer';
 import EventsPage from './EventsPage/EventsPage';
 import HeaderContainer from './Header/HeaderContainer';
+import HumanResourcesPage from './HumanResourcesPage/HumanResourcesPage';
+import MentorerPageContainer from './HumanResourcesPage/MentorerPage/MentorerPageContainer';
 import LocationPageAddContainer from './LocationPageAdd/LocationPageAddContainer';
 import LocationPageEditContainer from './LocationPageEdit/LocationPageEditContainer';
 import LocationsPage from './LocationsPage/LocationsPage';
@@ -54,6 +56,7 @@ let App = () => {
                 <Route exact path="/devices" render={() => <SwitchRolesContainer roles={[
                                 {role: 'admin', component: <DevicesPage />},
                                 {role: 'user', component: <DevicesPageUserContainer />},
+                                {role: 'hr', component: <DevicesPageUserContainer />},
                             ]} />} />
                 <Route exact path="/users" render={() => <SwitchRolesContainer roles={[
                                 {role: 'admin', component: <UsersPage />},
@@ -61,6 +64,7 @@ let App = () => {
                 <Route exact path="/services" render={() => <SwitchRolesContainer roles={[
                                 {role: 'admin', component: <ServicesPage />},
                                 {role: 'user', component: <ServicesPageUserContainer />},
+                                {role: 'hr', component: <ServicesPageUserContainer />},
                             ]} />} />
                 <Route exact path="/devices/:device" render={() => <SwitchRolesContainer roles={[
                                 {role: 'admin', component: <DeviceSavePage />},
@@ -153,6 +157,16 @@ let App = () => {
                             ]} /> } />
                 <Route exact path="/softwares/card/:softwareId" render={() => <SwitchRolesContainer roles={[
                                 {role: 'admin', component: <SoftwarePageCardContainer />},
+                            ]} /> } />
+                <Route exact path="/humanResources" render={() => <SwitchRolesContainer roles={[
+                                {role: 'admin', component: <HumanResourcesPage />},
+                                {role: 'user', component: <HumanResourcesPage />},
+                                {role: 'hr', component: <HumanResourcesPage />},
+                            ]} /> } />
+                <Route exact path="/mentorer" render={() => <SwitchRolesContainer roles={[
+                                {role: 'admin', component: <MentorerPageContainer />},
+                                {role: 'user', component: <MentorerPageContainer />},
+                                {role: 'hr', component: <MentorerPageContainer />},
                             ]} /> } />
                 <Page404 />
             </Switch>

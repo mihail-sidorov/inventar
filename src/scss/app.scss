@@ -673,7 +673,7 @@ html, body {
     }
 }
 
-.services-page, .employers-page, .locations-page, .posts-page, .department-names-page, .departmentsLocations-page, .postsDepartmentsLocations-page {
+.services-page, .employers-page, .locations-page, .posts-page, .department-names-page, .departmentsLocations-page, .postsDepartmentsLocations-page, .human-resources-page {
 
     background-color: #A3DEE6;
 
@@ -727,6 +727,92 @@ html, body {
                     align-self: center;
                 }
             }
+        }
+    }
+}
+
+.human-resources-page {
+
+    &__menu {
+
+        &-item {
+
+            display: block;
+            height: 70px;
+            line-height: 70px;
+            border: 1px solid #C4C4C4;
+            box-sizing: border-box;
+            padding: 0 18px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #000;
+        }
+    }
+}
+
+.mentorer-page {
+
+    background-color: #A3DEE6;
+
+    &__back-to-human-resources {
+
+        color: #403539;
+        text-decoration: none;
+        font-weight: normal;
+        padding-left: 30px;
+        border-radius: 30px;
+        font-size: 10px;
+        background: url('../imgs/back-arrow.svg') no-repeat 5px center;
+        background-color: #C4C4C4;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+
+    &__wrapper {
+
+        .inner-page {
+
+            &__content {
+
+                min-height: calc(100vh - 80px);
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    }
+
+    &__title {
+
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    &__tabs {
+
+        display: flex;
+        align-items: flex-end;
+    }
+
+    &__tab {
+
+        flex-basis: 230px;
+        height: 44px;
+        line-height: 44px;
+        background-color: #F2E9E9;
+        border-radius: 5px;
+        flex-shrink: 0;
+        margin-right: 3px;
+        text-align: center;
+        cursor: pointer;
+
+        &:last-child {
+
+            margin-right: 0;
+        }
+
+        &_active {
+
+            height: 50px;
+            line-height: 50px;
         }
     }
 }

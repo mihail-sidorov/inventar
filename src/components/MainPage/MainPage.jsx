@@ -31,6 +31,7 @@ let MainPageAdmin = (props) => {
                     <NavLink className="main-page__item" to="/locations">Местонахождения</NavLink>
                     <NavLink className="main-page__item" to="/departmentNames">Отделы</NavLink>
                     <NavLink className="main-page__item" to="/posts">Должности</NavLink>
+                    <NavLink className="main-page__item" to="/humanResources">Отдел кадров</NavLink>
                 </div>
             </div>
         </div>
@@ -45,6 +46,7 @@ let MainPageUser = (props) => {
                     <NavLink className="main-page__item" to="/devices">Оборудование</NavLink>
                     <NavLink className="main-page__item" to="/services">Сервисы</NavLink>
                     <NavLink className="main-page__item" to="/events">События</NavLink>
+                    <NavLink className="main-page__item" to="/humanResources">Отдел кадров</NavLink>
                 </div>
             </div>
         </div>
@@ -53,7 +55,7 @@ let MainPageUser = (props) => {
 
 let MainPage = (props) => {
     if (props.role === 'admin') return <MainPageAdmin />;
-    if (props.role === 'user') return <MainPageUser />;
+    if (props.role === 'user' || props.role === 'hr') return <MainPageUser />;
 }
 
 export default MainPage;
