@@ -2078,3 +2078,69 @@ html, body {
         }
     }
 }
+
+.mentorer-page {
+
+    .connections {
+
+        margin-top: 20px;
+
+        &__search {
+
+            display: flex;
+
+            &_protege {
+
+                margin-left: auto;
+            }
+
+            &-users {
+
+                &-title {
+
+                    margin-bottom: 10px;
+                    font-size: 24px;
+                }
+            }
+
+            &-items {
+
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            &-item {
+
+                margin-bottom: 5px;
+                cursor: pointer;
+
+                &:hover {
+
+                    background-color: #FBBAB5;
+                }
+
+                &:last-child {
+
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        &__approve {
+
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            border: 1px solid #B1B1AF;
+            border-radius: 5px;
+            padding: 10px;
+
+            &-mentor, &-protege {
+
+                font-weight: bold;
+            }
+        }
+    }
+}

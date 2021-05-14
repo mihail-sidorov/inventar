@@ -1,6 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { loginGet } from '../../../redux/authReducer';
+import { mentoringGet } from '../../../redux/mentorerPageReducer';
+import { usersGet } from '../../../redux/usersReducer';
 import InnerPageContainer from '../../InnerPage/InnerPageContainer';
 import ConnectionsContainer from './Connections/ConnectionsContainer';
 import MentorContainer from './Mentor/MentorContainer';
@@ -36,7 +39,7 @@ let MentorerPage = props => {
                             {tabs}
                         </div>
                         {
-                            props.showComponents.hr && <ConnectionsContainer />
+                            props.showComponents.hr && <ConnectionsContainer mentorerPageInit={props.mentorerPageInit} />
                         }
                         {
                             props.showComponents.mentor && <MentorContainer />
@@ -51,4 +54,59 @@ let MentorerPage = props => {
     );
 };
 
-export default MentorerPage;
+let MentorerPageClassComponent = class extends React.Component {
+    render() {
+        return (
+            <MentorerPage {...this.props} mentorerPageInit={() => {
+                this.mentorerPageInit();
+            }} />
+        );
+    }
+
+    mentorerPageInit() {
+        (async () => {
+            let mentoring = mentoringGet();
+            let users = usersGet();
+            let authData = loginGet();
+
+            mentoring = await mentoring;
+            users = await users;
+            authData = await authData;
+
+            let mentoringHr = [], mentoringMentor = [], mentoringProtege = [];
+            let showComponents = {};
+            if (authData.data.role === 'hr') {
+                showComponents.hr = false;
+                mentoringHr = mentoring.data;
+            }
+            for (let el of mentoring.data) {
+                if (el.mentor_id === authData.data.userId) {
+                    showComponents.mentor = false;
+                    mentoringMentor.push(el);
+                }
+                if (el.protege_id === authData.data.userId) {
+                    showComponents.protege = false;
+                    mentoringProtege.push(el);
+                }
+            }
+            for (let component in showComponents) {
+                showComponents[component] = true;
+                break;
+            }
+
+            this.props.mentoringSet(mentoringHr, mentoringMentor, mentoringProtege);
+            this.props.usersSet(users.data);
+            this.props.showComponentsSet(showComponents);
+        })();
+    }
+
+    componentDidMount() {
+        this.mentorerPageInit();
+    }
+
+    componentWillUnmount() {
+        this.props.resetMentorerPageState();
+    }
+}
+
+export default MentorerPageClassComponent;
