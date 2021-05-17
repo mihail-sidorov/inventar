@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mentorIdSetActionCreator, mentoringPost, mentorSearchSetActionCreator, protegeIdSetActionCreator, protegeSearchSetActionCreator, resetMentorerPageStateActionCreator } from '../../../../redux/mentorerPageReducer';
+import { mentorIdSetActionCreator, mentoringPost, mentorSearchSetActionCreator, protegeIdSetActionCreator, protegeSearchSetActionCreator, resetMentorerPageStateActionCreator, setHrListIsLastPageActionCreator } from '../../../../redux/mentorerPageReducer';
 import Connections from './Connections';
 
 let ConnectionsContainer = connect(
@@ -9,6 +9,7 @@ let ConnectionsContainer = connect(
         mentorId: state.mentorerPageState.mentorId,
         protegeId: state.mentorerPageState.protegeId,
         users: state.usersState.users,
+        hrList: state.mentorerPageState.hrList,
     }),
     dispatch => ({
         mentorSearchSet: search => {
@@ -27,8 +28,8 @@ let ConnectionsContainer = connect(
             if (mentorId !== null && protegeId !== null) {
                 mentoringPost(mentorId, protegeId)
                     .then(res => {
-                        console.log(res.data);
                         dispatch(resetMentorerPageStateActionCreator());
+                        dispatch(setHrListIsLastPageActionCreator());
                         mentorerPageInit();
                     })
                     .catch(console.log);

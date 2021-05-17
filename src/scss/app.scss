@@ -2081,65 +2081,162 @@ html, body {
 
 .mentorer-page {
 
-    .connections {
+    .inner-page__content {
 
-        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
 
-        &__search {
+        .mentorer-page__back-to-human-resources {
 
-            display: flex;
-
-            &_protege {
-
-                margin-left: auto;
-            }
-
-            &-users {
-
-                &-title {
-
-                    margin-bottom: 10px;
-                    font-size: 24px;
-                }
-            }
-
-            &-items {
-
-                margin-top: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            &-item {
-
-                margin-bottom: 5px;
-                cursor: pointer;
-
-                &:hover {
-
-                    background-color: #FBBAB5;
-                }
-
-                &:last-child {
-
-                    margin-bottom: 0;
-                }
-            }
+            align-self: flex-start;
         }
 
-        &__approve {
+        .connections {
 
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: flex-start;
+            flex-grow: 1;
             margin-top: 20px;
-            border: 1px solid #B1B1AF;
-            border-radius: 5px;
-            padding: 10px;
 
-            &-mentor, &-protege {
+            &__create {
 
-                font-weight: bold;
+                align-self: flex-start;
+            }
+    
+            &__search {
+    
+                display: flex;
+    
+                &_protege {
+    
+                    margin-left: auto;
+                }
+    
+                &-users {
+    
+                    &-title {
+    
+                        margin-bottom: 10px;
+                        font-size: 24px;
+                    }
+                }
+    
+                &-items {
+    
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+    
+                &-item {
+    
+                    margin-bottom: 5px;
+                    cursor: pointer;
+    
+                    &:hover {
+    
+                        background-color: #FBBAB5;
+                    }
+
+                    &:first-child {
+
+                        margin-top: 10px;
+                    }
+    
+                    &:last-child {
+    
+                        margin-bottom: 0;
+                    }
+                }
+            }
+    
+            &__approve {
+    
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+                border: 1px solid #B1B1AF;
+                border-radius: 5px;
+                padding: 10px;
+    
+                &-mentor, &-protege {
+    
+                    font-weight: bold;
+                }
+            }
+    
+            &__list-search {
+    
+                margin-top: 40px;
+            }
+    
+            &__list {
+    
+                margin-top: 20px;
+                margin-bottom: 20px;
+    
+                table {
+    
+                    width: 100%;
+                    border: 0;
+                    border-spacing: 0;
+            
+                    thead {
+            
+                        th {
+            
+                            border: 0;
+                            background-color: #FBBAB5;
+                            padding: 10px 0 10px 20px;
+                            text-align: left;
+            
+                            &:first-child {
+            
+                                border-radius: 20px 0 0 0;
+                            }
+            
+                            &:last-child {
+            
+                                border-radius: 0 20px 0 0;
+                            }
+                        }
+                    }
+            
+                    tbody {
+            
+                        tr {
+                            
+                            cursor: pointer;
+            
+                            td {
+            
+                                border: 0;
+                                border-bottom: 1px solid #B1B1AF;
+                                padding-top: 10px;
+                                padding-left: 20px;
+                            }
+            
+                            &:hover {
+            
+                                td {
+            
+                                    background-color: rgba(251, 186, 181, 0.2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+    
+            &__pagination {
+    
+                margin-top: auto;
+
+                .pagination {
+
+                    justify-content: center;
+                }
             }
         }
     }

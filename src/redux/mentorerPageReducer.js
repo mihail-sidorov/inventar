@@ -1,7 +1,99 @@
 import { data } from "jquery";
 import Axios from "../config/axiosConfig";
+import { countPages } from "../config/globals";
+import isEmptyObject from "../functions/isEmptyObject";
 
-const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE';
+const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE';
+
+let makeShort = (entitys, pagination, search, users) => {
+    let searchEntitys = [], shortEntitys = [];
+
+    if (search !== '') {
+        for (let entity of entitys) {
+            let searchWords = search.split(' ');
+            let entityAccord = true;
+
+            for (let i = 0; i < searchWords.length; i++) {
+                let wordAccord = false;
+                let pattern = new RegExp(searchWords[i].toLowerCase());
+                let propertiesArr = [];
+
+                for (let property in entity) {
+                    switch (property) {
+                        case 'mentor_id':
+                            if (!isEmptyObject(users)) {
+                                let mentorName = users[entity.mentor_id]?.full_name;
+                                if (mentorName !== undefined && mentorName !== null && mentorName !== '') {
+                                    propertiesArr.push(String(mentorName));
+                                }
+                            }
+                            break;
+                        case 'protege_id':
+                            if (!isEmptyObject(users)) {
+                                let protegeName = users[entity.protege_id]?.full_name;
+                                if (protegeName !== undefined && protegeName !== null && protegeName !== '') {
+                                    propertiesArr.push(String(protegeName));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                for (let i = 0; i < propertiesArr.length; i++) {
+                    if (propertiesArr[i].toLowerCase().match(pattern)) {
+                        wordAccord = true;
+                        break;
+                    }
+                }
+
+                if (!wordAccord) {
+                    entityAccord = false;
+                    break;
+                }
+            }
+
+            if (entityAccord) {
+                searchEntitys.push(entity);
+            }
+        }
+    }
+    else {
+        searchEntitys = entitys;
+    }
+
+    let paginationCount = pagination.count;
+    let currentPage = pagination.currentPage;
+    let isLastPage = pagination.isLastPage;
+    
+    let pages = Math.floor(Object.keys(searchEntitys).length / paginationCount);
+    if (Object.keys(searchEntitys).length % paginationCount > 0) {
+        pages++;
+    }
+    if (currentPage > pages || isLastPage) {
+        currentPage = pages;
+    }
+
+    if (currentPage === 0) currentPage = 1;
+
+    let left = (currentPage - 1) * paginationCount + 1;
+    let right = left + paginationCount - 1;
+    let i = 1;
+
+    for (let searchEntity of searchEntitys) {
+        if (i >= left && i <= right) {
+            shortEntitys.push(searchEntity);
+        }
+        i++;
+    }
+
+    return {
+        shortEntitys,
+        currentPage,
+        pages,
+    };
+}
 
 let initialState = {
     showComponents: {},
@@ -12,6 +104,36 @@ let initialState = {
     protegeSearch: {},
     mentorId: null,
     protegeId: null,
+    hrList: {
+        shortEntitys: [],
+        search: '',
+        pagination: {
+            count: countPages,
+            currentPage: 1,
+            pages: 0,
+            isLastPage: false,
+        },
+    },
+    mentorList: {
+        shortEntitys: [],
+        search: '',
+        pagination: {
+            count: 5,
+            currentPage: 1,
+            pages: 0,
+            isLastPage: false,
+        },
+    },
+    protegeList: {
+        shortEntitys: [],
+        search: '',
+        pagination: {
+            count: 5,
+            currentPage: 1,
+            pages: 0,
+            isLastPage: false,
+        },
+    },
 };
 
 // Запросы к API
@@ -97,6 +219,36 @@ export let resetMentorerPageStateActionCreator = () => ({
     type: RESET_MENTORER_PAGE_STATE,
 });
 
+export let makeShortHrListActionCreator = () => {
+    let state = window.store.getState();
+    let entitys = state.mentorerPageState.mentoringHr;
+    let pagination = state.mentorerPageState.hrList.pagination;
+    let search = state.mentorerPageState.hrList.search;
+    let users = state.usersState.users;
+
+    return {
+        type: MAKE_SHORT_HR_LIST,
+        entitys,
+        pagination,
+        search,
+        users,
+    };
+};
+
+export let changeHrListSearchActionCreator = search => ({
+    type: CHANGE_HR_LIST_SEARCH,
+    search,
+});
+
+export let changeHrListPaginationActionCreator = page => ({
+    type: CHANGE_HR_LIST_PAGINATION,
+    page,
+});
+
+export let setHrListIsLastPageActionCreator = () => ({
+    type: SET_HR_LIST_IS_LAST_PAGE,
+});
+
 // Редуктор
 
 let mentorerPageReducer = (state = initialState, action) => {
@@ -147,6 +299,52 @@ let mentorerPageReducer = (state = initialState, action) => {
         case RESET_MENTORER_PAGE_STATE:
             return {
                 ...initialState,
+            };
+        case MAKE_SHORT_HR_LIST:
+            let makeShortHrListResult = makeShort(action.entitys, action.pagination, action.search, action.users);
+
+            return {
+                ...state,
+                hrList: {
+                    ...state.hrList,
+                    shortEntitys: makeShortHrListResult.shortEntitys,
+                    pagination: {
+                        ...state.hrList.pagination,
+                        currentPage: makeShortHrListResult.currentPage,
+                        pages: makeShortHrListResult.pages,
+                        isLastPage: false,
+                    },
+                },
+            };
+        case CHANGE_HR_LIST_SEARCH:
+            return {
+                ...state,
+                hrList: {
+                    ...state.hrList,
+                    search: action.search,
+                },
+            };
+        case CHANGE_HR_LIST_PAGINATION:
+            return {
+                ...state,
+                hrList: {
+                    ...state.hrList,
+                    pagination: {
+                        ...state.hrList.pagination,
+                        currentPage: action.page,
+                    },
+                },
+            };
+        case SET_HR_LIST_IS_LAST_PAGE:
+            return {
+                ...state,
+                hrList: {
+                    ...state.hrList,
+                    pagination: {
+                        ...state.hrList.pagination,
+                        isLastPage: true,
+                    },
+                },
             };
         default:
             return state;
