@@ -4,6 +4,7 @@ import { categoriesGetActionCreator } from '../../../redux/categoriesReducer';
 import { devicesGetActionCreator } from '../../../redux/devicesReducer';
 import { makeShortEventsActionCreator } from '../../../redux/eventsPageReducer';
 import { eventsGetActionCreator } from '../../../redux/eventsReducer';
+import { mentoringConnectionsSetActionCreator } from '../../../redux/mentoringConnectionsReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
 import Events from './Events';
 
@@ -26,6 +27,9 @@ let EventsContainer = connect(
         },
         onCategoriesGet: (data) => {
             dispatch(categoriesGetActionCreator(data));
+        },
+        mentoringConnectionsSet : data => {
+            dispatch(mentoringConnectionsSetActionCreator(data));
         },
         onMakeShortEvents: () => {
             dispatch(makeShortEventsActionCreator());

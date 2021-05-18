@@ -6,6 +6,8 @@ import { devicesGet } from '../../../redux/devicesReducer';
 import { brandsGet } from '../../../redux/brandsReducer';
 import { categoriesGet } from '../../../redux/categoriesReducer';
 import GivenReturnDeviceEventContainer from './Event/GivenReturnDeviceEvent/GivenReturnDeviceEventContainer';
+import MentoringEventContainer from './Event/MentoringEvent/MentoringEventContainer';
+import { MentoringConnectionsGet } from '../../../redux/mentoringConnectionsReducer';
 
 let Events = (props) => {
     let eventsArr = [];
@@ -18,6 +20,9 @@ let Events = (props) => {
                 break;
             case 'returnDevice':
                 Event = GivenReturnDeviceEventContainer(id);
+                break;
+            case 'mentoring':
+                Event = MentoringEventContainer(id);
                 break;
             default:
                 break;
@@ -58,7 +63,7 @@ let EventsClassComponent = class extends React.Component {
 
         if (isEmptyObject(state.eventsState.events) || isEmptyObject(state.usersState.users)
         || isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)
-        || isEmptyObject(state.categoriesState.categories)) {
+        || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.mentoringConnectionsState.mentoringConnections)) {
             let promiseArr = [];
 
             if (isEmptyObject(state.eventsState.events)) {
@@ -76,6 +81,9 @@ let EventsClassComponent = class extends React.Component {
             if (isEmptyObject(state.categoriesState.categories)) {
                 promiseArr.push(categoriesGet());
             }
+            if (isEmptyObject(state.mentoringConnectionsState.mentoringConnections)) {
+                promiseArr.push(MentoringConnectionsGet());
+            }
 
             Promise.all(promiseArr)
                 .then((response) => {
@@ -85,6 +93,7 @@ let EventsClassComponent = class extends React.Component {
                         if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
                         if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
                         if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
+                        if (value.config.url === 'mentoring') this.props.mentoringConnectionsSet(value.data);
                     });
 
                     this.props.onMakeShortEvents();

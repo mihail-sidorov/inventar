@@ -4,6 +4,7 @@ import isEmptyObject from '../../functions/isEmptyObject';
 import { eventsGet } from '../../redux/eventsReducer';
 import InnerPageContainer from '../InnerPage/InnerPageContainer';
 import EventPageCardGivenReturnDeviceContainer from './EventPageCardGivenReturnDevice/EventPageCardGivenReturnDeviceContainer';
+import EventPageCardMentoringContainer from './EventPageCardMentoring/EventPageCardMentoringContainer';
 
 let EventPageCard = (props) => {
     let event = props.events[props.match.params.eventId];
@@ -16,6 +17,9 @@ let EventPageCard = (props) => {
                 break;
             case 'returnDevice':
                 eventByType = <EventPageCardGivenReturnDeviceContainer eventId={props.match.params.eventId} />;
+                break;
+            case 'mentoring':
+                eventByType = <EventPageCardMentoringContainer eventId={props.match.params.eventId} />;
                 break;
             default:
                 break;
