@@ -22,7 +22,7 @@ let MentorerPage = props => {
                     props.showComponentsChange(e.target.getAttribute('component'));
                 }}
             >
-                {component === 'hr' ? 'Связи' : component === 'mentor' ? 'Наставник' : component === 'protege' ? 'Ученик' : ''}
+                {component === 'hr' ? 'Связи' : component === 'mentor' ? 'Наставник' : component === 'protege' ? 'Стажер' : ''}
             </div>
         );
         tabIndex++;
@@ -99,6 +99,7 @@ let MentorerPageClassComponent = class extends React.Component {
             this.props.showComponentsSet(showComponents);
             this.props.makeShortHrList();
             this.props.makeShortMentorList();
+            this.props.makeShortProtegeList();
         })();
     }
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { makeShortHrListActionCreator, makeShortMentorListActionCreator, mentoringSetActionCreator, resetMentorerPageStateActionCreator, showComponentsChangeActionCreator, showComponentsSetActionCreator } from '../../../redux/mentorerPageReducer';
+import { makeShortHrListActionCreator, makeShortMentorListActionCreator, makeShortProtegeListActionCreator, mentoringSetActionCreator, resetMentorerPageStateActionCreator, showComponentsChangeActionCreator, showComponentsSetActionCreator } from '../../../redux/mentorerPageReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
 import MentorerPage from './MentorerPage';
 
@@ -28,6 +28,9 @@ let MentorerPageContainer = connect(
         },
         makeShortMentorList: () => {
             dispatch(makeShortMentorListActionCreator());
+        },
+        makeShortProtegeList: () => {
+            dispatch(makeShortProtegeListActionCreator());
         },
     })
 )(MentorerPage);

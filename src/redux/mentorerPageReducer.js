@@ -3,7 +3,7 @@ import Axios from "../config/axiosConfig";
 import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
 
-const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE', MAKE_SHORT_MENTOR_LIST = 'MAKE_SHORT_MENTOR_LIST', CHANGE_MENTOR_LIST_SEARCH = 'CHANGE_MENTOR_LIST_SEARCH', CHANGE_MENTOR_LIST_PAGINATION = 'CHANGE_MENTOR_LIST_PAGINATION';
+const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE', MAKE_SHORT_MENTOR_LIST = 'MAKE_SHORT_MENTOR_LIST', CHANGE_MENTOR_LIST_SEARCH = 'CHANGE_MENTOR_LIST_SEARCH', CHANGE_MENTOR_LIST_PAGINATION = 'CHANGE_MENTOR_LIST_PAGINATION', MAKE_SHORT_PROTEGE_LIST = 'MAKE_SHORT_PROTEGE_LIST', CHANGE_PROTEGE_LIST_SEARCH = 'CHANGE_PROTEGE_LIST_SEARCH', CHANGE_PROTEGE_LIST_PAGINATION = 'CHANGE_PROTEGE_LIST_PAGINATION';
 
 let makeShort = (entitys, pagination, search, users) => {
     let searchEntitys = [], shortEntitys = [];
@@ -118,7 +118,7 @@ let initialState = {
         shortEntitys: [],
         search: '',
         pagination: {
-            count: 5,
+            count: countPages,
             currentPage: 1,
             pages: 0,
             isLastPage: false,
@@ -128,7 +128,7 @@ let initialState = {
         shortEntitys: [],
         search: '',
         pagination: {
-            count: 5,
+            count: countPages,
             currentPage: 1,
             pages: 0,
             isLastPage: false,
@@ -247,6 +247,20 @@ export let makeShortMentorListActionCreator = () => {
     };
 };
 
+export let makeShortProtegeListActionCreator = () => {
+    let state = window.store.getState();
+    let entitys = state.mentorerPageState.mentoringProtege;
+    let pagination = state.mentorerPageState.protegeList.pagination;
+    let search = state.mentorerPageState.protegeList.search;
+    let users = state.usersState.users;
+    let makeShortProtegeListResult = makeShort(entitys, pagination, search, users);
+
+    return {
+        type: MAKE_SHORT_PROTEGE_LIST,
+        makeShortProtegeListResult,
+    };
+};
+
 export let changeHrListSearchActionCreator = search => ({
     type: CHANGE_HR_LIST_SEARCH,
     search,
@@ -268,6 +282,16 @@ export let changeMentorListSearchActionCreator = search => ({
 
 export let changeMentorListPaginationActionCreator = page => ({
     type: CHANGE_MENTOR_LIST_PAGINATION,
+    page,
+});
+
+export let changeProtegeListSearchActionCreator = search => ({
+    type: CHANGE_PROTEGE_LIST_SEARCH,
+    search,
+});
+
+export let changeProtegeListPaginationActionCreator = page => ({
+    type: CHANGE_PROTEGE_LIST_PAGINATION,
     page,
 });
 
@@ -349,6 +373,19 @@ let mentorerPageReducer = (state = initialState, action) => {
                     },
                 },
             };
+        case MAKE_SHORT_PROTEGE_LIST:
+            return {
+                ...state,
+                protegeList: {
+                    ...state.protegeList,
+                    shortEntitys: action.makeShortProtegeListResult.shortEntitys,
+                    pagination: {
+                        ...state.protegeList.pagination,
+                        currentPage: action.makeShortProtegeListResult.currentPage,
+                        pages: action.makeShortProtegeListResult.pages,
+                    },
+                },
+            };
         case CHANGE_HR_LIST_SEARCH:
             return {
                 ...state,
@@ -383,6 +420,25 @@ let mentorerPageReducer = (state = initialState, action) => {
                     ...state.mentorList,
                     pagination: {
                         ...state.mentorList.pagination,
+                        currentPage: action.page,
+                    },
+                },
+            };
+        case CHANGE_PROTEGE_LIST_SEARCH:
+            return {
+                ...state,
+                protegeList: {
+                    ...state.protegeList,
+                    search: action.search,
+                },
+            };
+        case CHANGE_PROTEGE_LIST_PAGINATION:
+            return {
+                ...state,
+                protegeList: {
+                    ...state.protegeList,
+                    pagination: {
+                        ...state.protegeList.pagination,
                         currentPage: action.page,
                     },
                 },
