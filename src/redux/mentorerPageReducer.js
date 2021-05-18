@@ -3,7 +3,7 @@ import Axios from "../config/axiosConfig";
 import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
 
-const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE';
+const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE', MAKE_SHORT_MENTOR_LIST = 'MAKE_SHORT_MENTOR_LIST', CHANGE_MENTOR_LIST_SEARCH = 'CHANGE_MENTOR_LIST_SEARCH', CHANGE_MENTOR_LIST_PAGINATION = 'CHANGE_MENTOR_LIST_PAGINATION';
 
 let makeShort = (entitys, pagination, search, users) => {
     let searchEntitys = [], shortEntitys = [];
@@ -225,13 +225,25 @@ export let makeShortHrListActionCreator = () => {
     let pagination = state.mentorerPageState.hrList.pagination;
     let search = state.mentorerPageState.hrList.search;
     let users = state.usersState.users;
+    let makeShortHrListResult = makeShort(entitys, pagination, search, users);
 
     return {
         type: MAKE_SHORT_HR_LIST,
-        entitys,
-        pagination,
-        search,
-        users,
+        makeShortHrListResult,
+    };
+};
+
+export let makeShortMentorListActionCreator = () => {
+    let state = window.store.getState();
+    let entitys = state.mentorerPageState.mentoringMentor;
+    let pagination = state.mentorerPageState.mentorList.pagination;
+    let search = state.mentorerPageState.mentorList.search;
+    let users = state.usersState.users;
+    let makeShortMentorListResult = makeShort(entitys, pagination, search, users);
+
+    return {
+        type: MAKE_SHORT_MENTOR_LIST,
+        makeShortMentorListResult,
     };
 };
 
@@ -247,6 +259,16 @@ export let changeHrListPaginationActionCreator = page => ({
 
 export let setHrListIsLastPageActionCreator = () => ({
     type: SET_HR_LIST_IS_LAST_PAGE,
+});
+
+export let changeMentorListSearchActionCreator = search => ({
+    type: CHANGE_MENTOR_LIST_SEARCH,
+    search,
+});
+
+export let changeMentorListPaginationActionCreator = page => ({
+    type: CHANGE_MENTOR_LIST_PAGINATION,
+    page,
 });
 
 // Редуктор
@@ -301,18 +323,29 @@ let mentorerPageReducer = (state = initialState, action) => {
                 ...initialState,
             };
         case MAKE_SHORT_HR_LIST:
-            let makeShortHrListResult = makeShort(action.entitys, action.pagination, action.search, action.users);
-
             return {
                 ...state,
                 hrList: {
                     ...state.hrList,
-                    shortEntitys: makeShortHrListResult.shortEntitys,
+                    shortEntitys: action.makeShortHrListResult.shortEntitys,
                     pagination: {
                         ...state.hrList.pagination,
-                        currentPage: makeShortHrListResult.currentPage,
-                        pages: makeShortHrListResult.pages,
+                        currentPage: action.makeShortHrListResult.currentPage,
+                        pages: action.makeShortHrListResult.pages,
                         isLastPage: false,
+                    },
+                },
+            };
+        case MAKE_SHORT_MENTOR_LIST:
+            return {
+                ...state,
+                mentorList: {
+                    ...state.mentorList,
+                    shortEntitys: action.makeShortMentorListResult.shortEntitys,
+                    pagination: {
+                        ...state.mentorList.pagination,
+                        currentPage: action.makeShortMentorListResult.currentPage,
+                        pages: action.makeShortMentorListResult.pages,
                     },
                 },
             };
@@ -331,6 +364,25 @@ let mentorerPageReducer = (state = initialState, action) => {
                     ...state.hrList,
                     pagination: {
                         ...state.hrList.pagination,
+                        currentPage: action.page,
+                    },
+                },
+            };
+        case CHANGE_MENTOR_LIST_SEARCH:
+            return {
+                ...state,
+                mentorList: {
+                    ...state.mentorList,
+                    search: action.search,
+                },
+            };
+        case CHANGE_MENTOR_LIST_PAGINATION:
+            return {
+                ...state,
+                mentorList: {
+                    ...state.mentorList,
+                    pagination: {
+                        ...state.mentorList.pagination,
                         currentPage: action.page,
                     },
                 },

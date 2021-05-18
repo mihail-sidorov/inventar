@@ -104,7 +104,7 @@ let Connections = props => {
                         {
                             hrListArr.length > 0 ? hrListArr :
                             <tr>
-                                <td colspan="2">
+                                <td colSpan="2">
                                     {props.searchOn ? 'По запросу поиска ничего не найдено' : 'Список данных пуст'}
                                 </td>
                             </tr>

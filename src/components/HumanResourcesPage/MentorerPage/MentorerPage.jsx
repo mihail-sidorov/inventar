@@ -98,6 +98,7 @@ let MentorerPageClassComponent = class extends React.Component {
             this.props.usersSet(users.data);
             this.props.showComponentsSet(showComponents);
             this.props.makeShortHrList();
+            this.props.makeShortMentorList();
         })();
     }
 
