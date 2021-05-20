@@ -19,6 +19,7 @@ import EventsPage from './EventsPage/EventsPage';
 import HeaderContainer from './Header/HeaderContainer';
 import HumanResourcesPage from './HumanResourcesPage/HumanResourcesPage';
 import MentorerPageContainer from './HumanResourcesPage/MentorerPage/MentorerPageContainer';
+import PlanPageContainer from './HumanResourcesPage/MentorerPage/PlanPage/PlanPageContainer';
 import LocationPageAddContainer from './LocationPageAdd/LocationPageAddContainer';
 import LocationPageEditContainer from './LocationPageEdit/LocationPageEditContainer';
 import LocationsPage from './LocationsPage/LocationsPage';
@@ -167,6 +168,11 @@ let App = () => {
                                 {role: 'admin', component: <MentorerPageContainer />},
                                 {role: 'user', component: <MentorerPageContainer />},
                                 {role: 'hr', component: <MentorerPageContainer />},
+                            ]} /> } />
+                <Route exact path="/mentorer/plan/:planId" render={() => <SwitchRolesContainer roles={[
+                                {role: 'admin', component: <PlanPageContainer />},
+                                {role: 'user', component: <PlanPageContainer />},
+                                {role: 'hr', component: <PlanPageContainer />},
                             ]} /> } />
                 <Page404 />
             </Switch>

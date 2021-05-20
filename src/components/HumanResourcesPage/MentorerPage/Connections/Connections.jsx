@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchContainer from './Search/SearchContainer';
 import PaginationContainer from './Pagination/PaginationContainer';
+import { withRouter } from 'react-router';
 
 let Connections = props => {
     let mentorSearchArr = [];
@@ -33,7 +34,9 @@ let Connections = props => {
     let hrListArrIndex = 1;
     for (let shortEntity of props.hrList.shortEntitys) {
         hrListArr.push(
-            <tr key={hrListArrIndex}>
+            <tr key={hrListArrIndex} onClick={() => {
+                props.history.push(`/mentorer/plan/${shortEntity.id}`);
+            }}>
                 <td>{props.users[shortEntity.mentor_id]?.full_name}</td>
                 <td>{props.users[shortEntity.protege_id]?.full_name}</td>
             </tr>
@@ -173,4 +176,4 @@ let ConnectionsClassComponent = class extends React.Component {
     }
 }
 
-export default ConnectionsClassComponent;
+export default withRouter(ConnectionsClassComponent);

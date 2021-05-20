@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import PaginationContainer from './Pagination/PaginationContainer';
 import SearchContainer from './Search/SearchConatiner';
 
@@ -7,7 +8,9 @@ let Protege = props => {
     let protegeListArrIndex = 1;
     for (let shortEntity of props.protegeList.shortEntitys) {
         protegeListArr.push(
-            <tr key={protegeListArrIndex}>
+            <tr key={protegeListArrIndex} onClick={() => {
+                props.history.push(`/mentorer/plan/${shortEntity.id}`);
+            }}>
                 <td>{props.users[shortEntity.mentor_id]?.full_name}</td>
             </tr>
         );
@@ -70,4 +73,4 @@ let ProtegeClassComponent = class extends React.Component {
     }
 }
 
-export default ProtegeClassComponent;
+export default withRouter(ProtegeClassComponent);

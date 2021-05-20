@@ -46,6 +46,7 @@ import softwaresPageReducer from './softwaresPageReducer';
 import subSoftwaresReducer from './subSoftwaresReducer';
 import mentorerPageReducer from './mentorerPageReducer';
 import mentoringConnectionsReducer from './mentoringConnectionsReducer';
+import planReducer from './planReducer';
 
 const ValidateReducer = actionType => {
     return (state, action) => {
@@ -127,6 +128,7 @@ const appReducer = combineReducers({
     subSoftwaresState: subSoftwaresReducer,
     mentorerPageState: mentorerPageReducer,
     mentoringConnectionsState: mentoringConnectionsReducer,
+    planState: planReducer,
 });
 
 const rootReducer = (state, action) => {

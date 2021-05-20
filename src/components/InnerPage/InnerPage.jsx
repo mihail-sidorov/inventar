@@ -34,7 +34,7 @@ let InnerPageAdmin = (props) => {
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'locations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/locations">Местонахождения</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'departmentNames' || props.match.params.page === 'departmentsLocations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/departmentNames">Отделы</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'posts' || props.match.params.page === 'postsDepartmentsLocations' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/posts">Должности</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'humanResources' || props.match.params.page === 'mentorer' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/humanResources">Отдел кадров</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'humanResources' || props.match.params.page === 'mentorer' || props.match.params.page === 'plan' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/humanResources">Отдел кадров</NavLink>
                 </div>
             </div>
             <div className="inner-page__content">
@@ -55,7 +55,7 @@ let InnerPageUser = (props) => {
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'devices' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/devices">Оборудование</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'services' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/services">Сервисы</NavLink>
                     <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'events' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/events">События</NavLink>
-                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'humanResources' || props.match.params.page === 'mentorer' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/humanResources">Отдел кадров</NavLink>
+                    <NavLink className={`inner-page__sidebar-menu-item${props.match.params.page === 'humanResources' || props.match.params.page === 'mentorer' || props.match.params.page === 'plan' ? ' inner-page__sidebar-menu-item_active' : ''}`} to="/humanResources">Отдел кадров</NavLink>
                 </div>
             </div>
             <div className="inner-page__content">

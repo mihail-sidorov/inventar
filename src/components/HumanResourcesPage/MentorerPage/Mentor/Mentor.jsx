@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import PaginationContainer from './Pagination/PaginationContainer';
 import SearchContainer from './Search/SearchContainer';
 
@@ -7,7 +8,9 @@ let Mentor = props => {
     let mentorListArrIndex = 1;
     for (let shortEntity of props.mentorList.shortEntitys) {
         mentorListArr.push(
-            <tr key={mentorListArrIndex}>
+            <tr key={mentorListArrIndex} onClick={() => {
+                props.history.push(`/mentorer/plan/${shortEntity.id}`);
+            }}>
                 <td>{props.users[shortEntity.protege_id]?.full_name}</td>
             </tr>
         );
@@ -70,4 +73,4 @@ let MentorClassComponent = class extends React.Component {
     }
 }
 
-export default MentorClassComponent;
+export default withRouter(MentorClassComponent);

@@ -1,4 +1,3 @@
-import { data } from "jquery";
 import Axios from "../config/axiosConfig";
 import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
