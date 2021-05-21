@@ -2353,3 +2353,121 @@ html, body {
         margin-bottom: 40px;
     }
 }
+
+.plan-edit-view {
+
+    &__add-block {
+
+        margin-bottom: 40px;
+    }
+
+    &__add-section {
+
+        width: 25px;
+        height: 25px;
+        background-size: 25px;
+        margin-left: 10px;
+    }
+
+    &__del-block {
+
+        width: 30px;
+        height: 30px;
+        background-image: url('../imgs/trash.svg');
+        background-size: 100%;
+        background-position: 0 0;
+        margin-left: auto;
+        cursor: pointer;
+    }
+
+    &__del-section {
+
+        width: 20px;
+        height: 20px;
+        background-image: url('../imgs/trash.svg');
+        background-size: 100%;
+        background-position: 0 0;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    &__block {
+
+        margin-bottom: 40px;
+        padding: 20px;
+        border-radius: 20px;
+        border: 1px solid #B1B1AF;
+
+        &:last-child {
+
+            margin-bottom: 0;
+        }
+
+        &-title {
+
+            font-size: 26px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        &-input {
+
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid #B1B1AF;
+            color: #B1B1AF;
+            padding: 10px;
+            border-radius: 20px;
+        }
+    }
+
+    &__sections {
+
+        margin-top: 20px;
+
+        &-title {
+
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__section {
+
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+
+        &:last-child {
+
+            margin-bottom: 0;
+        }
+
+        &-input {
+
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid #B1B1AF;
+            color: #B1B1AF;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+    }
+
+    &__btns {
+
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__save {
+
+        margin-right: 10px;
+    }
+}

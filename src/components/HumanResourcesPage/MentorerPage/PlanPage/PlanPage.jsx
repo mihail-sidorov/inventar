@@ -55,12 +55,10 @@ let PlanPage = props => {
     }, []);
 
     let planView = null;
-    if (props.role && props.userType && props.connectionStatus) {
-        if (props.role === 'hr' || props.userType === 'leader' || props.userType === 'protege') planView = <PlanReadViewContainer />;
-        if (props.userType === 'mentor') planView = <PlanEditViewContainer />;
-        if (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed') planView = <PlanReadViewContainer />;
-        if (props.connectionStatus === 'unconfirmed') planView = null;
-    }
+    if (props.role === 'hr' || props.userType === 'leader' || props.userType === 'protege') planView = <PlanReadViewContainer />;
+    if (props.userType === 'mentor') planView = <PlanEditViewContainer />;
+    if (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed') planView = <PlanReadViewContainer />;
+    if (props.connectionStatus === 'unconfirmed') planView = null;
 
     return (
         <div className="plan-page">
