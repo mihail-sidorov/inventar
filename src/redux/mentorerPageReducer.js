@@ -2,7 +2,7 @@ import Axios from "../config/axiosConfig";
 import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
 
-const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE', MAKE_SHORT_MENTOR_LIST = 'MAKE_SHORT_MENTOR_LIST', CHANGE_MENTOR_LIST_SEARCH = 'CHANGE_MENTOR_LIST_SEARCH', CHANGE_MENTOR_LIST_PAGINATION = 'CHANGE_MENTOR_LIST_PAGINATION', MAKE_SHORT_PROTEGE_LIST = 'MAKE_SHORT_PROTEGE_LIST', CHANGE_PROTEGE_LIST_SEARCH = 'CHANGE_PROTEGE_LIST_SEARCH', CHANGE_PROTEGE_LIST_PAGINATION = 'CHANGE_PROTEGE_LIST_PAGINATION';
+const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE', MAKE_SHORT_MENTOR_LIST = 'MAKE_SHORT_MENTOR_LIST', CHANGE_MENTOR_LIST_SEARCH = 'CHANGE_MENTOR_LIST_SEARCH', CHANGE_MENTOR_LIST_PAGINATION = 'CHANGE_MENTOR_LIST_PAGINATION', MAKE_SHORT_PROTEGE_LIST = 'MAKE_SHORT_PROTEGE_LIST', CHANGE_PROTEGE_LIST_SEARCH = 'CHANGE_PROTEGE_LIST_SEARCH', CHANGE_PROTEGE_LIST_PAGINATION = 'CHANGE_PROTEGE_LIST_PAGINATION' ,CHANGE_LEADER_LIST_SEARCH = 'CHANGE_LEADER_LIST_SEARCH', MAKE_SHORT_LEADER_LIST = 'MAKE_SHORT_LEADER_LIST', CHANGE_LEADER_LIST_PAGINATION = 'CHANGE_LEADER_LIST_PAGINATION';
 
 let makeShort = (entitys, pagination, search, users) => {
     let searchEntitys = [], shortEntitys = [];
@@ -99,6 +99,7 @@ let initialState = {
     mentoringHr: [],
     mentoringMentor: [],
     mentoringProtege: [],
+    mentoringLeader: [],
     mentorSearch: {},
     protegeSearch: {},
     mentorId: null,
@@ -133,6 +134,16 @@ let initialState = {
             isLastPage: false,
         },
     },
+    leaderList: {
+        shortEntitys: [],
+        search: '',
+        pagination: {
+            count: 3,
+            currentPage: 1,
+            pages: 0,
+            isLastPage: false,
+        },
+    },
 };
 
 // Запросы к API
@@ -148,11 +159,12 @@ export let showComponentsChangeActionCreator = component => ({
     component,
 });
 
-export let mentoringSetActionCreator = (mentoringHr, mentoringMentor, mentoringProtege) => ({
+export let mentoringSetActionCreator = (mentoringHr, mentoringMentor, mentoringProtege, mentoringLeader) => ({
     type: MENTORING_SET,
     mentoringHr,
     mentoringMentor,
     mentoringProtege,
+    mentoringLeader,
 });
 
 export let showComponentsSetActionCreator = obj => ({
@@ -260,6 +272,20 @@ export let makeShortProtegeListActionCreator = () => {
     };
 };
 
+export let makeShortLeaderListActionCreator = () => {
+    let state = window.store.getState();
+    let entitys = state.mentorerPageState.mentoringLeader;
+    let pagination = state.mentorerPageState.leaderList.pagination;
+    let search = state.mentorerPageState.leaderList.search;
+    let users = state.usersState.users;
+    let makeShortLeaderListResult = makeShort(entitys, pagination, search, users);
+
+    return {
+        type: MAKE_SHORT_LEADER_LIST,
+        makeShortLeaderListResult,
+    };
+};
+
 export let changeHrListSearchActionCreator = search => ({
     type: CHANGE_HR_LIST_SEARCH,
     search,
@@ -294,6 +320,16 @@ export let changeProtegeListPaginationActionCreator = page => ({
     page,
 });
 
+export let changeLeaderListSearchActionCreator = search => ({
+    type: CHANGE_LEADER_LIST_SEARCH,
+    search,
+});
+
+export let changeLeaderListPaginationActionCreator = page => ({
+    type: CHANGE_LEADER_LIST_PAGINATION,
+    page,
+});
+
 // Редуктор
 
 let mentorerPageReducer = (state = initialState, action) => {
@@ -315,6 +351,7 @@ let mentorerPageReducer = (state = initialState, action) => {
                 mentoringHr: action.mentoringHr,
                 mentoringMentor: action.mentoringMentor,
                 mentoringProtege: action.mentoringProtege,
+                mentoringLeader: action.mentoringLeader,
             };
         case SHOW_COMPONENTS_SET:
             return {
@@ -385,6 +422,19 @@ let mentorerPageReducer = (state = initialState, action) => {
                     },
                 },
             };
+        case MAKE_SHORT_LEADER_LIST:
+            return {
+                ...state,
+                leaderList: {
+                    ...state.leaderList,
+                    shortEntitys: action.makeShortLeaderListResult.shortEntitys,
+                    pagination: {
+                        ...state.leaderList.pagination,
+                        currentPage: action.makeShortLeaderListResult.currentPage,
+                        pages: action.makeShortLeaderListResult.pages,
+                    },
+                },
+            };
         case CHANGE_HR_LIST_SEARCH:
             return {
                 ...state,
@@ -438,6 +488,25 @@ let mentorerPageReducer = (state = initialState, action) => {
                     ...state.protegeList,
                     pagination: {
                         ...state.protegeList.pagination,
+                        currentPage: action.page,
+                    },
+                },
+            };
+        case CHANGE_LEADER_LIST_SEARCH:
+            return {
+                ...state,
+                leaderList: {
+                    ...state.leaderList,
+                    search: action.search,
+                },
+            };
+        case CHANGE_LEADER_LIST_PAGINATION:
+            return {
+                ...state,
+                leaderList: {
+                    ...state.leaderList,
+                    pagination: {
+                        ...state.leaderList.pagination,
                         currentPage: action.page,
                     },
                 },

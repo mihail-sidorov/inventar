@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { makeShortHrListActionCreator, makeShortMentorListActionCreator, makeShortProtegeListActionCreator, mentoringSetActionCreator, resetMentorerPageStateActionCreator, showComponentsChangeActionCreator, showComponentsSetActionCreator } from '../../../redux/mentorerPageReducer';
+import { makeShortHrListActionCreator, makeShortLeaderListActionCreator, makeShortMentorListActionCreator, makeShortProtegeListActionCreator, mentoringSetActionCreator, resetMentorerPageStateActionCreator, showComponentsChangeActionCreator, showComponentsSetActionCreator } from '../../../redux/mentorerPageReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
 import MentorerPage from './MentorerPage';
 
@@ -11,8 +11,8 @@ let MentorerPageContainer = connect(
         showComponentsChange: component => {
             dispatch(showComponentsChangeActionCreator(component));
         },
-        mentoringSet: (mentoringHr, mentoringMentor, mentoringProtege) => {
-            dispatch(mentoringSetActionCreator(mentoringHr, mentoringMentor, mentoringProtege));
+        mentoringSet: (mentoringHr, mentoringMentor, mentoringProtege, mentoringLeader) => {
+            dispatch(mentoringSetActionCreator(mentoringHr, mentoringMentor, mentoringProtege, mentoringLeader));
         },
         usersSet: data => {
             dispatch(usersGetActionCreator(data));
@@ -31,6 +31,9 @@ let MentorerPageContainer = connect(
         },
         makeShortProtegeList: () => {
             dispatch(makeShortProtegeListActionCreator());
+        },
+        makeShortLeaderList: () => {
+            dispatch(makeShortLeaderListActionCreator());
         },
     })
 )(MentorerPage);

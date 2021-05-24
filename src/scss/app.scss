@@ -2240,7 +2240,7 @@ html, body {
             }
         }
 
-        .mentor, .protege {
+        .mentor, .protege, .leader {
 
             flex-grow: 1;
             display: flex;
@@ -2311,6 +2311,31 @@ html, body {
                 .pagination {
 
                     justify-content: center;
+                }
+            }
+        }
+
+        .leader {
+
+            &__list {
+
+                table {
+            
+                    thead {
+            
+                        th {
+            
+                            &:first-child {
+
+                                border-radius: 20px 0 0 0;
+                            }
+
+                            &:last-child {
+
+                                border-radius: 0 20px 0 0;
+                            }
+                        }
+                    }
                 }
             }
         }
