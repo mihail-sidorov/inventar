@@ -1,7 +1,7 @@
 import Axios from "../config/axiosConfig";
 
 const
-    INIT_USER_RIGHTS = 'INIT_USER_RIGHTS',
+    SET_PLAN_STATE = 'SET_PLAN_STATE',
     RESET_PLAN_STATE = 'RESET_PLAN_STATE',
     BLOCK_TITLE_EDIT = 'BLOCK_TITLE_EDIT',
     SECTION_TITLE_EDIT = 'SECTION_TITLE_EDIT',
@@ -22,10 +22,12 @@ let initialState = {
 
 export let userRights = id => Axios.get(`/userRights?id=${id}`);
 
+export let planSave = (id, plan) => Axios.patch('/mentoring', {id, plan});
+
 // Создание Action Creators
 
-export let initUserRightsActionCreator = data => ({
-    type: INIT_USER_RIGHTS,
+export let setPlanStateActionCreator = data => ({
+    type: SET_PLAN_STATE,
     data,
 });
 
@@ -71,7 +73,7 @@ export let delPlanSectionActionCreator = (indexBlock, indexSection) => ({
 let planReducer = (state = initialState, action) => {
     let newState = {...state};
     switch (action.type) {
-        case INIT_USER_RIGHTS:
+        case SET_PLAN_STATE:
             return {
                 ...state,
                 ...action.data,
@@ -101,12 +103,14 @@ let planReducer = (state = initialState, action) => {
             newState.plan.blocks.push(
                 {
                     title: '',
-                    sections: [],
                 }
             );
             return newState;
         case ADD_PLAN_SECTION:
             newState.plan = {...newState.plan};
+            if (newState.plan.blocks[action.indexBlock].sections === undefined) {
+                newState.plan.blocks[action.indexBlock].sections = [];
+            }
             newState.plan.blocks[action.indexBlock].sections.push(
                 {
                     title: '',
@@ -123,6 +127,9 @@ let planReducer = (state = initialState, action) => {
         case DEL_PLAN_SECTION:
             newState.plan = {...newState.plan};
             newState.plan.blocks[action.indexBlock].sections.splice(action.indexSection, 1);
+            if (newState.plan.blocks[action.indexBlock].sections.length === 0) {
+                delete newState.plan.blocks[action.indexBlock].sections;
+            }
             return newState;
         default:
             return state;

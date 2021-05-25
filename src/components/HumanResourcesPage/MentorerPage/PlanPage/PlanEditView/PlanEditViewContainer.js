@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addPlanBlockActionCreator, addPlanSectionActionCreator, blockTitleEditActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, sectionTitleEditActionCreator } from '../../../../../redux/planReducer';
+import { addPlanBlockActionCreator, addPlanSectionActionCreator, blockTitleEditActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, planSave, sectionTitleEditActionCreator } from '../../../../../redux/planReducer';
 import PlanEditView from './PlanEditView';
 
 let PlanEditViewContainer = connect(
@@ -19,13 +19,19 @@ let PlanEditViewContainer = connect(
         },
         addPlanSection: indexBlock => {
             dispatch(addPlanSectionActionCreator(indexBlock));
-            alert('Добавлен новый раздел!');
         },
         delPlanBlock: index => {
             dispatch(delPlanBlockActionCreator(index));
         },
         delPlanSection: (indexBlock, indexSection) => {
             dispatch(delPlanSectionActionCreator(indexBlock, indexSection));
+        },
+        planSave: (id, plan) => {
+            planSave(id, plan)
+                .then(() => {
+                    alert('План сохранен!');
+                })
+                .catch(console.log);
         },
     })
 )(PlanEditView);

@@ -1,13 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
+import { withRouter } from 'react-router';
 
 let PlanEditView = props => {
     let plan = props.plan;
-    let blocks = [];
     if (plan !== null) {
-        plan.blocks.forEach((block, index) => {
+        let blocks = [];
+        plan.blocks?.forEach((block, index) => {
             let sections = [];
-            block.sections.forEach((section, index) => {
+            block.sections?.forEach((section, index) => {
                 section = (
                     <div className="plan-edit-view__section" index={index} key={index}>
                         <input className="plan-edit-view__section-input" type="text" value={section.title} placeholder="Заголовок раздела" onChange={e => {
@@ -64,8 +65,12 @@ let PlanEditView = props => {
                 }}></div>
                 {blocks}
                 <div className="plan-edit-view__btns">
-                    <button className="plan-edit-view__save">Сохранить</button>
-                    <button className="plan-edit-view__close">Закрыть</button>
+                    <button className="plan-edit-view__save" onClick={() => {
+                        props.planSave(props.match.params.planId, props.plan);
+                    }}>Сохранить</button>
+                    <button className="plan-edit-view__close" onClick={() => {
+                        props.history.push('/mentorer');
+                    }}>Закрыть</button>
                 </div>
             </div>
         );
@@ -83,4 +88,4 @@ let PlanEditView = props => {
     return plan;
 };
 
-export default PlanEditView;
+export default withRouter(PlanEditView);

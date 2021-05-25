@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { initUserRightsActionCreator, resetPlanStateActionCreator } from '../../../../redux/planReducer';
+import { setPlanStateActionCreator, resetPlanStateActionCreator } from '../../../../redux/planReducer';
 import PlanPage from './PlanPage';
 
 let PlanPageContainer = connect(
@@ -9,8 +9,8 @@ let PlanPageContainer = connect(
         connectionStatus: state.planState.connectionStatus,
     }),
     dispatch => ({
-        initUserRights: data => {
-            dispatch(initUserRightsActionCreator(data));
+        setPlanState: data => {
+            dispatch(setPlanStateActionCreator(data));
         },
         resetPlanState: () => {
             dispatch(resetPlanStateActionCreator());

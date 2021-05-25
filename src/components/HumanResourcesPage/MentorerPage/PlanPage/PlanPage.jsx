@@ -29,6 +29,7 @@ let PlanPage = props => {
                 userType = 'leader';
             }
 
+            let plan;
             for (let connection of mentoring) {
                 if (connection.id == props.match.params.planId) {
                     connectionStatus = connection.status;
@@ -38,32 +39,39 @@ let PlanPage = props => {
                     if (connection.protege_id == userId) {
                         userType = 'protege';
                     }
+                    plan = connection.plan;
                     break;
                 }
             }
 
-            props.initUserRights({
+            props.setPlanState({
                 role,
                 userId,
                 userType,
                 connectionStatus,
+                plan,
             });
-        })();
+        })().catch(console.log);
         return () => {
             props.resetPlanState();
         };
     }, []);
 
     let planView = null;
-    if (props.role === 'hr' || props.userType === 'leader' || props.userType === 'protege') planView = <PlanReadViewContainer />;
-    if (props.userType === 'mentor') planView = <PlanEditViewContainer />;
-    if (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed') planView = <PlanReadViewContainer />;
-    if (props.connectionStatus === 'unconfirmed') planView = null;
+    if (props.role === 'hr'
+    || (props.userType === 'leader' && (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed'))
+    || (props.userType === 'protege' && props.connectionStatus === 'planconfirmed')
+    || (props.userType === 'mentor' && (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed'))) {
+        planView = <PlanReadViewContainer />;
+    }
+    if (props.userType === 'mentor' && (props.connectionStatus === 'noplan' || props.connectionStatus === 'plancreated')) {
+        planView = <PlanEditViewContainer />;
+    }
 
     return (
         <div className="plan-page">
             <div className="plan-page__wrapper section-2">
-                <Route path="/mentorer/:page" render={() => (
+                <Route exact path="/mentorer/:page/:planId" render={() => (
                     <InnerPageContainer>
                         <NavLink className="plan-page__back-to-human-resources btn" to="/mentorer">Вернуться в наставничество</NavLink>
                         <div className="plan-page__title">План наставничества</div>

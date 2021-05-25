@@ -92,7 +92,7 @@ let MentorerPageClassComponent = class extends React.Component {
                 mentoringHr = mentoring.data;
             }
             for (let el of mentoring.data) {
-                if (el.mentor_id === authData.data.userId && el.status === 'noplan') {
+                if (el.mentor_id === authData.data.userId && (el.status === 'noplan' || el.status === 'plancreated' || el.status === 'sentformoderation' || el.status === 'planconfirmed')) {
                     showComponents.mentor = false;
                     mentoringMentor.push(el);
                 }
@@ -104,7 +104,7 @@ let MentorerPageClassComponent = class extends React.Component {
                     let objIn = {};
                     for (let id in users.data) {
                         if (users.data[id].dep_loc_id === users.data[authData.data.userId].dep_loc_id) {
-                            if ((el.mentor_id == id || el.protege_id == id) && el.status === 'sentformoderation') {
+                            if ((el.mentor_id == id || el.protege_id == id) && (el.status === 'sentformoderation' || el.status === 'planconfirmed')) {
                                 if (!objIn[el.id]) {
                                     mentoringLeader.push(el);
                                     objIn[el.id] = true;
@@ -129,7 +129,7 @@ let MentorerPageClassComponent = class extends React.Component {
             this.props.makeShortMentorList();
             this.props.makeShortProtegeList();
             this.props.makeShortLeaderList();
-        })();
+        })().catch(console.log);
     }
 
     componentDidMount() {
