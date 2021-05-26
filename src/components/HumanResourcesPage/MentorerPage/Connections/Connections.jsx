@@ -34,11 +34,18 @@ let Connections = props => {
     let hrListArrIndex = 1;
     for (let shortEntity of props.hrList.shortEntitys) {
         hrListArr.push(
-            <tr key={hrListArrIndex} onClick={() => {
-                props.history.push(`/mentorer/plan/${shortEntity.id}`);
-            }}>
+            <tr key={hrListArrIndex}>
                 <td>{props.users[shortEntity.mentor_id]?.full_name}</td>
                 <td>{props.users[shortEntity.protege_id]?.full_name}</td>
+                <td>
+                    <button
+                        onClick={() => {
+                            props.history.push(`/mentorer/plan/${shortEntity.id}`);
+                        }}
+                    >
+                        Открыть
+                    </button>
+                </td>
             </tr>
         );
         hrListArrIndex++;
@@ -101,6 +108,7 @@ let Connections = props => {
                         <tr>
                             <th>Наставник</th>
                             <th>Стажер</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

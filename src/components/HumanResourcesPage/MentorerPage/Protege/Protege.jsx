@@ -8,10 +8,17 @@ let Protege = props => {
     let protegeListArrIndex = 1;
     for (let shortEntity of props.protegeList.shortEntitys) {
         protegeListArr.push(
-            <tr key={protegeListArrIndex} onClick={() => {
-                props.history.push(`/mentorer/plan/${shortEntity.id}`);
-            }}>
+            <tr key={protegeListArrIndex}>
                 <td>{props.users[shortEntity.mentor_id]?.full_name}</td>
+                <td>
+                    <button
+                        onClick={() => {
+                            props.history.push(`/mentorer/plan/${shortEntity.id}`);
+                        }}
+                    >
+                        Открыть
+                    </button>
+                </td>
             </tr>
         );
         protegeListArrIndex++;
@@ -27,6 +34,7 @@ let Protege = props => {
                     <thead>
                         <tr>
                             <th>Наставник</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

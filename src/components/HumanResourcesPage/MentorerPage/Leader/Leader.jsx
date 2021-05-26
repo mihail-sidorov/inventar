@@ -10,11 +10,18 @@ let Leader = props => {
     let leaderListArrIndex = 1;
     for (let shortEntity of props.leaderList.shortEntitys) {
         leaderListArr.push(
-            <tr key={leaderListArrIndex} onClick={() => {
-                props.history.push(`/mentorer/plan/${shortEntity.id}`);
-            }}>
+            <tr key={leaderListArrIndex}>
                 <td>{props.users[shortEntity.mentor_id]?.full_name}</td>
                 <td>{props.users[shortEntity.protege_id]?.full_name}</td>
+                <td>
+                    <button
+                        onClick={() => {
+                            props.history.push(`/mentorer/plan/${shortEntity.id}`);
+                        }}
+                    >
+                        Открыть
+                    </button>
+                </td>
             </tr>
         );
         leaderListArrIndex++;
@@ -31,6 +38,7 @@ let Leader = props => {
                         <tr>
                             <th>Наставник</th>
                             <th>Стажер</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

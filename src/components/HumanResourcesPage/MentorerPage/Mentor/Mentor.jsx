@@ -2,16 +2,36 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import PaginationContainer from './Pagination/PaginationContainer';
 import SearchContainer from './Search/SearchContainer';
+import $ from 'jquery';
 
 let Mentor = props => {
     let mentorListArr = [];
     let mentorListArrIndex = 1;
     for (let shortEntity of props.mentorList.shortEntitys) {
         mentorListArr.push(
-            <tr key={mentorListArrIndex} onClick={() => {
-                props.history.push(`/mentorer/plan/${shortEntity.id}`);
-            }}>
-                <td>{props.users[shortEntity.protege_id]?.full_name}</td>
+            <tr key={mentorListArrIndex} id={shortEntity.id}>
+                <td>
+                    {props.users[shortEntity.protege_id]?.full_name}
+                </td>
+                <td>
+                    <button
+                        onClick={() => {
+                            props.history.push(`/mentorer/plan/${shortEntity.id}`);
+                        }}
+                    >
+                        Открыть
+                    </button>
+                    {
+                        shortEntity.status === 'plancreated' &&
+                        <button
+                            onClick={e => {
+                                props.planSend($(e.target).closest('tr').attr('id'));
+                            }}
+                        >
+                            Отправить
+                        </button>
+                    }
+                </td>
             </tr>
         );
         mentorListArrIndex++;
@@ -27,6 +47,7 @@ let Mentor = props => {
                     <thead>
                         <tr>
                             <th>Стажер</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

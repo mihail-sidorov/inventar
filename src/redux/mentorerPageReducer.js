@@ -2,7 +2,7 @@ import Axios from "../config/axiosConfig";
 import { countPages } from "../config/globals";
 import isEmptyObject from "../functions/isEmptyObject";
 
-const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE', MAKE_SHORT_MENTOR_LIST = 'MAKE_SHORT_MENTOR_LIST', CHANGE_MENTOR_LIST_SEARCH = 'CHANGE_MENTOR_LIST_SEARCH', CHANGE_MENTOR_LIST_PAGINATION = 'CHANGE_MENTOR_LIST_PAGINATION', MAKE_SHORT_PROTEGE_LIST = 'MAKE_SHORT_PROTEGE_LIST', CHANGE_PROTEGE_LIST_SEARCH = 'CHANGE_PROTEGE_LIST_SEARCH', CHANGE_PROTEGE_LIST_PAGINATION = 'CHANGE_PROTEGE_LIST_PAGINATION' ,CHANGE_LEADER_LIST_SEARCH = 'CHANGE_LEADER_LIST_SEARCH', MAKE_SHORT_LEADER_LIST = 'MAKE_SHORT_LEADER_LIST', CHANGE_LEADER_LIST_PAGINATION = 'CHANGE_LEADER_LIST_PAGINATION';
+const SHOW_COMPONENT_CHANGE = 'SHOW_COMPONENT_CHANGE', MENTORING_SET = 'MENTORING_SET', SHOW_COMPONENTS_SET = 'SHOW_COMPONENTS_SET', MENTOR_SEARCH_SET = 'MENTOR_SEARCH_SET', PROTEGE_SEARCH_SET = 'PROTEGE_SEARCH_SET', MENTOR_ID_SET = 'MENTOR_ID_SET', PROTEGE_ID_SET = 'PROTEGE_ID_SET', RESET_MENTORER_PAGE_STATE = 'RESET_MENTORER_PAGE_STATE', MAKE_SHORT_HR_LIST = 'MAKE_SHORT_HR_LIST', CHANGE_HR_LIST_SEARCH = 'CHANGE_HR_LIST_SEARCH', CHANGE_HR_LIST_PAGINATION = 'CHANGE_HR_LIST_PAGINATION', SET_HR_LIST_IS_LAST_PAGE = 'SET_HR_LIST_IS_LAST_PAGE', MAKE_SHORT_MENTOR_LIST = 'MAKE_SHORT_MENTOR_LIST', CHANGE_MENTOR_LIST_SEARCH = 'CHANGE_MENTOR_LIST_SEARCH', CHANGE_MENTOR_LIST_PAGINATION = 'CHANGE_MENTOR_LIST_PAGINATION', MAKE_SHORT_PROTEGE_LIST = 'MAKE_SHORT_PROTEGE_LIST', CHANGE_PROTEGE_LIST_SEARCH = 'CHANGE_PROTEGE_LIST_SEARCH', CHANGE_PROTEGE_LIST_PAGINATION = 'CHANGE_PROTEGE_LIST_PAGINATION' ,CHANGE_LEADER_LIST_SEARCH = 'CHANGE_LEADER_LIST_SEARCH', MAKE_SHORT_LEADER_LIST = 'MAKE_SHORT_LEADER_LIST', CHANGE_LEADER_LIST_PAGINATION = 'CHANGE_LEADER_LIST_PAGINATION', MENTORING_HR_UPDATE = 'MENTORING_HR_UPDATE', MENTORING_MENTOR_UPDATE = 'MENTORING_MENTOR_UPDATE', MENTORING_PROTEGE_UPDATE = 'MENTORING_PROTEGE_UPDATE', MENTORING_LEADER_UPDATE = 'MENTORING_LEADER_UPDATE';
 
 let makeShort = (entitys, pagination, search, users) => {
     let searchEntitys = [], shortEntitys = [];
@@ -330,6 +330,26 @@ export let changeLeaderListPaginationActionCreator = page => ({
     page,
 });
 
+export let mentoringHrUpdateActionCreator = obj => ({
+    type: MENTORING_HR_UPDATE,
+    obj,
+});
+
+export let mentoringMentorUpdateActionCreator = obj => ({
+    type: MENTORING_MENTOR_UPDATE,
+    obj,
+});
+
+export let mentoringProtegeUpdateActionCreator = obj => ({
+    type: MENTORING_PROTEGE_UPDATE,
+    obj,
+});
+
+export let mentoringLeaderUpdateActionCreator = obj => ({
+    type: MENTORING_LEADER_UPDATE,
+    obj,
+});
+
 // Редуктор
 
 let mentorerPageReducer = (state = initialState, action) => {
@@ -521,6 +541,54 @@ let mentorerPageReducer = (state = initialState, action) => {
                         isLastPage: true,
                     },
                 },
+            };
+        case MENTORING_HR_UPDATE:
+            let mentoringHr = [...state.mentoringHr];
+            for (let index = 0; index < mentoringHr.length; index++) {
+                if (mentoringHr[index].id === action.obj.id) {
+                    mentoringHr.splice(index, 1, action.obj);
+                    break;
+                }
+            }
+            return {
+                ...state,
+                mentoringHr,
+            };
+        case MENTORING_MENTOR_UPDATE:
+            let mentoringMentor = [...state.mentoringMentor];
+            for (let index = 0; index < mentoringMentor.length; index++) {
+                if (mentoringMentor[index].id === action.obj.id) {
+                    mentoringMentor.splice(index, 1, action.obj);
+                    break;
+                }
+            }
+            return {
+                ...state,
+                mentoringMentor,
+            };
+        case MENTORING_PROTEGE_UPDATE:
+            let mentoringProtege = [...state.mentoringProtege];
+            for (let index = 0; index < mentoringProtege.length; index++) {
+                if (mentoringProtege[index].id === action.obj.id) {
+                    mentoringProtege.splice(index, 1, action.obj);
+                    break;
+                }
+            }
+            return {
+                ...state,
+                mentoringProtege,
+            };
+        case MENTORING_LEADER_UPDATE:
+            let mentoringLeader = [...state.mentoringLeader];
+            for (let index = 0; index < mentoringLeader.length; index++) {
+                if (mentoringLeader[index].id === action.obj.id) {
+                    mentoringLeader.splice(index, 1, action.obj);
+                    break;
+                }
+            }
+            return {
+                ...state,
+                mentoringLeader,
             };
         default:
             return state;

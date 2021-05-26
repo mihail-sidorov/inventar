@@ -24,6 +24,8 @@ export let userRights = id => Axios.get(`/userRights?id=${id}`);
 
 export let planSave = (id, plan) => Axios.patch('/mentoring', {id, plan});
 
+export let planSend = id => Axios.put('/mentoring', {id});
+
 // Создание Action Creators
 
 export let setPlanStateActionCreator = data => ({
