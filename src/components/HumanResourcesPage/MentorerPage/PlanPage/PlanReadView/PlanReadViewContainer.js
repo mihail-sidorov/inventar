@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 import PlanReadView from './PlanReadView';
 
 let PlanReadViewContainer = connect(
-    state => ({}),
+    state => ({
+        plan: state.planState.plan,
+    }),
     dispatch => ({})
 )(PlanReadView);
 

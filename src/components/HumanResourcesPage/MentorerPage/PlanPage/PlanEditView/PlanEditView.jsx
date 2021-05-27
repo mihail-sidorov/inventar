@@ -66,8 +66,8 @@ let PlanEditView = props => {
                 {blocks}
                 <div className="plan-edit-view__btns">
                     <button className="plan-edit-view__save" onClick={() => {
-                        props.planSave(props.match.params.planId, props.plan);
-                    }}>Сохранить</button>
+                        props.planSave(props.match.params.planId, props.plan, props.connectionStatus);
+                    }}>{props.connectionStatus === 'noplan' ? 'Создать план' : 'Сохранить'}</button>
                     <button className="plan-edit-view__close" onClick={() => {
                         props.history.push('/mentorer');
                     }}>Закрыть</button>

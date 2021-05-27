@@ -8,7 +8,8 @@ const
     ADD_PLAN_BLOCK = 'ADD_PLAN_BLOCK',
     ADD_PLAN_SECTION = 'ADD_PLAN_SECTION',
     DEL_PLAN_BLOCK = 'DEL_PLAN_BLOCK',
-    DEL_PLAN_SECTION = 'DEL_PLAN_SECTION';
+    DEL_PLAN_SECTION = 'DEL_PLAN_SECTION',
+    CONNECTION_STATUS_CHANGE = 'CONNECTION_STATUS_CHANGE';
 
 let initialState = {
     role: null,
@@ -68,6 +69,11 @@ export let delPlanSectionActionCreator = (indexBlock, indexSection) => ({
     type: DEL_PLAN_SECTION,
     indexBlock,
     indexSection,
+});
+
+export let connectionStatusChangeActionCreator = status => ({
+    type: CONNECTION_STATUS_CHANGE,
+    status,
 });
 
 // Редуктор
@@ -133,6 +139,11 @@ let planReducer = (state = initialState, action) => {
                 delete newState.plan.blocks[action.indexBlock].sections;
             }
             return newState;
+        case CONNECTION_STATUS_CHANGE:
+            return {
+                ...state,
+                connectionStatus: action.status,
+            };
         default:
             return state;
     }
