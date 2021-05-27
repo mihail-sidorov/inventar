@@ -10,6 +10,7 @@ let Protege = props => {
         protegeListArr.push(
             <tr key={protegeListArrIndex}>
                 <td>{props.users[shortEntity.mentor_id]?.full_name}</td>
+                <td>{shortEntity.status_rus}</td>
                 <td>
                     <button
                         onClick={() => {
@@ -34,6 +35,7 @@ let Protege = props => {
                     <thead>
                         <tr>
                             <th>Наставник</th>
+                            <th>Статус</th>
                             <th></th>
                         </tr>
                     </thead>

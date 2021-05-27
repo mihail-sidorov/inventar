@@ -24,6 +24,9 @@ let Events = (props) => {
             case 'mentoring':
                 Event = MentoringEventContainer(id);
                 break;
+            case 'acceptPlan':
+                Event = MentoringEventContainer(id);
+                break;
             default:
                 break;
         }

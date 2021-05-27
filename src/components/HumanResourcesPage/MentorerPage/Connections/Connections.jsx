@@ -37,6 +37,7 @@ let Connections = props => {
             <tr key={hrListArrIndex}>
                 <td>{props.users[shortEntity.mentor_id]?.full_name}</td>
                 <td>{props.users[shortEntity.protege_id]?.full_name}</td>
+                <td>{shortEntity.status_rus}</td>
                 <td>
                     <button
                         onClick={() => {
@@ -108,6 +109,7 @@ let Connections = props => {
                         <tr>
                             <th>Наставник</th>
                             <th>Стажер</th>
+                            <th>Статус</th>
                             <th></th>
                         </tr>
                     </thead>

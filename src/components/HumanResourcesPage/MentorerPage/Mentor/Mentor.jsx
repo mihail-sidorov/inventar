@@ -13,6 +13,7 @@ let Mentor = props => {
                 <td>
                     {props.users[shortEntity.protege_id]?.full_name}
                 </td>
+                <td>{shortEntity.status_rus}</td>
                 <td>
                     <button
                         onClick={() => {
@@ -47,6 +48,7 @@ let Mentor = props => {
                     <thead>
                         <tr>
                             <th>Стажер</th>
+                            <th>Статус</th>
                             <th></th>
                         </tr>
                     </thead>

@@ -21,6 +21,9 @@ let EventPageCard = (props) => {
             case 'mentoring':
                 eventByType = <EventPageCardMentoringContainer eventId={props.match.params.eventId} />;
                 break;
+            case 'acceptPlan':
+                eventByType = <EventPageCardMentoringContainer eventId={props.match.params.eventId} />;
+                break;
             default:
                 break;
         }
