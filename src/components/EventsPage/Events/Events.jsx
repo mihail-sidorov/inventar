@@ -63,15 +63,13 @@ let Events = (props) => {
 let EventsClassComponent = class extends React.Component {
     componentDidMount() {
         let state = window.store.getState();
+        let promiseArr = [];
 
-        if (isEmptyObject(state.eventsState.events) || isEmptyObject(state.usersState.users)
+        promiseArr.push(eventsGet());
+
+        if (isEmptyObject(state.usersState.users)
         || isEmptyObject(state.devicesState.devices) || isEmptyObject(state.brandsState.brands)
         || isEmptyObject(state.categoriesState.categories) || isEmptyObject(state.mentoringConnectionsState.mentoringConnections)) {
-            let promiseArr = [];
-
-            if (isEmptyObject(state.eventsState.events)) {
-                promiseArr.push(eventsGet());
-            }
             if (isEmptyObject(state.usersState.users)) {
                 promiseArr.push(usersGet());
             }
@@ -87,27 +85,23 @@ let EventsClassComponent = class extends React.Component {
             if (isEmptyObject(state.mentoringConnectionsState.mentoringConnections)) {
                 promiseArr.push(MentoringConnectionsGet());
             }
-
-            Promise.all(promiseArr)
-                .then((response) => {
-                    response.forEach((value) => {
-                        if (value.config.url === 'events') this.props.onEventsGet(value.data);
-                        if (value.config.url === 'users') this.props.onUsersGet(value.data);
-                        if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
-                        if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
-                        if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
-                        if (value.config.url === 'mentoring') this.props.mentoringConnectionsSet(value.data);
-                    });
-
-                    this.props.onMakeShortEvents();
-                })
-                .catch((error) => {
-                    console.log(error);
+        }
+        Promise.all(promiseArr)
+            .then((response) => {
+                response.forEach((value) => {
+                    if (value.config.url === 'events') this.props.onEventsGet(value.data);
+                    if (value.config.url === 'users') this.props.onUsersGet(value.data);
+                    if (value.config.url === 'devices') this.props.onDevicesGet(value.data);
+                    if (value.config.url === 'brands') this.props.onBrandsGet(value.data);
+                    if (value.config.url === 'categories') this.props.onCategoriesGet(value.data);
+                    if (value.config.url === 'mentoring') this.props.mentoringConnectionsSet(value.data);
                 });
-        }
-        else {
-            this.props.onMakeShortEvents();
-        }
+
+                this.props.onMakeShortEvents();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
