@@ -9,7 +9,23 @@ const
     ADD_PLAN_SECTION = 'ADD_PLAN_SECTION',
     DEL_PLAN_BLOCK = 'DEL_PLAN_BLOCK',
     DEL_PLAN_SECTION = 'DEL_PLAN_SECTION',
-    CONNECTION_STATUS_CHANGE = 'CONNECTION_STATUS_CHANGE';
+    CONNECTION_STATUS_CHANGE = 'CONNECTION_STATUS_CHANGE',
+    ADD_TEST = 'ADD_TEST',
+    ADD_TEST_QUESTION = 'ADD_TEST_QUESTION',
+    TEST_TITLE_CHANGE = 'TEST_TITLE_CHANGE',
+    TEST_QUESTION_TITLE_CHANGE = 'TEST_QUESTION_TITLE_CHANGE',
+    DEL_TEST_QUESTION = 'DEL_TEST_QUESTION',
+    DEL_TEST = 'DEL_TEST',
+    TEST_QUESTION_ANSWER_TITLE_CHANGE = 'TEST_QUESTION_ANSWER_TITLE_CHANGE',
+    TEST_QUESTION_ANSWER_SET_RIGHT = 'TEST_QUESTION_ANSWER_SET_RIGHT',
+    ADD_PLAN_TEST = 'ADD_PLAN_TEST',
+    ADD_PLAN_TEST_QUESTION = 'ADD_PLAN_TEST_QUESTION',
+    PLAN_TEST_TITLE_CHANGE = 'PLAN_TEST_TITLE_CHANGE',
+    PLAN_TEST_QUESTION_TITLE_CHANGE = 'PLAN_TEST_QUESTION_TITLE_CHANGE',
+    DEL_PLAN_TEST_QUESTION = 'DEL_PLAN_TEST_QUESTION',
+    DEL_PLAN_TEST = 'DEL_PLAN_TEST',
+    PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE = 'PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE',
+    PLAN_TEST_QUESTION_ANSWER_SET_RIGHT = 'PLAN_TEST_QUESTION_ANSWER_SET_RIGHT';
 
 let initialState = {
     role: null,
@@ -74,6 +90,101 @@ export let delPlanSectionActionCreator = (indexBlock, indexSection) => ({
 export let connectionStatusChangeActionCreator = status => ({
     type: CONNECTION_STATUS_CHANGE,
     status,
+});
+
+export let addTestActionCreator = blockIndex => ({
+    type: ADD_TEST,
+    blockIndex,
+});
+
+export let addTestQuestionActionCreator = blockIndex => ({
+    type: ADD_TEST_QUESTION,
+    blockIndex,
+});
+
+export let testTitleChangeActionCreator = (value, blockIndex) => ({
+    type: TEST_TITLE_CHANGE,
+    value,
+    blockIndex,
+});
+
+export let testQuestionTitleChangeActionCreator = (value, blockIndex, index) => ({
+    type: TEST_QUESTION_TITLE_CHANGE,
+    value,
+    blockIndex,
+    index,
+});
+
+export let delTestQuestionActionCreator = (blockIndex, index) => ({
+    type: DEL_TEST_QUESTION,
+    blockIndex,
+    index,
+});
+
+export let delTestActionCreator = blockIndex => ({
+    type: DEL_TEST,
+    blockIndex,
+});
+
+export let testQuestionAnswerTitleChangeActionCreator = (value, bIndex, qIndex, aIndex) => ({
+    type: TEST_QUESTION_ANSWER_TITLE_CHANGE,
+    value,
+    bIndex,
+    qIndex,
+    aIndex,
+});
+
+export let testQuestionAnswerSetRightActionCreator = (bIndex, qIndex, aIndex) => ({
+    type: TEST_QUESTION_ANSWER_SET_RIGHT,
+    bIndex,
+    qIndex,
+    aIndex,
+});
+
+
+
+
+
+
+export let addPlanTestActionCreator = () => ({
+    type: ADD_PLAN_TEST,
+});
+
+export let addPlanTestQuestionActionCreator = () => ({
+    type: ADD_PLAN_TEST_QUESTION,
+});
+
+export let planTestTitleChangeActionCreator = value => ({
+    type: PLAN_TEST_TITLE_CHANGE,
+    value,
+});
+
+export let planTestQuestionTitleChangeActionCreator = (value, qIndex) => ({
+    type: PLAN_TEST_QUESTION_TITLE_CHANGE,
+    value,
+    qIndex,
+});
+
+export let delPlanTestQuestionActionCreator = index => ({
+    type: DEL_PLAN_TEST_QUESTION,
+    index,
+});
+
+export let delPlanTestActionCreator = () => ({
+    type: DEL_PLAN_TEST,
+});
+
+export let planTestQuestionAnswerTitleChangeActionCreator = (value, qIndex, aIndex) => ({
+    type: PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE,
+    value,
+    qIndex,
+    aIndex,
+});
+
+export let planTestQuestionAnswerSetRightActionCreator = (qIndex, aIndex) => ({
+    type: PLAN_TEST_QUESTION_ANSWER_SET_RIGHT,
+    qIndex,
+    aIndex,
 });
 
 // Редуктор
@@ -144,6 +255,148 @@ let planReducer = (state = initialState, action) => {
                 ...state,
                 connectionStatus: action.status,
             };
+        case ADD_TEST:
+            newState.plan = {...newState.plan};
+            if (newState.plan.blocks[action.blockIndex].test === undefined ) {
+                newState.plan.blocks[action.blockIndex].test = {};
+                newState.plan.blocks[action.blockIndex].test.status = 'uncomplete';
+                newState.plan.blocks[action.blockIndex].test.title = '';
+            }
+            return newState;
+        case ADD_TEST_QUESTION:
+            if (newState.plan.blocks[action.blockIndex].test.questions === undefined) {
+                newState.plan.blocks[action.blockIndex].test.questions = [];
+            }
+            newState.plan.blocks[action.blockIndex].test.questions.push(
+                {
+                    title: '',
+                    answers: [
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                    ],
+                }
+            );
+            newState.plan.blocks[action.blockIndex].test = {...newState.plan.blocks[action.blockIndex].test};
+            return newState;
+        case TEST_TITLE_CHANGE:
+            state.plan.blocks[action.blockIndex].test.title = action.value;
+            state.plan.blocks[action.blockIndex].test = {...state.plan.blocks[action.blockIndex].test};
+            return state;
+        case TEST_QUESTION_TITLE_CHANGE:
+            state.plan.blocks[action.blockIndex].test.questions[action.index].title = action.value;
+            state.plan.blocks[action.blockIndex].test = {...state.plan.blocks[action.blockIndex].test};
+            return state;
+        case DEL_TEST_QUESTION:
+            state.plan.blocks[action.blockIndex].test.questions.splice(action.index, 1);
+            if (state.plan.blocks[action.blockIndex].test.questions.length === 0) {
+                delete state.plan.blocks[action.blockIndex].test.questions;
+            }
+            state.plan.blocks[action.blockIndex].test = {...state.plan.blocks[action.blockIndex].test};
+            return state;
+        case DEL_TEST:
+            delete newState.plan.blocks[action.blockIndex].test;
+            newState.plan = {...newState.plan};
+            return newState;
+        case TEST_QUESTION_ANSWER_TITLE_CHANGE:
+            state.plan.blocks[action.bIndex].test.questions[action.qIndex].answers[action.aIndex].title = action.value;
+            state.plan.blocks[action.bIndex].test = {...state.plan.blocks[action.bIndex].test};
+            return state;
+        case TEST_QUESTION_ANSWER_SET_RIGHT:
+            state.plan.blocks[action.bIndex].test.questions[action.qIndex].answers.forEach(el => {
+                el.isRight = false;
+            });
+            state.plan.blocks[action.bIndex].test.questions[action.qIndex].answers[action.aIndex].isRight = true;
+            state.plan.blocks[action.bIndex].test = {...state.plan.blocks[action.bIndex].test};
+            return state;
+        case ADD_PLAN_TEST:
+            newState.plan = {...newState.plan};
+            if (newState.plan.test === undefined ) {
+                newState.plan.test = {};
+                newState.plan.test.status = 'uncomplete';
+                newState.plan.test.title = '';
+            }
+            return newState;
+        case ADD_PLAN_TEST_QUESTION:
+            if (state.plan.test.questions === undefined) {
+                state.plan.test.questions = [];
+            }
+            state.plan.test.questions.push(
+                {
+                    title: '',
+                    answers: [
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                        {
+                            title: '',
+                            isRight: false,
+                            isPick: false,
+                        },
+                    ],
+                }
+            );
+            state.plan.test = {...state.plan.test};
+            return state;
+        case PLAN_TEST_TITLE_CHANGE:
+            state.plan.test.title = action.value;
+            state.plan.test = {...state.plan.test};
+            return state;
+        case PLAN_TEST_QUESTION_TITLE_CHANGE:
+            state.plan.test.questions[action.qIndex].title = action.value;
+            state.plan.test = {...state.plan.test};
+            return state;
+        case DEL_PLAN_TEST_QUESTION:
+            state.plan.test.questions.splice(action.index, 1);
+            if (state.plan.test.questions.length === 0) {
+                delete state.plan.test.questions;
+            }
+            state.plan.test = {...state.plan.test};
+            return state;
+        case DEL_PLAN_TEST:
+            delete newState.plan.test;
+            newState.plan = {...newState.plan};
+            return newState;
+        case PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE:
+            state.plan.test.questions[action.qIndex].answers[action.aIndex].title = action.value;
+            state.plan.test = {...state.plan.test};
+            return state;
+        case PLAN_TEST_QUESTION_ANSWER_SET_RIGHT:
+            state.plan.test.questions[action.qIndex].answers.forEach(el => {
+                el.isRight = false;
+            });
+            state.plan.test.questions[action.qIndex].answers[action.aIndex].isRight = true;
+            state.plan.test = {...state.plan.test};
+            return state;
         default:
             return state;
     }

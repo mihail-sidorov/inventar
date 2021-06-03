@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
+import './scss/app.scss';
+
 import App from './components/App';
 import store from './redux/store';
 import { loginGet, setAuthDataActionCreator } from './redux/authReducer';
-import './scss/app.scss';
 
 loginGet()
   .then((response) => {

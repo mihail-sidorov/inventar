@@ -2361,9 +2361,45 @@ html, body {
 
 .plan-edit-view {
 
-    &__add-block {
+    .test-edit-view {
 
         margin-bottom: 40px;
+    }
+
+    &__head {
+
+        margin-bottom: 40px;
+        display: flex;
+    }
+
+    &__add-entity-wrapper {
+
+        display: flex;
+        align-items: center;
+        margin-right: 40px;
+
+        &:last-child {
+
+            margin-right: 0;
+        }
+
+        span {
+
+            font-size: 26px;
+        }
+    }
+    
+    &__add-entity {
+
+        margin-right: 10px;
+    }
+
+    &__sections-title {
+
+        span {
+
+            margin-left: 10px;
+        }
     }
 
     &__add-section {
@@ -2371,7 +2407,6 @@ html, body {
         width: 25px;
         height: 25px;
         background-size: 25px;
-        margin-left: 10px;
     }
 
     &__del-block {
@@ -2474,6 +2509,26 @@ html, body {
     &__save {
 
         margin-right: 10px;
+    }
+
+    &__test {
+
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        margin-top: 20px;
+
+        &-add {
+
+            width: 25px;
+            height: 25px;
+            background-size: 25px;
+        }
+
+        span {
+
+            margin-left: 10px;
+        }
     }
 }
 

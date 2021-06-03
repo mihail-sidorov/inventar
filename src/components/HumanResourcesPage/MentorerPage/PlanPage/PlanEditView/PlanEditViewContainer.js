@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addPlanBlockActionCreator, addPlanSectionActionCreator, blockTitleEditActionCreator, connectionStatusChangeActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, planSave, sectionTitleEditActionCreator } from '../../../../../redux/planReducer';
+import { addPlanBlockActionCreator, addPlanSectionActionCreator, addPlanTestActionCreator, addTestActionCreator, blockTitleEditActionCreator, connectionStatusChangeActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, planSave, sectionTitleEditActionCreator } from '../../../../../redux/planReducer';
 import PlanEditView from './PlanEditView';
 
 let PlanEditViewContainer = connect(
@@ -36,6 +36,12 @@ let PlanEditViewContainer = connect(
                     alert(mes);
                 })
                 .catch(console.log);
+        },
+        addTest: blockIndex => {
+            dispatch(addTestActionCreator(blockIndex));
+        },
+        addPlanTest: () => {
+            dispatch(addPlanTestActionCreator());
         },
     })
 )(PlanEditView);
