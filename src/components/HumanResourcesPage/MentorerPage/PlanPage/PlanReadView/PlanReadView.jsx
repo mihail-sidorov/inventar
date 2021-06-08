@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import TestReadView from './TestReadView/TestReadView';
 
 let PlanReadView = props => {
     let plan = props.plan;
@@ -24,6 +25,9 @@ let PlanReadView = props => {
                 <div className="plan-read-view__block" key={index}>
                     <div className="plan-read-view__block-title">{block.title}</div>
                     {sections}
+                    {
+                        block.test && ((props.userType === 'protege' && block.test.status === 'uncomplete') ? 'Прохождение теста' : <TestReadView blockIndex={index} />)
+                    }
                 </div>
             );
             blocks.push(block);
@@ -36,6 +40,9 @@ let PlanReadView = props => {
         plan = (
             <div className="plan-read-view">
                 {blocks}
+                {
+                    plan.test && ((props.userType === 'protege' && plan.test.status === 'uncomplete') ? 'Прохождение теста' : <TestReadView />)
+                }
                 <div className="plan-read-view__btns">
                     <button className="plan-read-view__close" onClick={() => {
                         props.history.push('/mentorer');

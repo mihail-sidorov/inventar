@@ -2578,4 +2578,15 @@ html, body {
         display: flex;
         justify-content: center;
     }
+
+    & > .test-read-view {
+
+        margin-top: 40px;
+
+        .test-read-view__title {
+
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+    }
 }
