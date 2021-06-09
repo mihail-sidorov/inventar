@@ -25,7 +25,11 @@ const
     DEL_PLAN_TEST_QUESTION = 'DEL_PLAN_TEST_QUESTION',
     DEL_PLAN_TEST = 'DEL_PLAN_TEST',
     PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE = 'PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE',
-    PLAN_TEST_QUESTION_ANSWER_SET_RIGHT = 'PLAN_TEST_QUESTION_ANSWER_SET_RIGHT';
+    PLAN_TEST_QUESTION_ANSWER_SET_RIGHT = 'PLAN_TEST_QUESTION_ANSWER_SET_RIGHT',
+    TEST_QUESTION_ANSWER_SET_PICK = 'TEST_QUESTION_ANSWER_SET_PICK',
+    TEST_FINISH = 'TEST_FINISH',
+    PLAN_TEST_QUESTION_ANSWER_SET_PICK = 'PLAN_TEST_QUESTION_ANSWER_SET_PICK',
+    PLAN_TEST_FINISH = 'PLAN_TEST_FINISH';
 
 let initialState = {
     role: null,
@@ -141,6 +145,18 @@ export let testQuestionAnswerSetRightActionCreator = (bIndex, qIndex, aIndex) =>
     aIndex,
 });
 
+export let testQuestionAnswerSetPickActionCreator = (bIndex, qIndex, aIndex) => ({
+    type: TEST_QUESTION_ANSWER_SET_PICK,
+    bIndex,
+    qIndex,
+    aIndex,
+});
+
+export let testFinishActionCreator = bIndex => ({
+    type: TEST_FINISH,
+    bIndex,
+});
+
 
 
 
@@ -185,6 +201,16 @@ export let planTestQuestionAnswerSetRightActionCreator = (qIndex, aIndex) => ({
     type: PLAN_TEST_QUESTION_ANSWER_SET_RIGHT,
     qIndex,
     aIndex,
+});
+
+export let planTestQuestionAnswerSetPickActionCreator = (qIndex, aIndex) => ({
+    type: PLAN_TEST_QUESTION_ANSWER_SET_PICK,
+    qIndex,
+    aIndex,
+});
+
+export let planTestFinishActionCreator = () => ({
+    type: PLAN_TEST_FINISH,
 });
 
 // Редуктор
@@ -326,6 +352,13 @@ let planReducer = (state = initialState, action) => {
             state.plan.blocks[action.bIndex].test.questions[action.qIndex].answers[action.aIndex].isRight = true;
             state.plan.blocks[action.bIndex].test = {...state.plan.blocks[action.bIndex].test};
             return state;
+        case TEST_QUESTION_ANSWER_SET_PICK:
+            state.plan.blocks[action.bIndex].test.questions[action.qIndex].answers.forEach(el => {
+                el.isPick = false;
+            });
+            state.plan.blocks[action.bIndex].test.questions[action.qIndex].answers[action.aIndex].isPick = true;
+            state.plan.blocks[action.bIndex].test = {...state.plan.blocks[action.bIndex].test};
+            return state;
         case ADD_PLAN_TEST:
             newState.plan = {...newState.plan};
             if (newState.plan.test === undefined ) {
@@ -397,6 +430,21 @@ let planReducer = (state = initialState, action) => {
             state.plan.test.questions[action.qIndex].answers[action.aIndex].isRight = true;
             state.plan.test = {...state.plan.test};
             return state;
+        case PLAN_TEST_QUESTION_ANSWER_SET_PICK:
+            state.plan.test.questions[action.qIndex].answers.forEach(el => {
+                el.isPick = false;
+            });
+            state.plan.test.questions[action.qIndex].answers[action.aIndex].isPick = true;
+            state.plan.test = {...state.plan.test};
+            return state;
+        case TEST_FINISH:
+            newState.plan = {...newState.plan}
+            newState.plan.blocks[action.bIndex].test.status = 'complete';
+            return newState;
+        case PLAN_TEST_FINISH:
+            newState.plan = {...newState.plan}
+            newState.plan.test.status = 'complete';
+            return newState;
         default:
             return state;
     }

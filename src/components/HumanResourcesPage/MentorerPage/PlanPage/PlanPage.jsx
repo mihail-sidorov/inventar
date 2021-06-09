@@ -69,7 +69,7 @@ let PlanPage = props => {
                                       {
                                         title: "Ответ12",
                                         isRight: true,
-                                        isPick: true
+                                        isPick: false
                                       },
                                       {
                                         title: "Ответ13",
@@ -94,7 +94,7 @@ let PlanPage = props => {
                                       {
                                         title: "Ответ22",
                                         isRight: false,
-                                        isPick: true
+                                        isPick: false
                                       },
                                       {
                                         title: "Ответ23",
@@ -200,7 +200,7 @@ let PlanPage = props => {
                               {
                                 title: "Ответ12",
                                 isRight: true,
-                                isPick: true
+                                isPick: false
                               },
                               {
                                 title: "Ответ13",
@@ -225,7 +225,7 @@ let PlanPage = props => {
                               {
                                 title: "Ответ22",
                                 isRight: false,
-                                isPick: true
+                                isPick: false
                               },
                               {
                                 title: "Ответ23",

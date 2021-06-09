@@ -2589,4 +2589,15 @@ html, body {
             margin-bottom: 10px;
         }
     }
+
+    & > .test-execution-view {
+
+        margin-top: 40px;
+
+        .test-execution-view__title {
+
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+    }
 }

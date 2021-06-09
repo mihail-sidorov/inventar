@@ -1,0 +1,47 @@
+.test-execution-view {
+
+    margin-top: 10px;
+
+    ul, li {
+
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    &__title {
+
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    &__question-title {
+
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    &__answers {
+
+        padding-left: 20px !important;
+        margin-bottom: 10px !important;
+    }
+
+    &__answer {
+
+        margin-bottom: 5px !important;
+        display: flex;
+        align-items: center;
+
+        &:last-child {
+
+            margin-bottom: 0 !important;
+        }
+
+        input[type='radio'] {
+
+            margin: 0;
+            margin-left: 10px;
+        }
+    }
+}
