@@ -7,7 +7,9 @@ let PlanEditView = props => {
     let plan = props.plan;
     if (plan !== null) {
         let blocks = [];
+        let planBlocks = plan.blocks;
         plan.blocks?.forEach((block, index) => {
+            let bIndex = index;
             let sections = [];
             block.sections?.forEach((section, index) => {
                 section = (
@@ -18,6 +20,27 @@ let PlanEditView = props => {
                             let indexSection = $(e.target).closest('.plan-edit-view__section').attr('index');
                             props.sectionTitleEdit(value, indexBlock, indexSection);
                         }} />
+                        {
+                            block.sections.length > 1 &&
+                            <div className="plan-edit-view__section-arrows">
+                                {
+                                    index > 0 &&
+                                    <div className="plan-edit-view__section-arrow plan-edit-view__section-arrow_up"
+                                        onClick={() => {
+                                            props.movePlanSection(bIndex, index, index - 1);
+                                        }}
+                                    ></div>
+                                }
+                                {
+                                    index < block.sections.length - 1 &&
+                                    <div className="plan-edit-view__section-arrow"
+                                        onClick={() => {
+                                            props.movePlanSection(bIndex, index, index + 1);
+                                        }}
+                                    ></div>
+                                }
+                            </div>
+                        }
                         <div className="plan-edit-view__del-section" onClick={e => {
                             let indexBlock = $(e.target).closest('.plan-edit-view__block').attr('index');
                             let indexSection = $(e.target).closest('.plan-edit-view__section').attr('index');
@@ -41,10 +64,31 @@ let PlanEditView = props => {
             );
             block = (
                 <div className="plan-edit-view__block" index={index} key={index}>
-                    <div className="plan-edit-view__block-title"><span>Блок</span><div className="plan-edit-view__del-block" onClick={e => {
-                        let index = $(e.target).closest('.plan-edit-view__block').attr('index');
-                        props.delPlanBlock(index);
-                    }}></div></div>
+                    <div className="plan-edit-view__block-title">
+                        <span>Блок</span>
+                        <div className="plan-edit-view__block-arrows">
+                            {
+                                index > 0 &&
+                                <div className="plan-edit-view__block-arrow plan-edit-view__block-arrow_up"
+                                    onClick={() => {
+                                        props.movePlanBlock(index, index - 1);
+                                    }}
+                                ></div>
+                            }
+                            {
+                                index < planBlocks.length - 1 &&
+                                <div className="plan-edit-view__block-arrow"
+                                    onClick={() => {
+                                        props.movePlanBlock(index, index + 1);
+                                    }}
+                                ></div>
+                            }
+                        </div>
+                        <div className="plan-edit-view__del-block" onClick={e => {
+                            let index = $(e.target).closest('.plan-edit-view__block').attr('index');
+                            props.delPlanBlock(index);
+                        }}></div>
+                    </div>
                     <input className="plan-edit-view__block-input" type="text" value={block.title} placeholder="Заголовок блока" onChange={e => {
                         let value = $(e.target).val();
                         let index = Number($(e.target).closest('.plan-edit-view__block').attr('index'));

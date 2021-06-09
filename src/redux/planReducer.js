@@ -1,4 +1,5 @@
 import Axios from "../config/axiosConfig";
+import arrayMove from 'array-move';
 
 const
     SET_PLAN_STATE = 'SET_PLAN_STATE',
@@ -29,7 +30,9 @@ const
     TEST_QUESTION_ANSWER_SET_PICK = 'TEST_QUESTION_ANSWER_SET_PICK',
     TEST_FINISH = 'TEST_FINISH',
     PLAN_TEST_QUESTION_ANSWER_SET_PICK = 'PLAN_TEST_QUESTION_ANSWER_SET_PICK',
-    PLAN_TEST_FINISH = 'PLAN_TEST_FINISH';
+    PLAN_TEST_FINISH = 'PLAN_TEST_FINISH',
+    MOVE_PLAN_BLOCK = 'MOVE_PLAN_BLOCK',
+    MOVE_PLAN_SECTION = 'MOVE_PLAN_SECTION';
 
 let initialState = {
     role: null,
@@ -211,6 +214,19 @@ export let planTestQuestionAnswerSetPickActionCreator = (qIndex, aIndex) => ({
 
 export let planTestFinishActionCreator = () => ({
     type: PLAN_TEST_FINISH,
+});
+
+export let movePlanBlockActionCreator = (from, to) => ({
+    type: MOVE_PLAN_BLOCK,
+    from,
+    to,
+});
+
+export let movePlanSectionActionCreator = (bIndex, from, to) => ({
+    type: MOVE_PLAN_SECTION,
+    bIndex,
+    from,
+    to,
 });
 
 // Редуктор
@@ -438,12 +454,20 @@ let planReducer = (state = initialState, action) => {
             state.plan.test = {...state.plan.test};
             return state;
         case TEST_FINISH:
-            newState.plan = {...newState.plan}
+            newState.plan = {...newState.plan};
             newState.plan.blocks[action.bIndex].test.status = 'complete';
             return newState;
         case PLAN_TEST_FINISH:
-            newState.plan = {...newState.plan}
+            newState.plan = {...newState.plan};
             newState.plan.test.status = 'complete';
+            return newState;
+        case MOVE_PLAN_BLOCK:
+            newState.plan = {...newState.plan};
+            arrayMove.mutate(newState.plan.blocks, action.from, action.to);
+            return newState;
+        case MOVE_PLAN_SECTION:
+            newState.plan = {...newState.plan};
+            arrayMove.mutate(newState.plan.blocks[action.bIndex].sections, action.from, action.to);
             return newState;
         default:
             return state;

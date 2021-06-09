@@ -44,7 +44,7 @@ let PlanPage = props => {
                 }
             }
 
-            if (plan !== null) {
+            if (plan === null) {
                 plan = {
                     blocks: [
                         {
@@ -54,68 +54,68 @@ let PlanPage = props => {
                                     title: 'Порядок взаимодействия, круг вопросов',
                                 },
                             ],
-                            test: {
-                                status: "uncomplete",
-                                title: "Тест1",
-                                questions: [
-                                  {
-                                    title: "Вопрос1",
-                                    answers: [
-                                      {
-                                        title: "Ответ11",
-                                        isRight: false,
-                                        isPick: false
-                                      },
-                                      {
-                                        title: "Ответ12",
-                                        isRight: true,
-                                        isPick: false
-                                      },
-                                      {
-                                        title: "Ответ13",
-                                        isRight: false,
-                                        isPick: false
-                                      },
-                                      {
-                                        title: "Ответ14",
-                                        isRight: false,
-                                        isPick: false
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    title: "Вопрос2",
-                                    answers: [
-                                      {
-                                        title: "Ответ21",
-                                        isRight: false,
-                                        isPick: false
-                                      },
-                                      {
-                                        title: "Ответ22",
-                                        isRight: false,
-                                        isPick: false
-                                      },
-                                      {
-                                        title: "Ответ23",
-                                        isRight: true,
-                                        isPick: false
-                                      },
-                                      {
-                                        title: "Ответ24",
-                                        isRight: false,
-                                        isPick: false
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
+                            // test: {
+                            //     status: "uncomplete",
+                            //     title: "Тест1",
+                            //     questions: [
+                            //       {
+                            //         title: "Вопрос1",
+                            //         answers: [
+                            //           {
+                            //             title: "Ответ11",
+                            //             isRight: false,
+                            //             isPick: false
+                            //           },
+                            //           {
+                            //             title: "Ответ12",
+                            //             isRight: true,
+                            //             isPick: false
+                            //           },
+                            //           {
+                            //             title: "Ответ13",
+                            //             isRight: false,
+                            //             isPick: false
+                            //           },
+                            //           {
+                            //             title: "Ответ14",
+                            //             isRight: false,
+                            //             isPick: false
+                            //           }
+                            //         ]
+                            //       },
+                            //       {
+                            //         title: "Вопрос2",
+                            //         answers: [
+                            //           {
+                            //             title: "Ответ21",
+                            //             isRight: false,
+                            //             isPick: false
+                            //           },
+                            //           {
+                            //             title: "Ответ22",
+                            //             isRight: false,
+                            //             isPick: false
+                            //           },
+                            //           {
+                            //             title: "Ответ23",
+                            //             isRight: true,
+                            //             isPick: false
+                            //           },
+                            //           {
+                            //             title: "Ответ24",
+                            //             isRight: false,
+                            //             isPick: false
+                            //           }
+                            //         ]
+                            //       }
+                            //     ]
+                            //   }
                         },
                         {
                             title: 'Знакомство с сотрудниками',
                             sections: [
                                 {
-                                    title: 'Личное знакомство с сотрудниками компании, их функиями в подразделении',
+                                    title: 'Личное знакомство с сотрудниками компании, их функциями в подразделении',
                                 },
                             ],
                         },
@@ -185,62 +185,62 @@ let PlanPage = props => {
                             ],
                         },
                     ],
-                    test: {
-                        status: "uncomplete",
-                        title: "Контрольный тест",
-                        questions: [
-                          {
-                            title: "Вопрос1",
-                            answers: [
-                              {
-                                title: "Ответ11",
-                                isRight: false,
-                                isPick: false
-                              },
-                              {
-                                title: "Ответ12",
-                                isRight: true,
-                                isPick: false
-                              },
-                              {
-                                title: "Ответ13",
-                                isRight: false,
-                                isPick: false
-                              },
-                              {
-                                title: "Ответ14",
-                                isRight: false,
-                                isPick: false
-                              }
-                            ]
-                          },
-                          {
-                            title: "Вопрос2",
-                            answers: [
-                              {
-                                title: "Ответ21",
-                                isRight: false,
-                                isPick: false
-                              },
-                              {
-                                title: "Ответ22",
-                                isRight: false,
-                                isPick: false
-                              },
-                              {
-                                title: "Ответ23",
-                                isRight: true,
-                                isPick: false
-                              },
-                              {
-                                title: "Ответ24",
-                                isRight: false,
-                                isPick: false
-                              }
-                            ]
-                          }
-                        ]
-                      }
+                    // test: {
+                    //     status: "uncomplete",
+                    //     title: "Контрольный тест",
+                    //     questions: [
+                    //       {
+                    //         title: "Вопрос1",
+                    //         answers: [
+                    //           {
+                    //             title: "Ответ11",
+                    //             isRight: false,
+                    //             isPick: false
+                    //           },
+                    //           {
+                    //             title: "Ответ12",
+                    //             isRight: true,
+                    //             isPick: false
+                    //           },
+                    //           {
+                    //             title: "Ответ13",
+                    //             isRight: false,
+                    //             isPick: false
+                    //           },
+                    //           {
+                    //             title: "Ответ14",
+                    //             isRight: false,
+                    //             isPick: false
+                    //           }
+                    //         ]
+                    //       },
+                    //       {
+                    //         title: "Вопрос2",
+                    //         answers: [
+                    //           {
+                    //             title: "Ответ21",
+                    //             isRight: false,
+                    //             isPick: false
+                    //           },
+                    //           {
+                    //             title: "Ответ22",
+                    //             isRight: false,
+                    //             isPick: false
+                    //           },
+                    //           {
+                    //             title: "Ответ23",
+                    //             isRight: true,
+                    //             isPick: false
+                    //           },
+                    //           {
+                    //             title: "Ответ24",
+                    //             isRight: false,
+                    //             isPick: false
+                    //           }
+                    //         ]
+                    //       }
+                    //     ]
+                    //   }
                 };
             }
 

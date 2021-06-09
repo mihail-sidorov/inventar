@@ -2466,6 +2466,27 @@ html, body {
             padding: 10px;
             border-radius: 20px;
         }
+
+        &-arrows {
+
+            display: flex;
+            margin-left: 10px;
+        }
+
+        &-arrow {
+
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            background: url('../imgs/arrow.svg') no-repeat center;
+            background-size: auto 20px;
+
+            &_up {
+
+                margin-right: 5px;
+                transform: rotate(180deg);
+            }
+        }
     }
 
     &__sections {
@@ -2501,6 +2522,30 @@ html, body {
             color: #B1B1AF;
             padding: 5px 10px;
             border-radius: 20px;
+        }
+
+        &-arrows {
+
+            display: flex;
+            margin-left: 10px;
+        }
+
+        &-arrow {
+
+            width: 15px;
+            height: 15px;
+            background: url('../imgs/arrow.svg') no-repeat center;
+            cursor: pointer;
+
+            &_up {
+
+                transform: rotate(180deg);
+            }
+
+            &:nth-child(2) {
+
+                margin-left: 5px;
+            }
         }
     }
 
