@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { serverName } from '../../../../../../config/serverName';
 import { useShallowEqualSelector } from '../../../../../../hooks/useShallowEqualSelector';
-import { addPlanTestQuestionActionCreator, addTestQuestionActionCreator, delPlanTestActionCreator, delPlanTestQuestionActionCreator, delTestActionCreator, delTestQuestionActionCreator, planTestQuestionAnswerSetRightActionCreator, planTestQuestionAnswerTitleChangeActionCreator, planTestQuestionTitleChangeActionCreator, planTestTitleChangeActionCreator, testQuestionAnswerSetRightActionCreator, testQuestionAnswerTitleChangeActionCreator, testQuestionTitleChangeActionCreator, testTitleChangeActionCreator } from '../../../../../../redux/planReducer';
+import { addPlanTestQuestionActionCreator, addTestQuestionActionCreator, delPlanTestActionCreator, delPlanTestQuestionActionCreator, delTestActionCreator, delTestQuestionActionCreator, loadImageToTestThunk, planTestQuestionAnswerSetRightActionCreator, planTestQuestionAnswerTitleChangeActionCreator, planTestQuestionTitleChangeActionCreator, planTestTitleChangeActionCreator, testQuestionAnswerSetRightActionCreator, testQuestionAnswerTitleChangeActionCreator, testQuestionTitleChangeActionCreator, testTitleChangeActionCreator } from '../../../../../../redux/planReducer';
 
 import './TestEditView.scss';
 
@@ -11,25 +13,39 @@ let TestBlockEditView = (props) => {
         test: state.planState.plan.blocks[blockIndex].test,
     }));
     const dispatch = useDispatch();
+    const {planId} = useParams();
 
     let questions = [];
     test.questions?.forEach((el, index) => {
         let answers = [];
         el.answers?.forEach((el, aIndex) => {
             answers.push(
-                <div className="test-edit-view__answer" key={aIndex}>
-                    <input type="text" name="answer" placeholder="Ответ на вопрос" value={el.title}
-                        onChange={e => {
-                            dispatch(testQuestionAnswerTitleChangeActionCreator(e.target.value, blockIndex, index, aIndex));
-                        }}
-                    />
-                    <input type="radio" name={`right_answer_${blockIndex}_${index}`}
-                        onChange={() => {
-                            dispatch(testQuestionAnswerSetRightActionCreator(blockIndex, index, aIndex));
-                        }}
-                        checked={el.isRight}
-                    />
-                </div>
+                <React.Fragment key={aIndex}>
+                    <div className="test-edit-view__answer">
+                        <input type="text" name="answer" placeholder="Ответ на вопрос" value={el.title}
+                            onChange={e => {
+                                dispatch(testQuestionAnswerTitleChangeActionCreator(e.target.value, blockIndex, index, aIndex));
+                            }}
+                        />
+                        <input type="file"
+                            onChange={(e) => {
+                                dispatch(loadImageToTestThunk(e.target, planId, blockIndex, index, aIndex));
+                            }}
+                        />
+                        <input type="radio" name={`right_answer_${blockIndex}_${index}`}
+                            onChange={() => {
+                                dispatch(testQuestionAnswerSetRightActionCreator(blockIndex, index, aIndex));
+                            }}
+                            checked={el.isRight === undefined ? false : el.isRight}
+                        />
+                    </div>
+                    {
+                        el.img &&
+                        <div className="test-edit-view__answer-img">
+                            <img src={serverName + el.img} />
+                        </div>
+                    }
+                </React.Fragment>
             );
         });
         if (answers.length !== 0) {
@@ -51,12 +67,21 @@ let TestBlockEditView = (props) => {
                             dispatch(testQuestionTitleChangeActionCreator(e.target.value, blockIndex, index));
                         }}
                     />
+                    <input type="file" onChange={(e) => {
+                        dispatch(loadImageToTestThunk(e.target, planId, blockIndex, index));
+                    }} />
                     <div className="test-edit-view__del-test-question"
                         onClick={() => {
                             dispatch(delTestQuestionActionCreator(blockIndex, index));
                         }}
                     ></div>
                 </div>
+                {
+                    el.img &&
+                    <div className="test-edit-view__question-img">
+                        <img src={`${serverName}${el.img}`} />
+                    </div>
+                }
                 {answers}
             </div>
         );
@@ -105,24 +130,38 @@ function PlanTestEditView(props) {
         test: state.planState.plan.test,
     }));
     const dispatch = useDispatch();
+    const {planId} = useParams();
 
     let questions = [];
     test.questions?.forEach((el, index) => {
         let answers = [];
         el.answers?.forEach((el, aIndex) => {
             answers.push(
-                <div className="test-edit-view__answer" key={aIndex}>
-                    <input type="text" name="answer" placeholder="Ответ на вопрос" value={el.title}
-                        onChange={e => {
-                            dispatch(planTestQuestionAnswerTitleChangeActionCreator(e.target.value, index, aIndex));
-                        }}
-                    />
-                    <input type="radio" name={`right_answer_${index}`} checked={el.isRight}
-                        onChange={() => {
-                            dispatch(planTestQuestionAnswerSetRightActionCreator(index, aIndex));
-                        }}
-                    />
-                </div>
+                <React.Fragment key={aIndex}>
+                    <div className="test-edit-view__answer">
+                        <input type="text" name="answer" placeholder="Ответ на вопрос" value={el.title}
+                            onChange={e => {
+                                dispatch(planTestQuestionAnswerTitleChangeActionCreator(e.target.value, index, aIndex));
+                            }}
+                        />
+                        <input type="file"
+                            onChange={(e) => {
+                                dispatch(loadImageToTestThunk(e.target, planId, undefined, index, aIndex));
+                            }}
+                        />
+                        <input type="radio" name={`right_answer_${index}`} checked={el.isRight === undefined ? false : el.isRight}
+                            onChange={() => {
+                                dispatch(planTestQuestionAnswerSetRightActionCreator(index, aIndex));
+                            }}
+                        />
+                    </div>
+                    {
+                        el.img &&
+                        <div className="test-edit-view__answer-img">
+                            <img src={serverName + el.img} />
+                        </div>
+                    }
+                </React.Fragment>
             );
         });
         if (answers.length !== 0) {
@@ -144,12 +183,21 @@ function PlanTestEditView(props) {
                             dispatch(planTestQuestionTitleChangeActionCreator(e.target.value, index));
                         }}
                     />
+                    <input type="file" onChange={(e) => {
+                        dispatch(loadImageToTestThunk(e.target, planId, undefined, index));
+                    }} />
                     <div className="test-edit-view__del-test-question"
                         onClick={() => {
                             dispatch(delPlanTestQuestionActionCreator(index));
                         }}
                     ></div>
                 </div>
+                {
+                    el.img &&
+                    <div className="test-edit-view__question-img">
+                        <img src={`${serverName}${el.img}`} />
+                    </div>
+                }
                 {answers}
             </div>
         );

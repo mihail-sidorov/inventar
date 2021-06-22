@@ -27,7 +27,7 @@ let PlanReadView = props => {
                     <div className="plan-read-view__block-title">{block.title}</div>
                     {sections}
                     {
-                        block.test && ((props.userType === 'protege' && block.test.status === 'uncomplete') ? <TestExecutionView blockIndex={index} /> : <TestReadView blockIndex={index} />)
+                        block.test && ((props.userType === 'protege' && props.connectionStatus === 'planconfirmed' && block.test.status === 'incomplete') ? <TestExecutionView blockIndex={index} /> : <TestReadView blockIndex={index} />)
                     }
                 </div>
             );
@@ -42,7 +42,7 @@ let PlanReadView = props => {
             <div className="plan-read-view">
                 {blocks}
                 {
-                    plan.test && ((props.userType === 'protege' && plan.test.status === 'uncomplete') ? <TestExecutionView /> : <TestReadView />)
+                    plan.test && ((props.userType === 'protege' && props.connectionStatus === 'planconfirmed' && plan.test.status === 'uncomplete') ? <TestExecutionView /> : <TestReadView />)
                 }
                 <div className="plan-read-view__btns">
                     <button className="plan-read-view__close" onClick={() => {

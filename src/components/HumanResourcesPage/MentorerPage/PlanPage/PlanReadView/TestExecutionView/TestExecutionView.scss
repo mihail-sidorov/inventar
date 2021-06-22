@@ -27,16 +27,20 @@
         margin-bottom: 10px !important;
     }
 
-    &__answer {
+    &__answer-wrapper {
 
         margin-bottom: 5px !important;
-        display: flex;
-        align-items: center;
 
         &:last-child {
 
             margin-bottom: 0 !important;
         }
+    }
+
+    &__answer {
+
+        display: flex;
+        align-items: center;
 
         input[type='radio'] {
 

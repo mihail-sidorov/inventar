@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { serverName } from '../../../../../../config/serverName';
 import { useShallowEqualSelector } from '../../../../../../hooks/useShallowEqualSelector';
 import { planTestFinishActionCreator, planTestQuestionAnswerSetPickActionCreator, testFinishActionCreator, testQuestionAnswerSetPickActionCreator } from '../../../../../../redux/planReducer';
 
@@ -64,21 +65,29 @@ function Test(props) {
     let answers = [];
     props.test.questions[props.qn].answers.forEach((el, index) => {
         answers.push(
-            <li className="test-execution-view__answer" key={index}>
-                <div className="test-execution-view__answer-title">
-                    {el.title}
+            <li className="test-execution-view__answer-wrapper" key={index}>
+                <div className="test-execution-view__answer">
+                    <div className="test-execution-view__answer-title">
+                        {el.title}
+                    </div>
+                    <input type="radio" name={props.bi !== undefined ? `answer_pick_${props.bi}_${props.qn}` : `answer_pick_${props.qn}`}
+                        onChange={() => {
+                            if (props.bi !== undefined) {
+                                props.dispatch(testQuestionAnswerSetPickActionCreator(props.bi, props.qn, index));
+                            }
+                            else {
+                                props.dispatch(planTestQuestionAnswerSetPickActionCreator(props.qn, index));
+                            }
+                        }}
+                        checked={el.isPick === undefined ? false : el.isPick}
+                    />
                 </div>
-                <input type="radio" name={props.bi !== undefined ? `answer_pick_${props.bi}_${props.qn}` : `answer_pick_${props.qn}`}
-                    onChange={() => {
-                        if (props.bi !== undefined) {
-                            props.dispatch(testQuestionAnswerSetPickActionCreator(props.bi, props.qn, index));
-                        }
-                        else {
-                            props.dispatch(planTestQuestionAnswerSetPickActionCreator(props.qn, index));
-                        }
-                    }}
-                    checked={el.isPick}
-                />
+                {
+                    el.img &&
+                    <div className="test-execution-view__answer-img">
+                        <img src={serverName + el.img} />
+                    </div>
+                }
             </li>
         );
     });
@@ -92,6 +101,12 @@ function Test(props) {
                 <div className="test-execution-view__question-title">
                     {props.test.questions[props.qn].title}
                 </div>
+                {
+                    props.test.questions[props.qn].img &&
+                    <div className="test-execution-view__question-img">
+                        <img src={serverName + props.test.questions[props.qn].img} />
+                    </div>
+                }
                 <ul className="test-execution-view__answers">
                     {answers}
                 </ul>

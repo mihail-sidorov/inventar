@@ -1,5 +1,6 @@
 import Axios from "../config/axiosConfig";
 import arrayMove from 'array-move';
+import mentoringFileLoad from "../functions/mentoringFileLoad";
 
 const
     SET_PLAN_STATE = 'SET_PLAN_STATE',
@@ -32,7 +33,8 @@ const
     PLAN_TEST_QUESTION_ANSWER_SET_PICK = 'PLAN_TEST_QUESTION_ANSWER_SET_PICK',
     PLAN_TEST_FINISH = 'PLAN_TEST_FINISH',
     MOVE_PLAN_BLOCK = 'MOVE_PLAN_BLOCK',
-    MOVE_PLAN_SECTION = 'MOVE_PLAN_SECTION';
+    MOVE_PLAN_SECTION = 'MOVE_PLAN_SECTION',
+    ADD_IMAGE_TO_TEST = 'ADD_IMAGE_TO_TEST';
 
 let initialState = {
     role: null,
@@ -160,11 +162,6 @@ export let testFinishActionCreator = bIndex => ({
     bIndex,
 });
 
-
-
-
-
-
 export let addPlanTestActionCreator = () => ({
     type: ADD_PLAN_TEST,
 });
@@ -228,6 +225,22 @@ export let movePlanSectionActionCreator = (bIndex, from, to) => ({
     from,
     to,
 });
+
+export let addImageToTestActionCreator = (path, bIndex, qIndex, aIndex) => ({
+    type: ADD_IMAGE_TO_TEST,
+    path,
+    bIndex,
+    qIndex,
+    aIndex,
+});
+
+// Thunks
+
+export let loadImageToTestThunk = (file, cId, bIndex, qIndex, aIndex) => async (dispatch) => {
+    let path = (await mentoringFileLoad(file, cId)).data.path;
+
+    dispatch(addImageToTestActionCreator(path, bIndex, qIndex, aIndex));
+};
 
 // Редуктор
 
@@ -315,23 +328,15 @@ let planReducer = (state = initialState, action) => {
                     answers: [
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                     ],
                 }
@@ -393,23 +398,15 @@ let planReducer = (state = initialState, action) => {
                     answers: [
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                         {
                             title: '',
-                            isRight: false,
-                            isPick: false,
                         },
                     ],
                 }
@@ -469,6 +466,26 @@ let planReducer = (state = initialState, action) => {
             newState.plan = {...newState.plan};
             arrayMove.mutate(newState.plan.blocks[action.bIndex].sections, action.from, action.to);
             return newState;
+        case ADD_IMAGE_TO_TEST:
+            if (action.bIndex !== undefined) {
+                state.plan.blocks[action.bIndex].test = {...state.plan.blocks[action.bIndex].test};
+                if (action.aIndex === undefined) {
+                    state.plan.blocks[action.bIndex].test.questions[action.qIndex].img = action.path;
+                }
+                else {
+                    state.plan.blocks[action.bIndex].test.questions[action.qIndex].answers[action.aIndex].img = action.path;
+                }
+            }
+            else {
+                state.plan.test = {...state.plan.test};
+                if (action.aIndex === undefined) {
+                    state.plan.test.questions[action.qIndex].img = action.path;
+                }
+                else {
+                    state.plan.test.questions[action.qIndex].answers[action.aIndex].img = action.path;
+                }
+            }
+            return state;
         default:
             return state;
     }

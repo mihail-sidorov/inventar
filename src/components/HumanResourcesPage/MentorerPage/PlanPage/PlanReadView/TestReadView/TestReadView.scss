@@ -52,16 +52,20 @@
         padding-left: 20px !important;
     }
 
-    &__answer {
+    &__answer-wrapper {
 
         margin-bottom: 5px !important;
-        display: flex;
-        align-items: center;
 
         &:last-child {
 
             margin-bottom: 0 !important;
         }
+    }
+
+    &__answer {
+
+        display: flex;
+        align-items: center;
 
         &_is-right {
 

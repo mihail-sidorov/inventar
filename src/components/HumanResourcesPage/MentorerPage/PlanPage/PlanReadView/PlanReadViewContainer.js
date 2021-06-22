@@ -4,8 +4,8 @@ import PlanReadView from './PlanReadView';
 let PlanReadViewContainer = connect(
     state => ({
         plan: state.planState.plan,
+        connectionStatus: state.connectionStatus,
         userType: state.planState.userType,
-        //userType: 'protege',
     }),
     dispatch => ({})
 )(PlanReadView);

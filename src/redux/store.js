@@ -1,4 +1,5 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import mainPageReducer from './mainPageReducer';
 import {reducer as formReducer} from 'redux-form';
 import authReducer from './authReducer';
@@ -133,13 +134,13 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
     if (action.type === 'SET_AUTH_DATA') {
-      state = undefined
+        state = undefined;
     }
   
-    return appReducer(state, action)
+    return appReducer(state, action);
 }
 
-let store = createStore(rootReducer);
+let store = createStore(rootReducer, applyMiddleware(thunk));
 
 window.store = store;
 
