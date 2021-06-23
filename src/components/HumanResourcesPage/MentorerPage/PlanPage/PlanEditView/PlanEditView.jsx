@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import { withRouter } from 'react-router';
 import TestEditView from './TestEditView/TestEditView';
+import TaskEditView from './TaskEditView/TaskEditView';
 
 let PlanEditView = props => {
     let plan = props.plan;
@@ -110,6 +111,21 @@ let PlanEditView = props => {
                                 <span>Тест</span>
                             </div>
                     }
+                    {
+                        block.task
+                            ?
+                            <TaskEditView bIndex={index} />
+                            :
+                            <div className="plan-edit-view__task">
+                                <div
+                                    className="plan-edit-view__task-add add-btn"
+                                    onClick={() => {
+                                        props.addTask(index);
+                                    }}
+                                ></div>
+                                <span>Задание</span>
+                            </div>
+                    }
                 </div>
             );
             blocks.push(block);
@@ -138,13 +154,22 @@ let PlanEditView = props => {
                                 <span>Контрольный тест</span>
                             </div>
                     }
-                    <div className="plan-edit-view__add-entity-wrapper">
-                        <div className="plan-edit-view__add-entity add-btn" onClick={() => {
-                            
-                        }}></div>
-                        <span>Контрольное задание</span>
-                    </div>
+                    {
+                        !plan.task
+                            &&
+                            <div className="plan-edit-view__add-entity-wrapper">
+                                <div className="plan-edit-view__add-entity add-btn" onClick={() => {
+                                    props.addPlanTask();
+                                }}></div>
+                                <span>Контрольное задание</span>
+                            </div>
+                    }
                 </div>
+                {
+                    plan.task
+                        &&
+                        <TaskEditView />
+                }
                 {
                     plan.test
                         &&

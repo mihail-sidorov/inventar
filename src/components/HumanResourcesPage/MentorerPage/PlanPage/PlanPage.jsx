@@ -17,6 +17,9 @@ let PlanPage = props => {
             let connectionStatus = null;
 
             let {userId, role} = (await login).data;
+            if (role === 'hr') {
+                userType = 'hr';
+            }
             mentoring = (await mentoring).data;
             let leader = (await userRights(userId)).data;
             if (leader.length && leader[0].leader) {
@@ -133,7 +136,6 @@ let PlanPage = props => {
             }
 
             props.setPlanState({
-                role,
                 userId,
                 userType,
                 connectionStatus,
@@ -146,7 +148,7 @@ let PlanPage = props => {
     }, []);
 
     let planView = null;
-    if (props.role === 'hr'
+    if (props.userType === 'hr'
     || (props.userType === 'leader' && (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed'))
     || (props.userType === 'protege' && props.connectionStatus === 'planconfirmed')
     || (props.userType === 'mentor' && (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed'))) {

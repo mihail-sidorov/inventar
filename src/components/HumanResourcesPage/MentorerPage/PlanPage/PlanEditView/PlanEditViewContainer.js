@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addPlanBlockActionCreator, addPlanSectionActionCreator, addPlanTestActionCreator, addTestActionCreator, blockTitleEditActionCreator, connectionStatusChangeActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, movePlanBlockActionCreator, movePlanSectionActionCreator, planSave, sectionTitleEditActionCreator } from '../../../../../redux/planReducer';
+import { addPlanBlockActionCreator, addPlanSectionActionCreator, addPlanTaskActionCreator, addPlanTestActionCreator, addTaskActionCreator, addTestActionCreator, blockTitleEditActionCreator, connectionStatusChangeActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, movePlanBlockActionCreator, movePlanSectionActionCreator, planSave, sectionTitleEditActionCreator } from '../../../../../redux/planReducer';
 import PlanEditView from './PlanEditView';
 
 let PlanEditViewContainer = connect(
@@ -48,6 +48,12 @@ let PlanEditViewContainer = connect(
         },
         movePlanSection: (bIndex, from, to) => {
             dispatch(movePlanSectionActionCreator(bIndex, from, to));
+        },
+        addTask: bIndex => {
+            dispatch(addTaskActionCreator(bIndex));
+        },
+        addPlanTask: () => {
+            dispatch(addPlanTaskActionCreator());
         },
     })
 )(PlanEditView);

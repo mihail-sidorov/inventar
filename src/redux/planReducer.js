@@ -34,10 +34,18 @@ const
     PLAN_TEST_FINISH = 'PLAN_TEST_FINISH',
     MOVE_PLAN_BLOCK = 'MOVE_PLAN_BLOCK',
     MOVE_PLAN_SECTION = 'MOVE_PLAN_SECTION',
-    ADD_IMAGE_TO_TEST = 'ADD_IMAGE_TO_TEST';
+    ADD_IMAGE_TO_TEST = 'ADD_IMAGE_TO_TEST',
+    ADD_TASK = 'ADD_TASK',
+    CHANGE_TASK_TITLE = 'CHANGE_TASK_TITLE',
+    CHANGE_TASK_DESC = 'CHANGE_TASK_DESC',
+    DEL_TASK = 'DEL_TASK',
+    ADD_FILE_TO_TASK_BY_MENTOR = 'ADD_FILE_TO_TASK_BY_MENTOR',
+    ADD_PLAN_TASK = 'ADD_PLAN_TASK',
+    DEL_PLAN_TASK = 'DEL_PLAN_TASK',
+    CHANGE_PLAN_TASK_TITLE = 'CHANGE_PLAN_TASK_TITLE',
+    CHANGE_PLAN_TASK_DESC = 'CHANGE_PLAN_TASK_DESC';
 
 let initialState = {
-    role: null,
     userId: null,
     userType: null,
     connectionStatus: null,
@@ -234,12 +242,62 @@ export let addImageToTestActionCreator = (path, bIndex, qIndex, aIndex) => ({
     aIndex,
 });
 
+export let addTaskActionCreator = bIndex => ({
+    type: ADD_TASK,
+    bIndex,
+});
+
+export let changeTaskTitleActionCreator = (title, bIndex) => ({
+    type: CHANGE_TASK_TITLE,
+    title,
+    bIndex,
+});
+
+export let changePlanTaskTitleActionCreator = title => ({
+    type: CHANGE_PLAN_TASK_TITLE,
+    title,
+});
+
+export let changeTaskDescActionCreator = (desc, bIndex) => ({
+    type: CHANGE_TASK_DESC,
+    desc,
+    bIndex,
+});
+
+export let changePlanTaskDescActionCreator = desc => ({
+    type: CHANGE_PLAN_TASK_DESC,
+    desc,
+});
+
+export let delTaskActionCreator = bIndex => ({
+    type: DEL_TASK,
+    bIndex,
+});
+
+export let delPlanTaskActionCreator = () => ({
+    type: DEL_PLAN_TASK,
+});
+
+export let addFileToTaskByMentorActionCreator = (path, bIndex) => ({
+    type: ADD_FILE_TO_TASK_BY_MENTOR,
+    path,
+    bIndex,
+});
+
+export let addPlanTaskActionCreator = () => ({
+    type: ADD_PLAN_TASK,
+});
+
 // Thunks
 
 export let loadImageToTestThunk = (file, cId, bIndex, qIndex, aIndex) => async (dispatch) => {
     let path = (await mentoringFileLoad(file, cId)).data.path;
-
     dispatch(addImageToTestActionCreator(path, bIndex, qIndex, aIndex));
+};
+
+export let loadFileToTaskByMentorThunk = (file, cId, bIndex) => async dispatch => {
+    let path = (await mentoringFileLoad(file, cId)).data.path;
+    dispatch(addFileToTaskByMentorActionCreator(path, bIndex));
 };
 
 // Редуктор
@@ -314,7 +372,7 @@ let planReducer = (state = initialState, action) => {
             newState.plan = {...newState.plan};
             if (newState.plan.blocks[action.blockIndex].test === undefined ) {
                 newState.plan.blocks[action.blockIndex].test = {};
-                newState.plan.blocks[action.blockIndex].test.status = 'uncomplete';
+                newState.plan.blocks[action.blockIndex].test.status = 'incomplete';
                 newState.plan.blocks[action.blockIndex].test.title = '';
             }
             return newState;
@@ -485,6 +543,56 @@ let planReducer = (state = initialState, action) => {
                     state.plan.test.questions[action.qIndex].answers[action.aIndex].img = action.path;
                 }
             }
+            return state;
+        case ADD_TASK:
+            newState.plan = {...newState.plan};
+            newState.plan.blocks[action.bIndex].task = {
+                title: '',
+                desc: '',
+                status: 'incomplete',
+            };
+            return newState;
+        case CHANGE_TASK_TITLE:
+            state.plan.blocks[action.bIndex].task = {...state.plan.blocks[action.bIndex].task};
+            state.plan.blocks[action.bIndex].task.title = action.title;
+            return state;
+        case CHANGE_TASK_DESC:
+            state.plan.blocks[action.bIndex].task = {...state.plan.blocks[action.bIndex].task};
+            state.plan.blocks[action.bIndex].task.desc = action.desc;
+            return state;
+        case DEL_TASK:
+            newState.plan = {...newState.plan};
+            delete newState.plan.blocks[action.bIndex].task;
+            return newState;
+        case ADD_FILE_TO_TASK_BY_MENTOR:
+            if (action.bIndex !== undefined) {
+                state.plan.blocks[action.bIndex].task = {...state.plan.blocks[action.bIndex].task};
+                state.plan.blocks[action.bIndex].task.file = action.path;
+            }
+            else {
+                state.plan.task = {...state.plan.task};
+                state.plan.task.file = action.path;
+            }
+            return state;
+        case ADD_PLAN_TASK:
+            newState.plan = {...newState.plan};
+            newState.plan.task = {
+                title: '',
+                desc: '',
+                status: 'incomplete',
+            };
+            return newState;
+        case DEL_PLAN_TASK:
+            newState.plan = {...newState.plan};
+            delete newState.plan.task;
+            return newState;
+        case CHANGE_PLAN_TASK_TITLE:
+            state.plan.task = {...state.plan.task};
+            state.plan.task.title = action.title;
+            return state;
+        case CHANGE_PLAN_TASK_DESC:
+            state.plan.task = {...state.plan.task};
+            state.plan.task.desc = action.desc;
             return state;
         default:
             return state;

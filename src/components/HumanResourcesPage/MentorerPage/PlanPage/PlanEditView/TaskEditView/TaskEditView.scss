@@ -1,0 +1,70 @@
+.task-edit-view {
+
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #B1B1AF;
+    margin-top: 20px;
+    background-color: #fcf8d9;
+
+    &__task-title {
+
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+
+        span {
+
+            font-size: 20px;
+        }
+    }
+
+    &__task-del {
+
+        width: 25px;
+        height: 25px;
+        background-image: url('../../../../../../imgs/trash.svg');
+        background-size: 100%;
+        background-position: 0 0;
+        margin-left: auto;
+        cursor: pointer;
+    }
+
+    &__title {
+
+        margin-bottom: 10px;
+
+        input {
+
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid #B1B1AF;
+            color: #B1B1AF;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+    }
+
+    &__desc {
+        
+        margin-bottom: 10px;
+
+        textarea {
+
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            height: 200px;
+            border: 1px solid #B1B1AF;
+            color: #B1B1AF;
+            padding: 10px;
+            border-radius: 20px;
+        }
+    }
+
+    &__file-url {
+
+        display: block;
+        margin-top: 10px;
+    }
+}
