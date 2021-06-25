@@ -1,0 +1,60 @@
+.protege-answer {
+
+    &__send {
+
+        margin-top: 20px;
+    }
+
+    &__send-title {
+
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    &__send-comment {
+
+        margin-bottom: 5px;
+
+        textarea {
+
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            height: 100px;
+            border: 1px solid #B1B1AF;
+            color: #B1B1AF;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+    }
+
+    &__send-file {
+
+        margin-bottom: 5px;
+
+        a {
+            display: block;
+        }
+    }
+
+    &__send-save {
+
+        margin-right: 5px;
+    }
+
+    &__content {
+
+        margin-bottom: 20px;
+    }
+
+    &__content-title {
+
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    &__content-comment {
+
+        margin-bottom: 5px;
+    }
+}

@@ -77,7 +77,10 @@ export default function TaskEditView(props) {
                         }
                     }}
                 />
-                <a href={serverName + task.file} className="task-edit-view__file-url" target="_blank">{task.file}</a>
+                {
+                    task.file &&
+                    <a href={serverName + task.file} className="task-edit-view__file-url" target="_blank">{task.file}</a>
+                }
             </div>
         </div>
     );

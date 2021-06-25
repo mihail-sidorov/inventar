@@ -4,15 +4,26 @@ import { NavLink } from 'react-router-dom';
 import { loginGet } from '../../../../redux/authReducer';
 import { mentoringGet } from '../../../../redux/mentorerPageReducer';
 import { userRights } from '../../../../redux/planReducer';
+import { usersGet } from '../../../../redux/usersReducer';
 import InnerPageContainer from '../../../InnerPage/InnerPageContainer';
 import PlanEditViewContainer from './PlanEditView/PlanEditViewContainer';
 import PlanReadViewContainer from './PlanReadView/PlanReadViewContainer';
+
+function leaderForUser(lId, uId, users) {
+    if (users[lId].dep_loc_id === users[uId].dep_loc_id) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 let PlanPage = props => {
     useEffect(() => {
         (async () => {
             let login = loginGet();
             let mentoring = mentoringGet();
+            let users = usersGet();
             let userType = null;
             let connectionStatus = null;
 
@@ -21,6 +32,7 @@ let PlanPage = props => {
                 userType = 'hr';
             }
             mentoring = (await mentoring).data;
+            users = (await users).data;
             let leader = (await userRights(userId)).data;
             if (leader.length && leader[0].leader) {
                 leader = true;
@@ -28,14 +40,16 @@ let PlanPage = props => {
             else {
                 leader = false;
             }
-            if (leader) {
-                userType = 'leader';
-            }
 
             let plan;
             for (let connection of mentoring) {
                 if (connection.id == props.match.params.planId) {
                     connectionStatus = connection.status;
+                    if (leader) {
+                        if (leaderForUser(userId, connection.mentor_id, users) || leaderForUser(userId, connection.protege_id, users)) {
+                            userType = 'leader';
+                        }
+                    }
                     if (connection.mentor_id == userId) {
                         userType = 'mentor';
                     }

@@ -1,0 +1,23 @@
+.mentor-grade {
+
+    &__set {
+
+        input {
+
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid #B1B1AF;
+            color: #B1B1AF;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+    }
+
+    &__show-title {
+
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+}

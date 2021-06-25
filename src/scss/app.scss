@@ -2361,11 +2361,6 @@ html, body {
 
 .plan-edit-view {
 
-    .test-edit-view {
-
-        margin-bottom: 40px;
-    }
-
     &__head {
 
         margin-bottom: 40px;
@@ -2429,6 +2424,11 @@ html, body {
         background-position: 0 0;
         margin-left: 10px;
         cursor: pointer;
+    }
+
+    &__blocks {
+
+        margin-top: 40px;
     }
 
     &__block {
@@ -2584,6 +2584,11 @@ html, body {
 
 .plan-read-view {
 
+    &__blocks {
+
+        margin-bottom: 40px;
+    }
+
     &__block {
 
         margin-bottom: 20px;
@@ -2626,7 +2631,7 @@ html, body {
 
     & > .test-read-view {
 
-        margin-top: 40px;
+        margin-top: 20px;
 
         .test-read-view__title {
 
@@ -2637,9 +2642,20 @@ html, body {
 
     & > .test-execution-view {
 
-        margin-top: 40px;
+        margin-top: 20px;
 
         .test-execution-view__title {
+
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+    }
+
+    & > .task-read-view {
+    
+        margin-top: 20px;
+
+        .task-read-view__title {
 
             font-size: 26px;
             margin-bottom: 10px;

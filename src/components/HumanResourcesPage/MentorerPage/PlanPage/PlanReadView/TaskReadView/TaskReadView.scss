@@ -1,0 +1,25 @@
+.task-read-view {
+
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #B1B1AF;
+    background-color: #fcf8d9;
+
+    &__wrapper {
+
+        margin-bottom: 20px;
+    }
+
+    &__title {
+
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    &__desc {
+
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+}

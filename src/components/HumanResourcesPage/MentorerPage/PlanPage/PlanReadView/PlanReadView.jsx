@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import TestExecutionView from './TestExecutionView/TestExecutionView';
 import TestReadView from './TestReadView/TestReadView';
+import TaskReadView from './TaskReadView/TaskReadView';
 
 let PlanReadView = props => {
     let plan = props.plan;
@@ -27,7 +28,11 @@ let PlanReadView = props => {
                     <div className="plan-read-view__block-title">{block.title}</div>
                     {sections}
                     {
-                        block.test && ((props.userType === 'protege' && props.connectionStatus === 'planconfirmed' && block.test.status === 'incomplete') ? <TestExecutionView blockIndex={index} /> : <TestReadView blockIndex={index} />)
+                        block.test && ((props.userType === 'protege' && block.test.status === 'incomplete') ? <TestExecutionView blockIndex={index} /> : <TestReadView blockIndex={index} />)
+                    }
+                    {
+                        block.task &&
+                        <TaskReadView bIndex={index} />
                     }
                 </div>
             );
@@ -42,7 +47,11 @@ let PlanReadView = props => {
             <div className="plan-read-view">
                 {blocks}
                 {
-                    plan.test && ((props.userType === 'protege' && props.connectionStatus === 'planconfirmed' && plan.test.status === 'uncomplete') ? <TestExecutionView /> : <TestReadView />)
+                    plan.test && ((props.userType === 'protege' && plan.test.status === 'uncomplete') ? <TestExecutionView /> : <TestReadView />)
+                }
+                {
+                    plan.task &&
+                    <TaskReadView />
                 }
                 <div className="plan-read-view__btns">
                     <button className="plan-read-view__close" onClick={() => {

@@ -166,14 +166,14 @@ let PlanEditView = props => {
                     }
                 </div>
                 {
-                    plan.task
-                        &&
-                        <TaskEditView />
-                }
-                {
                     plan.test
                         &&
                         <TestEditView />
+                }
+                {
+                    plan.task
+                        &&
+                        <TaskEditView />
                 }
                 {blocks}
                 <div className="plan-edit-view__btns">

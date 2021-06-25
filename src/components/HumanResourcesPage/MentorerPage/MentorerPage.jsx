@@ -92,31 +92,21 @@ let MentorerPageClassComponent = class extends React.Component {
                 mentoringHr = mentoring.data;
             }
             for (let el of mentoring.data) {
+                if (leader) {
+                    if ((users.data[authData.data.userId].dep_loc_id === users.data[el.mentor_id].dep_loc_id || users.data[authData.data.userId].dep_loc_id === users.data[el.protege_id].dep_loc_id) && (el.status === 'sentformoderation' || el.status === 'planconfirmed')) {
+                        mentoringLeader.push(el);
+                    }
+                }
                 if (el.mentor_id === authData.data.userId && (el.status === 'noplan' || el.status === 'plancreated' || el.status === 'sentformoderation' || el.status === 'planconfirmed')) {
-                    showComponents.mentor = false;
                     mentoringMentor.push(el);
                 }
                 if (el.protege_id === authData.data.userId && el.status === 'planconfirmed') {
-                    showComponents.protege = false;
                     mentoringProtege.push(el);
                 }
-                if (leader) {
-                    let objIn = {};
-                    for (let id in users.data) {
-                        if (users.data[id].dep_loc_id === users.data[authData.data.userId].dep_loc_id) {
-                            if ((el.mentor_id == id || el.protege_id == id) && (el.status === 'sentformoderation' || el.status === 'planconfirmed')) {
-                                if (!objIn[el.id]) {
-                                    mentoringLeader.push(el);
-                                    objIn[el.id] = true;
-                                }
-                            }
-                        }
-                    }
-                    if (mentoringLeader.length) {
-                        showComponents.leader = false;
-                    }
-                }
             }
+            if (mentoringLeader.length > 0) showComponents.leader = false;
+            if (mentoringMentor.length > 0) showComponents.mentor = false;
+            if (mentoringProtege.length > 0) showComponents.protege = false;
             for (let component in showComponents) {
                 showComponents[component] = true;
                 break;

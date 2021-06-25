@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addPlanBlockActionCreator, addPlanSectionActionCreator, addPlanTaskActionCreator, addPlanTestActionCreator, addTaskActionCreator, addTestActionCreator, blockTitleEditActionCreator, connectionStatusChangeActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, movePlanBlockActionCreator, movePlanSectionActionCreator, planSave, sectionTitleEditActionCreator } from '../../../../../redux/planReducer';
+import { addPlanBlockActionCreator, addPlanSectionActionCreator, addPlanTaskActionCreator, addPlanTestActionCreator, addTaskActionCreator, addTestActionCreator, blockTitleEditActionCreator, connectionStatusChangeActionCreator, delPlanBlockActionCreator, delPlanSectionActionCreator, movePlanBlockActionCreator, movePlanSectionActionCreator, planSave, sectionTitleEditActionCreator, updatePlanActionCreator } from '../../../../../redux/planReducer';
 import PlanEditView from './PlanEditView';
 
 let PlanEditViewContainer = connect(
@@ -29,6 +29,7 @@ let PlanEditViewContainer = connect(
         planSave: (id, plan, status) => {
             planSave(id, plan)
                 .then((res) => {
+                    dispatch(updatePlanActionCreator(res.data.plan));
                     if (status === 'noplan') {
                         dispatch(connectionStatusChangeActionCreator(res.data.status));
                     }

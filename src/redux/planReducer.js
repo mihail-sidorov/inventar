@@ -43,7 +43,12 @@ const
     ADD_PLAN_TASK = 'ADD_PLAN_TASK',
     DEL_PLAN_TASK = 'DEL_PLAN_TASK',
     CHANGE_PLAN_TASK_TITLE = 'CHANGE_PLAN_TASK_TITLE',
-    CHANGE_PLAN_TASK_DESC = 'CHANGE_PLAN_TASK_DESC';
+    CHANGE_PLAN_TASK_DESC = 'CHANGE_PLAN_TASK_DESC',
+    CHANGE_TASK_ANSWER_COMMENT = 'CHANGE_TASK_ANSWER_COMMENT',
+    CHANGE_PLAN_TASK_ANSWER_COMMENT = 'CHANGE_PLAN_TASK_ANSWER_COMMENT',
+    ADD_FILE_TO_TASK_ANSWER = 'ADD_FILE_TO_TASK_ANSWER',
+    UPDATE_PLAN = 'UPDATE_PLAN',
+    CHANGE_TASK_GRADE = 'CHANGE_TASK_GRADE';
 
 let initialState = {
     userId: null,
@@ -57,6 +62,10 @@ let initialState = {
 export let userRights = id => Axios.get(`/userRights?id=${id}`);
 
 export let planSave = (id, plan) => Axios.patch('/mentoring', {id, plan});
+
+export let planSaveProtege = (id, plan) => Axios.patch('/mentoringProtege', {id, plan});
+
+export let planSaveMentor = (id, plan) => Axios.patch('/mentoringMentor', {id, plan});
 
 export let planSend = id => Axios.put('/mentoring', {id});
 
@@ -288,6 +297,34 @@ export let addPlanTaskActionCreator = () => ({
     type: ADD_PLAN_TASK,
 });
 
+export let changeTaskAnswerCommentActionCreator = (value, bIndex) => ({
+    type: CHANGE_TASK_ANSWER_COMMENT,
+    value,
+    bIndex,
+});
+
+export let changePlanTaskAnswerCommentActionCreator = value => ({
+    type: CHANGE_PLAN_TASK_ANSWER_COMMENT,
+    value,
+});
+
+export let addFileToTaskAnswerActionCreator = (path, bIndex) => ({
+    type: ADD_FILE_TO_TASK_ANSWER,
+    path,
+    bIndex,
+});
+
+export let updatePlanActionCreator = plan => ({
+    type: UPDATE_PLAN,
+    plan,
+});
+
+export let changeTaskGradeActionCreator = (value, bIndex) => ({
+    type: CHANGE_TASK_GRADE,
+    value,
+    bIndex,
+});
+
 // Thunks
 
 export let loadImageToTestThunk = (file, cId, bIndex, qIndex, aIndex) => async (dispatch) => {
@@ -298,6 +335,33 @@ export let loadImageToTestThunk = (file, cId, bIndex, qIndex, aIndex) => async (
 export let loadFileToTaskByMentorThunk = (file, cId, bIndex) => async dispatch => {
     let path = (await mentoringFileLoad(file, cId)).data.path;
     dispatch(addFileToTaskByMentorActionCreator(path, bIndex));
+};
+
+export let loadFileToTaskAnswerThunk = (file, cId, bIndex) => async dispatch => {
+    let path = (await mentoringFileLoad(file, cId)).data.path;
+    dispatch(addFileToTaskAnswerActionCreator(path, bIndex));
+};
+
+export let planSaveProtegeThunk = planId => async (dispatch, getState) => {
+    let {plan} = (await planSaveProtege(planId, getState().planState.plan)).data;
+    dispatch(updatePlanActionCreator(plan));
+};
+
+export let sendTaskForCheckingThunk = (planId, bIndex) => async (dispatch, getState) => {
+    let plan = getState().planState.plan;
+    if (bIndex !== undefined) {
+        plan.blocks[bIndex].task.checking = 'checking';
+    }
+    else {
+        plan.task.checking = 'checking';
+    }
+    plan = (await planSaveProtege(planId, plan)).data.plan;
+    dispatch(updatePlanActionCreator(plan));
+};
+
+export let planSaveMentorThunk = planId => async (dispatch, getState) => {
+    let {plan} = (await planSaveMentor(planId, getState().planState.plan)).data;
+    dispatch(updatePlanActionCreator(plan));
 };
 
 // Редуктор
@@ -372,7 +436,6 @@ let planReducer = (state = initialState, action) => {
             newState.plan = {...newState.plan};
             if (newState.plan.blocks[action.blockIndex].test === undefined ) {
                 newState.plan.blocks[action.blockIndex].test = {};
-                newState.plan.blocks[action.blockIndex].test.status = 'incomplete';
                 newState.plan.blocks[action.blockIndex].test.title = '';
             }
             return newState;
@@ -442,7 +505,6 @@ let planReducer = (state = initialState, action) => {
             newState.plan = {...newState.plan};
             if (newState.plan.test === undefined ) {
                 newState.plan.test = {};
-                newState.plan.test.status = 'uncomplete';
                 newState.plan.test.title = '';
             }
             return newState;
@@ -549,7 +611,6 @@ let planReducer = (state = initialState, action) => {
             newState.plan.blocks[action.bIndex].task = {
                 title: '',
                 desc: '',
-                status: 'incomplete',
             };
             return newState;
         case CHANGE_TASK_TITLE:
@@ -579,7 +640,6 @@ let planReducer = (state = initialState, action) => {
             newState.plan.task = {
                 title: '',
                 desc: '',
-                status: 'incomplete',
             };
             return newState;
         case DEL_PLAN_TASK:
@@ -593,6 +653,59 @@ let planReducer = (state = initialState, action) => {
         case CHANGE_PLAN_TASK_DESC:
             state.plan.task = {...state.plan.task};
             state.plan.task.desc = action.desc;
+            return state;
+        case CHANGE_TASK_ANSWER_COMMENT:
+            state.plan.blocks[action.bIndex].task = {...state.plan.blocks[action.bIndex].task};
+            if (state.plan.blocks[action.bIndex].task.answer === undefined) {
+                state.plan.blocks[action.bIndex].task.answer = {
+                    comment: '',
+                };
+            }
+            state.plan.blocks[action.bIndex].task.answer.comment = action.value;
+            return state;
+        case CHANGE_PLAN_TASK_ANSWER_COMMENT:
+            state.plan.task = {...state.plan.task};
+            if (state.plan.task.answer === undefined) {
+                state.plan.task.answer = {
+                    comment: '',
+                };
+            }
+            state.plan.task.answer.comment = action.value;
+            return state;
+        case ADD_FILE_TO_TASK_ANSWER:
+            if (action.bIndex === undefined) {
+                state.plan.task = {...state.plan.task};
+                if (state.plan.task.answer === undefined) {
+                    state.plan.task.answer = {
+                        comment: '',
+                    };
+                }
+                state.plan.task.answer.file = action.path;
+            }
+            else {
+                state.plan.blocks[action.bIndex].task = {...state.plan.blocks[action.bIndex].task};
+                if (state.plan.blocks[action.bIndex].task.answer === undefined) {
+                    state.plan.blocks[action.bIndex].task.answer = {
+                        comment: '',
+                    };
+                }
+                state.plan.blocks[action.bIndex].task.answer.file = action.path;
+            }
+            return state;
+        case UPDATE_PLAN:
+            return {
+                ...state,
+                plan: action.plan,
+            };
+        case CHANGE_TASK_GRADE:
+            if (action.bIndex !== undefined) {
+                state.plan.blocks[action.bIndex].task = {...state.plan.blocks[action.bIndex].task};
+                state.plan.blocks[action.bIndex].task.grade = action.value;
+            }
+            else {
+                state.plan.task = {...state.plan.task};
+                state.plan.task.grade = action.value;
+            }
             return state;
         default:
             return state;
