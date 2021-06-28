@@ -8,6 +8,8 @@ let User = (props) => {
         }}>
             <td>{props.user.full_name}</td>
             <td>{props.post.post}</td>
+            <td>{props.loc.location}</td>
+            <td>{props.department.department}</td>
         </tr>
     );
 }

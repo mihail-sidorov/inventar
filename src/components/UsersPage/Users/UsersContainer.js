@@ -1,4 +1,7 @@
 import { connect } from 'react-redux';
+import { departmentNamesGetActionCreator } from '../../../redux/departmentNamesReducer';
+import { departmentsLocationsSetActionCreator } from '../../../redux/departmentsLocationsReducer';
+import { locationsGetActionCreator } from '../../../redux/locationsReducer';
 import { postDepLocsGetActionCreator } from '../../../redux/postDepLocsReducer';
 import { makeShortUsersActionCreator } from '../../../redux/usersPageReducer';
 import { usersGetActionCreator } from '../../../redux/usersReducer';
@@ -17,6 +20,15 @@ let UsersContainer = connect(
         },
         onMakeShortUsers: () => {
             dispatch(makeShortUsersActionCreator());
+        },
+        onLocationsGet: (data) => {
+            dispatch(locationsGetActionCreator(data));
+        },
+        onDepartmentsLocationsGet: (data) => {
+            dispatch(departmentsLocationsSetActionCreator(data));
+        },
+        onDepartmentNamesGet: (data) => {
+            dispatch(departmentNamesGetActionCreator(data));
         },
     })
 )(Users);

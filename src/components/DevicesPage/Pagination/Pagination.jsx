@@ -15,16 +15,24 @@ let Pagination = (props) => {
 
     let pages = [];
     let activeCurrentPage;
-    let prev = [];
-    let next = [];
+    let first;
+    let prev;
+    let next;
     let onScreenCount = 4;
     let limit = 0;
 
     if (props.currentPage > 1) {
-        prev.push(<span className="pagination__prev" key={1} onClick={onPrevPage}></span>);
+        first = (
+            <span className="pagination__first"
+                onClick={() => {
+                    props.changePage(1);
+                }}
+            ></span>
+        );
+        prev = <span className="pagination__prev" onClick={onPrevPage}></span>;
     }
     if (props.currentPage < props.pages) {
-        next.push(<span className="pagination__next" key={1} onClick={onNextPage}></span>);
+        next = <span className="pagination__next" onClick={onNextPage}></span>;
     }
 
     for (let i = 1; i <= props.pages; i++) {
@@ -70,6 +78,7 @@ let Pagination = (props) => {
 
     return (
         (props.pages > 1) && <div className="pagination">
+            {first}
             {prev}
             <span className="pagination__pages">
                 {pages}

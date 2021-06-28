@@ -19,9 +19,9 @@ let DevicesPageUser = (props) => {
                         <div className="device-field" onClick={(e) => {
                             $(e.currentTarget).toggleClass('open');
                             $(e.currentTarget).parent().find('>ul').slideToggle();
-                        }}>{props.categories[userDevices[group][id].category_id]?.category}, {props.brands[userDevices[group][id].brand_id]?.brand}, {userDevices[group][id].model}</div>
+                        }}>{props.categories[userDevices[group][id].category_id]?.category}, {props.brands[userDevices[group][id].brand_id]?.brand}, {userDevices[group][id].model}, <span>{userDevices[group][id].status_rus}</span></div>
                         :
-                        <div>{props.categories[userDevices[group][id].category_id]?.category}, {props.brands[userDevices[group][id].brand_id]?.brand}, {userDevices[group][id].model}</div>
+                        <div>{props.categories[userDevices[group][id].category_id]?.category}, {props.brands[userDevices[group][id].brand_id]?.brand}, {userDevices[group][id].model}, <span>{userDevices[group][id].status_rus}</span></div>
                     }
                     {makeDevicesGroup(userDevices, id)}
                 </li>

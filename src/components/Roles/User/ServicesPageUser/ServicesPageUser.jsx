@@ -31,6 +31,15 @@ let ServicesPageUser = (props) => {
                             <div className="services-page-user__content">
                                 <div className="services-page-user__content-table">
                                     <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Наименование</th>
+                                                <th>Логин</th>
+                                                <th>Пароль</th>
+                                                <th>Адрес сервиса</th>
+                                                <th>Комментарии</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             {
                                                 accountsArr.length ? accountsArr : <tr><td>Список данных пуст</td></tr>

@@ -235,6 +235,17 @@ html, body {
                 .devices {
 
                     margin-bottom: 20px;
+
+                    table {
+
+                        thead {
+
+                            th:last-child {
+
+                                padding-right: 20px;
+                            }
+                        }
+                    }
                 }
 
                 .pagination {
@@ -315,6 +326,14 @@ html, body {
             .form__field_radio {
 
                 margin-bottom: 0;
+            }
+
+            & > div {
+
+                & > span {
+
+                    background-color: #FBBAB5;
+                }
             }
         }
 
@@ -1076,6 +1095,38 @@ html, body {
     line-height: 24px;
     display: flex;
     font-size: 18px;
+
+    &__first {
+
+        width: 16px;
+        cursor: pointer;
+        position: relative;
+        margin-right: 5px;
+
+        &::before, &::after {
+
+            content: '';
+            display: block;
+            width: 8px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            background-image: url('../imgs/pagination-prev.svg');
+            background-repeat: no-repeat;
+            background-position: 0 center;
+            background-size: 100% auto;
+        }
+
+        &::before {
+
+            left: 0;
+        }
+
+        &::after {
+
+            left: 6px;
+        }
+    }
 
     &__prev {
 

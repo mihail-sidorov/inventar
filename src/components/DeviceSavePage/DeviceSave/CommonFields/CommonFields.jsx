@@ -10,6 +10,7 @@ let CommonFields = (props) => {
     let optionsBrands = [];
     let optionsSuppliers = [];
     let optionsLocations = [];
+    let showResponsibleField = false;
 
     function sortObjectAsc(obj) {
         return Object.entries(obj).sort((a, b) => {
@@ -35,15 +36,22 @@ let CommonFields = (props) => {
         optionsLocations.push(<option value={id} key={id}>{props.locations[id].location}</option>);
     }
 
+    if (props.device.user_id === undefined || props.responsibles[props.device.user_id] !== undefined) {
+        showResponsibleField = true;
+    }
+
     return(
         <>
             {
                 !isEmptyObject(props.category) && props.category.sub_devices !== null ?
                 <>
-                    <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
-                        <option></option>
-                        {optionsResponsibles}
-                    </Field>
+                    {
+                        showResponsibleField &&
+                        <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
+                            <option></option>
+                            {optionsResponsibles}
+                        </Field>
+                    }
                     <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
                         <option></option>
                         {optionsLocations}
@@ -66,10 +74,13 @@ let CommonFields = (props) => {
                         <option></option>
                         {optionsSuppliers}
                     </Field>
-                    <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
-                        <option></option>
-                        {optionsResponsibles}
-                    </Field>
+                    {
+                        showResponsibleField &&
+                        <Field name="user_id" desc="Ответственный на складе" component={Select} validate={[required]}>
+                            <option></option>
+                            {optionsResponsibles}
+                        </Field>
+                    }
                     <Field name="location_id" desc="Местонахождение" component={Select} validate={[required]}>
                         <option></option>
                         {optionsLocations}
