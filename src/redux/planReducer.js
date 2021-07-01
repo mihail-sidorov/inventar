@@ -328,17 +328,17 @@ export let changeTaskGradeActionCreator = (value, bIndex) => ({
 // Thunks
 
 export let loadImageToTestThunk = (file, cId, bIndex, qIndex, aIndex) => async (dispatch) => {
-    let path = (await mentoringFileLoad(file, cId)).data.path;
+    let path = (await mentoringFileLoad(file, cId)).data[0].path;
     dispatch(addImageToTestActionCreator(path, bIndex, qIndex, aIndex));
 };
 
 export let loadFileToTaskByMentorThunk = (file, cId, bIndex) => async dispatch => {
-    let path = (await mentoringFileLoad(file, cId)).data.path;
+    let path = (await mentoringFileLoad(file, cId)).data[0].path;
     dispatch(addFileToTaskByMentorActionCreator(path, bIndex));
 };
 
 export let loadFileToTaskAnswerThunk = (file, cId, bIndex) => async dispatch => {
-    let path = (await mentoringFileLoad(file, cId)).data.path;
+    let path = (await mentoringFileLoad(file, cId)).data[0].path;
     dispatch(addFileToTaskAnswerActionCreator(path, bIndex));
 };
 
