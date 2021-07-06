@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { serverName } from '../../../../../../config/serverName';
 import { useShallowEqualSelector } from '../../../../../../hooks/useShallowEqualSelector';
-import { addPlanTestQuestionActionCreator, addTestQuestionActionCreator, delPlanTestActionCreator, delPlanTestQuestionActionCreator, delTestActionCreator, delTestQuestionActionCreator, loadImageToTestThunk, planTestQuestionAnswerSetRightActionCreator, planTestQuestionAnswerTitleChangeActionCreator, planTestQuestionTitleChangeActionCreator, planTestTitleChangeActionCreator, testQuestionAnswerSetRightActionCreator, testQuestionAnswerTitleChangeActionCreator, testQuestionTitleChangeActionCreator, testTitleChangeActionCreator } from '../../../../../../redux/planReducer';
+import { addPlanTestQuestionActionCreator, addTestQuestionActionCreator, delPlanTestActionCreator, delPlanTestQuestionActionCreator, delTestActionCreator, delTestQuestionActionCreator, loadImageToTestThunk, planTestDurationChangeActionCreator, planTestQuestionAnswerSetRightActionCreator, planTestQuestionAnswerTitleChangeActionCreator, planTestQuestionTitleChangeActionCreator, planTestTitleChangeActionCreator, testDurationChangeActionCreator, testQuestionAnswerSetRightActionCreator, testQuestionAnswerTitleChangeActionCreator, testQuestionTitleChangeActionCreator, testTitleChangeActionCreator } from '../../../../../../redux/planReducer';
 
 import './TestEditView.scss';
 
@@ -110,6 +110,12 @@ let TestBlockEditView = (props) => {
                         dispatch(testTitleChangeActionCreator(e.target.value, blockIndex));
                     }}
                     placeholder="Заголовок теста"
+                />
+                <input type="text" name="duration" placeholder="Время прохождения теста"
+                    value={test.duration ?? ''}
+                    onChange={(e) => {
+                        dispatch(testDurationChangeActionCreator(e.target.value, blockIndex));
+                    }}
                 />
             </div>
             <div className="test-edit-view__questions">
@@ -226,6 +232,12 @@ function PlanTestEditView(props) {
                         dispatch(planTestTitleChangeActionCreator(e.target.value));
                     }}
                     placeholder="Заголовок теста"
+                />
+                <input type="text" name="duration" placeholder="Время прохождения теста"
+                    value={test.duration ?? ''}
+                    onChange={(e) => {
+                        dispatch(planTestDurationChangeActionCreator(e.target.value));
+                    }}
                 />
             </div>
             <div className="test-edit-view__questions">

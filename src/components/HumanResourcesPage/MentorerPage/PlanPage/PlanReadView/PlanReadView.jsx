@@ -47,7 +47,7 @@ let PlanReadView = props => {
             <div className="plan-read-view">
                 {blocks}
                 {
-                    plan.test && ((props.userType === 'protege' && plan.test.status === 'uncomplete') ? <TestExecutionView /> : <TestReadView />)
+                    plan.test && ((props.userType === 'protege' && plan.test.status === 'incomplete') ? <TestExecutionView /> : <TestReadView />)
                 }
                 {
                     plan.task &&

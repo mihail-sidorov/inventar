@@ -13,6 +13,12 @@
 
         font-size: 22px;
         margin-bottom: 5px;
+        display: flex;
+
+        .timer {
+
+            margin-left: 10px;
+        }
     }
 
     &__question-title {

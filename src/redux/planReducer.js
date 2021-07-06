@@ -48,7 +48,9 @@ const
     CHANGE_PLAN_TASK_ANSWER_COMMENT = 'CHANGE_PLAN_TASK_ANSWER_COMMENT',
     ADD_FILE_TO_TASK_ANSWER = 'ADD_FILE_TO_TASK_ANSWER',
     UPDATE_PLAN = 'UPDATE_PLAN',
-    CHANGE_TASK_GRADE = 'CHANGE_TASK_GRADE';
+    CHANGE_TASK_GRADE = 'CHANGE_TASK_GRADE',
+    TEST_DURATION_CHANGE = 'TEST_DURATION_CHANGE',
+    PLAN_TEST_DURATION_CHANGE = 'PLAN_TEST_DURATION_CHANGE';
 
 let initialState = {
     userId: null,
@@ -323,6 +325,17 @@ export let changeTaskGradeActionCreator = (value, bIndex) => ({
     type: CHANGE_TASK_GRADE,
     value,
     bIndex,
+});
+
+export let testDurationChangeActionCreator = (value, bIndex) => ({
+    type: TEST_DURATION_CHANGE,
+    value,
+    bIndex,
+});
+
+export let planTestDurationChangeActionCreator = value => ({
+    type: PLAN_TEST_DURATION_CHANGE,
+    value,
 });
 
 // Thunks
@@ -705,6 +718,24 @@ let planReducer = (state = initialState, action) => {
             else {
                 state.plan.task = {...state.plan.task};
                 state.plan.task.grade = action.value;
+            }
+            return state;
+        case TEST_DURATION_CHANGE:
+            state.plan.blocks[action.bIndex].test = {...state.plan.blocks[action.bIndex].test};
+            if (action.value === '') {
+                delete state.plan.blocks[action.bIndex].test.duration;
+            }
+            else {
+                state.plan.blocks[action.bIndex].test.duration = action.value;
+            }
+            return state;
+        case PLAN_TEST_DURATION_CHANGE:
+            state.plan.test = {...state.plan.test};
+            if (action.value === '') {
+                delete state.plan.test.duration;
+            }
+            else {
+                state.plan.test.duration = action.value;
             }
             return state;
         default:

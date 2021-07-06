@@ -4,6 +4,100 @@ import { withRouter } from 'react-router';
 import TestEditView from './TestEditView/TestEditView';
 import TaskEditView from './TaskEditView/TaskEditView';
 
+function planValidate(plan) {
+    if (plan.blocks !== undefined) {
+        for (let block of plan.blocks) {
+            if (!block.title) {
+                alert('Заголовок блока должен быть заполнен!');
+                return false;
+            }
+            if (block.sections !== undefined) {
+                for (let section of block.sections) {
+                    if (!section.title) {
+                        alert('Заголовок раздела должен быть заполнен!');
+                        return false;
+                    }
+                }
+            }
+            if (block.test !== undefined) {
+                if (!block.test.title) {
+                    alert('Заголовок теста должен быть заполнен!');
+                    return false;
+                }
+                if (block.test.questions !== undefined) {
+                    for (let question of block.test.questions) {
+                        if (!question.title) {
+                            alert('Заголовок вопроса теста должен быть заполнен!');
+                            return false;
+                        }
+                        if (question.answers !== undefined) {
+                            let isRight = false;
+                            for (let answer of question.answers) {
+                                if (!answer.title) {
+                                    alert('Заголовок ответа теста должен быть заполнен!');
+                                    return false;
+                                }
+                                if (answer.isRight) {
+                                    isRight = true;
+                                }
+                            }
+                            if (!isRight) {
+                                alert('У вопроса теста должен быть отмечен правильный вариант ответа!');
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            if (block.task !== undefined) {
+                if (!block.task.title) {
+                    alert('Заголовок задания должен быть заполнен!');
+                    return false;
+                }
+            }
+        }
+    }
+
+    if (plan.test !== undefined) {
+        if (!plan.test.title) {
+            alert('Заголовок теста должен быть заполнен!');
+            return false;
+        }
+        if (plan.test.questions !== undefined) {
+            for (let question of plan.test.questions) {
+                if (!question.title) {
+                    alert('Заголовок вопроса теста должен быть заполнен!');
+                    return false;
+                }
+                if (question.answers !== undefined) {
+                    let isRight = false;
+                    for (let answer of question.answers) {
+                        if (!answer.title) {
+                            alert('Заголовок ответа теста должен быть заполнен!');
+                            return false;
+                        }
+                        if (answer.isRight) {
+                            isRight = true;
+                        }
+                    }
+                    if (!isRight) {
+                        alert('У вопроса теста должен быть отмечен правильный вариант ответа!');
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    if (plan.task !== undefined) {
+        if (!plan.task.title) {
+            alert('Заголовок задания должен быть заполнен!');
+            return false;
+        }
+    }
+
+    return true;
+}
+
 let PlanEditView = props => {
     let plan = props.plan;
     if (plan !== null) {
@@ -178,6 +272,9 @@ let PlanEditView = props => {
                 {blocks}
                 <div className="plan-edit-view__btns">
                     <button className="plan-edit-view__save" onClick={() => {
+                        if (!planValidate(props.plan)) {
+                            return;
+                        }
                         props.planSave(props.match.params.planId, props.plan, props.connectionStatus);
                     }}>{props.connectionStatus === 'noplan' ? 'Создать план' : 'Сохранить'}</button>
                     <button className="plan-edit-view__close" onClick={() => {

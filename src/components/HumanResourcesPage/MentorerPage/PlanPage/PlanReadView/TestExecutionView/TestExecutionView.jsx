@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { serverName } from '../../../../../../config/serverName';
 import { useShallowEqualSelector } from '../../../../../../hooks/useShallowEqualSelector';
 import { planTestFinishActionCreator, planTestQuestionAnswerSetPickActionCreator, testFinishActionCreator, testQuestionAnswerSetPickActionCreator } from '../../../../../../redux/planReducer';
+import Timer from '../../../../../Timer/Timer';
 
 import './TestExecutionView.scss';
 
@@ -96,6 +97,7 @@ function Test(props) {
         <>
             <div className="test-execution-view__title">
                 {props.test.title}
+                <Timer time={605000} />
             </div>
             <div className="test-execution-view__question">
                 <div className="test-execution-view__question-title">
