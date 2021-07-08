@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { serverName } from '../../../../../../config/serverName';
 import { useShallowEqualSelector } from '../../../../../../hooks/useShallowEqualSelector';
-import { planTestFinishActionCreator, planTestQuestionAnswerSetPickActionCreator, testFinishActionCreator, testQuestionAnswerSetPickActionCreator } from '../../../../../../redux/planReducer';
+import { answerQuestionTestThunk, planTestQuestionAnswerSetPickActionCreator, setStartTestThunk, testQuestionAnswerSetPickActionCreator } from '../../../../../../redux/planReducer';
 import Timer from '../../../../../Timer/Timer';
 
 import './TestExecutionView.scss';
@@ -27,7 +28,21 @@ function TestExecutionView(props) {
 
     const {test} = useShallowEqualSelector(getTest(props.blockIndex));
     const dispatch = useDispatch();
-    const [qn, qnChange] = useState(null);
+    let qnStart = null;
+    if (test.questions !== undefined) {
+        qnStart = 0;
+        for (let question of test.questions) {
+            if (question.answers !== undefined) {
+                for (let answer of question.answers) {
+                    if (answer.isPick) {
+                        qnStart++;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    const [qn, qnChange] = useState(qnStart);
     const StartBtnText = props.blockIndex !== undefined ? 'Пройти тест': 'Пройти контрольный тест';
 
     return (
@@ -35,24 +50,22 @@ function TestExecutionView(props) {
             {
                 qn === null
                     ?
-                    <StartBtn sbt={StartBtnText} qn={qn} qnChange={qnChange} />
+                    <StartBtn sbt={StartBtnText} bi={props.blockIndex} qnChange={qnChange} />
                     :
-                    <Test test={test} dispatch={dispatch} bi={props.blockIndex} qn={qn} qnChange={qnChange} />
+                    <Test test={test} bi={props.blockIndex} qn={qn} qnChange={qnChange} />
             }
         </div>
     );
 }
 
 function StartBtn(props) {
+    const {planId} = useParams();
+    const dispatch = useDispatch();
+
     return (
         <button className="test-execution-view__start-btn"
             onClick={() => {
-                if (props.qn === null) {
-                    props.qnChange(0);
-                }
-                else {
-                    props.qnChange(props.qn + 1);
-                }
+                dispatch(setStartTestThunk(planId, props.bi, props.qnChange));
             }}
         >
             {
@@ -63,6 +76,9 @@ function StartBtn(props) {
 }
 
 function Test(props) {
+    const {planId} = useParams();
+    const dispatch = useDispatch();
+
     let answers = [];
     props.test.questions[props.qn].answers.forEach((el, index) => {
         answers.push(
@@ -74,10 +90,10 @@ function Test(props) {
                     <input type="radio" name={props.bi !== undefined ? `answer_pick_${props.bi}_${props.qn}` : `answer_pick_${props.qn}`}
                         onChange={() => {
                             if (props.bi !== undefined) {
-                                props.dispatch(testQuestionAnswerSetPickActionCreator(props.bi, props.qn, index));
+                                dispatch(testQuestionAnswerSetPickActionCreator(props.bi, props.qn, index));
                             }
                             else {
-                                props.dispatch(planTestQuestionAnswerSetPickActionCreator(props.qn, index));
+                                dispatch(planTestQuestionAnswerSetPickActionCreator(props.qn, index));
                             }
                         }}
                         checked={el.isPick === undefined ? false : el.isPick}
@@ -97,7 +113,10 @@ function Test(props) {
         <>
             <div className="test-execution-view__title">
                 {props.test.title}
-                <Timer time={605000} />
+                {
+                    props.test.leftTime !== undefined &&
+                    <Timer time={props.test.leftTime} />
+                }
             </div>
             <div className="test-execution-view__question">
                 <div className="test-execution-view__question-title">
@@ -122,17 +141,7 @@ function Test(props) {
                             }
                         }
                         if (isPick) {
-                            if (props.qn === props.test.questions.length - 1) {
-                                if (props.bi !== undefined) {
-                                    props.dispatch(testFinishActionCreator(props.bi));
-                                }
-                                else {
-                                    props.dispatch(planTestFinishActionCreator());
-                                }
-                            }
-                            else {
-                                props.qnChange(props.qn + 1);
-                            }
+                            dispatch(answerQuestionTestThunk(planId, props.qn, props.qnChange));
                         }
                         else {
                             alert('Выберите один из вариантов ответов!');

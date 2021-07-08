@@ -48,6 +48,10 @@ function planValidate(plan) {
                         }
                     }
                 }
+                else {
+                    alert('Добавьте вопросы к тесту!');
+                    return false;
+                }
             }
             if (block.task !== undefined) {
                 if (!block.task.title) {
@@ -86,6 +90,10 @@ function planValidate(plan) {
                     }
                 }
             }
+        }
+        else {
+            alert('Добавьте вопросы к тесту!');
+            return false;
         }
     }
     if (plan.task !== undefined) {

@@ -29,9 +29,7 @@ const
     PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE = 'PLAN_TEST_QUESTION_ANSWER_TITLE_CHANGE',
     PLAN_TEST_QUESTION_ANSWER_SET_RIGHT = 'PLAN_TEST_QUESTION_ANSWER_SET_RIGHT',
     TEST_QUESTION_ANSWER_SET_PICK = 'TEST_QUESTION_ANSWER_SET_PICK',
-    TEST_FINISH = 'TEST_FINISH',
     PLAN_TEST_QUESTION_ANSWER_SET_PICK = 'PLAN_TEST_QUESTION_ANSWER_SET_PICK',
-    PLAN_TEST_FINISH = 'PLAN_TEST_FINISH',
     MOVE_PLAN_BLOCK = 'MOVE_PLAN_BLOCK',
     MOVE_PLAN_SECTION = 'MOVE_PLAN_SECTION',
     ADD_IMAGE_TO_TEST = 'ADD_IMAGE_TO_TEST',
@@ -176,11 +174,6 @@ export let testQuestionAnswerSetPickActionCreator = (bIndex, qIndex, aIndex) => 
     aIndex,
 });
 
-export let testFinishActionCreator = bIndex => ({
-    type: TEST_FINISH,
-    bIndex,
-});
-
 export let addPlanTestActionCreator = () => ({
     type: ADD_PLAN_TEST,
 });
@@ -226,10 +219,6 @@ export let planTestQuestionAnswerSetPickActionCreator = (qIndex, aIndex) => ({
     type: PLAN_TEST_QUESTION_ANSWER_SET_PICK,
     qIndex,
     aIndex,
-});
-
-export let planTestFinishActionCreator = () => ({
-    type: PLAN_TEST_FINISH,
 });
 
 export let movePlanBlockActionCreator = (from, to) => ({
@@ -375,6 +364,26 @@ export let sendTaskForCheckingThunk = (planId, bIndex) => async (dispatch, getSt
 export let planSaveMentorThunk = planId => async (dispatch, getState) => {
     let {plan} = (await planSaveMentor(planId, getState().planState.plan)).data;
     dispatch(updatePlanActionCreator(plan));
+};
+
+export let setStartTestThunk = (planId, bIndex, qnChange) => async (dispatch, getState) => {
+    let plan = getState().planState.plan;
+    if (bIndex !== undefined) {
+        plan.blocks[bIndex].test.setStartTest = 1;
+    }
+    else {
+        plan.test.setStartTest = 1;
+    }
+    plan = (await planSaveProtege(planId, plan)).data.plan;
+    dispatch(updatePlanActionCreator(plan));
+    qnChange(0);
+};
+
+export let answerQuestionTestThunk = (planId, qn, qnChange) => async (dispatch, getState) => {
+    let plan = getState().planState.plan;
+    plan = (await planSaveProtege(planId, plan)).data.plan;
+    dispatch(updatePlanActionCreator(plan));
+    qnChange(qn + 1);
 };
 
 // Редуктор
@@ -583,14 +592,6 @@ let planReducer = (state = initialState, action) => {
             state.plan.test.questions[action.qIndex].answers[action.aIndex].isPick = true;
             state.plan.test = {...state.plan.test};
             return state;
-        case TEST_FINISH:
-            newState.plan = {...newState.plan};
-            newState.plan.blocks[action.bIndex].test.status = 'complete';
-            return newState;
-        case PLAN_TEST_FINISH:
-            newState.plan = {...newState.plan};
-            newState.plan.test.status = 'complete';
-            return newState;
         case MOVE_PLAN_BLOCK:
             newState.plan = {...newState.plan};
             arrayMove.mutate(newState.plan.blocks, action.from, action.to);
