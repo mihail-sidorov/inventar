@@ -68,6 +68,8 @@ export let planSaveProtege = (id, plan) => Axios.patch('/mentoringProtege', {id,
 
 export let planSaveMentor = (id, plan) => Axios.patch('/mentoringMentor', {id, plan});
 
+export let planCompleteMentor = id => Axios.post('/mentoringMentor', {id});
+
 export let planSend = id => Axios.put('/mentoring', {id});
 
 // Создание Action Creators
@@ -401,6 +403,16 @@ export let resetTestThunk = (planId, bIndex) => async (dispatch, getState) => {
     }
     plan = (await planSaveMentor(planId, plan)).data.plan;
     dispatch(updatePlanActionCreator(plan));
+};
+
+export let planCompleteMentorThunk = planId => async (dispatch, getState) => {
+    try {
+        let connectionStatus = (await planCompleteMentor(planId)).data.status;
+        dispatch(connectionStatusChangeActionCreator(connectionStatus));
+    }
+    catch (err) {
+        alert(err);
+    }
 };
 
 // Редуктор

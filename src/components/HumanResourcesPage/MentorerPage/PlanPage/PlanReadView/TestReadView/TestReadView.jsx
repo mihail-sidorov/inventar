@@ -15,16 +15,18 @@ let TestReadView = (props) => {
         getTest = state => ({
             test: state.planState.plan.blocks[props.blockIndex].test,
             userType: state.planState.userType,
+            connectionStatus: state.planState.connectionStatus,
         });
     }
     else {
         getTest = state => ({
             test: state.planState.plan.test,
             userType: state.planState.userType,
+            connectionStatus: state.planState.connectionStatus,
         });
     }
 
-    const {test, userType} = useShallowEqualSelector(getTest);
+    const {test, userType, connectionStatus} = useShallowEqualSelector(getTest);
     const dispatch = useDispatch();
     const {planId} = useParams();
     
@@ -81,7 +83,7 @@ let TestReadView = (props) => {
                     {test.title}
                 </span>
                 {
-                    userType === 'mentor' && test.status === 'complete' &&
+                    userType === 'mentor' && test.status === 'complete' && connectionStatus === 'planconfirmed' &&
                     <button className="test-read-view__reset"
                         onClick={() => {
                             dispatch(resetTestThunk(planId, props.blockIndex));
@@ -92,6 +94,20 @@ let TestReadView = (props) => {
             <ul className="test-read-view__questions">
                 {questions}
             </ul>
+            {
+                test.status === 'complete' &&
+                <div className="test-read-view__result">
+                    <div className="test-read-view__result-title">Результат теста:</div>
+                    <div className="test-read-view__result-buls">
+                        Баллы: {test.grade} из 100
+                    </div>
+                    <div className="test-read-view__result-inform">
+                        {
+                            (test.leftTime !== undefined && !test.leftTime) ? 'Тест завершился по истечении времени!' : ''
+                        }
+                    </div>
+                </div>
+            }
         </div>
     );
 }

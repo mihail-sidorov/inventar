@@ -163,9 +163,8 @@ let PlanPage = props => {
 
     let planView = null;
     if (props.userType === 'hr'
-    || (props.userType === 'leader' && (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed'))
-    || (props.userType === 'protege' && props.connectionStatus === 'planconfirmed')
-    || (props.userType === 'mentor' && (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed'))) {
+    || ((props.userType === 'leader' || props.userType === 'mentor') && (props.connectionStatus === 'sentformoderation' || props.connectionStatus === 'planconfirmed' || props.connectionStatus === 'complete'))
+    || (props.userType === 'protege' && props.connectionStatus === 'planconfirmed' || props.connectionStatus === 'complete')) {
         planView = <PlanReadViewContainer />;
     }
     if (props.userType === 'mentor' && (props.connectionStatus === 'noplan' || props.connectionStatus === 'plancreated')) {

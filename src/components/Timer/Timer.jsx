@@ -7,9 +7,11 @@ let Timer = (props) => {
     let timeoutId;
     
     useEffect(() => {
-        timeoutId = setTimeout(() => {
-            changeTime(time - 1000);
-        }, 1000);
+        if (time !== 0) {
+            timeoutId = setTimeout(() => {
+                changeTime(time - 1000);
+            }, 1000);
+        }
 
         return () => clearTimeout(timeoutId);
     });

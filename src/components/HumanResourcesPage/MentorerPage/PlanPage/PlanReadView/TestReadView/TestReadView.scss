@@ -100,4 +100,21 @@
             }
         }
     }
+
+    &__result {
+
+        margin-top: 10px;
+    }
+
+    &__result-title {
+
+        font-size: 18px;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+
+    &__result-inform {
+
+        color: #FBBAB5;
+    }
 }
