@@ -138,7 +138,7 @@ let initialState = {
         shortEntitys: [],
         search: '',
         pagination: {
-            count: 3,
+            count: countPages,
             currentPage: 1,
             pages: 0,
             isLastPage: false,

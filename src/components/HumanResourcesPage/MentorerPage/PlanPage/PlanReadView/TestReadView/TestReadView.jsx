@@ -4,6 +4,9 @@ import cn from 'classnames';
 
 import './TestReadView.scss';
 import { serverName } from '../../../../../../config/serverName';
+import { resetTestThunk } from '../../../../../../redux/planReducer';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 let TestReadView = (props) => {
     let getTest;
@@ -22,6 +25,8 @@ let TestReadView = (props) => {
     }
 
     const {test, userType} = useShallowEqualSelector(getTest);
+    const dispatch = useDispatch();
+    const {planId} = useParams();
     
     let questions = [];
     test.questions?.forEach((el, qIndex) => {
@@ -72,7 +77,17 @@ let TestReadView = (props) => {
     return (
         <div className="test-read-view">
             <div className="test-read-view__title">
-                {test.title}
+                <span>
+                    {test.title}
+                </span>
+                {
+                    userType === 'mentor' && test.status === 'complete' &&
+                    <button className="test-read-view__reset"
+                        onClick={() => {
+                            dispatch(resetTestThunk(planId, props.blockIndex));
+                        }}
+                    >Сбросить</button>
+                }
             </div>
             <ul className="test-read-view__questions">
                 {questions}

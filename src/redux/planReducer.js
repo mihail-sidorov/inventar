@@ -1,3 +1,4 @@
+import reactDom from "react-dom";
 import Axios from "../config/axiosConfig";
 import arrayMove from 'array-move';
 import mentoringFileLoad from "../functions/mentoringFileLoad";
@@ -375,15 +376,31 @@ export let setStartTestThunk = (planId, bIndex, qnChange) => async (dispatch, ge
         plan.test.setStartTest = 1;
     }
     plan = (await planSaveProtege(planId, plan)).data.plan;
-    dispatch(updatePlanActionCreator(plan));
-    qnChange(0);
+    reactDom.unstable_batchedUpdates(() => {
+        dispatch(updatePlanActionCreator(plan));
+        qnChange(0);
+    });
 };
 
 export let answerQuestionTestThunk = (planId, qn, qnChange) => async (dispatch, getState) => {
     let plan = getState().planState.plan;
     plan = (await planSaveProtege(planId, plan)).data.plan;
+    reactDom.unstable_batchedUpdates(() => {
+        dispatch(updatePlanActionCreator(plan));
+        qnChange(qn + 1);
+    });
+};
+
+export let resetTestThunk = (planId, bIndex) => async (dispatch, getState) => {
+    let plan = getState().planState.plan;
+    if (bIndex !== undefined) {
+        plan.blocks[bIndex].test.reset = 1;
+    }
+    else {
+        plan.test.reset = 1;
+    }
+    plan = (await planSaveMentor(planId, plan)).data.plan;
     dispatch(updatePlanActionCreator(plan));
-    qnChange(qn + 1);
 };
 
 // Редуктор

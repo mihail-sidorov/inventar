@@ -18,6 +18,12 @@
 
         font-size: 22px;
         margin-bottom: 5px;
+        display: flex;
+    }
+
+    &__reset {
+
+        margin-left: auto;
     }
 
     &__question {
